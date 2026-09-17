@@ -2,7 +2,7 @@
 
 ## 1. Mi ez?
 
-Egy telepíthető eszköz, amely a kutató saját munkaterületén, a saját AI-asszisztensével (Claude Code, Codex, Copilot) végigvezet a TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságához (KEAB) benyújtandó kutatásetikai engedélykérelmen. Egy paranccsal kerül a projektbe, mint az OpenSpec vagy hasonló skillsetek. Utána beszélgetve eldönti, kell-e engedély, kikérdezi, ami a projekt leírásából nem derül ki, és kitölti a kar hivatalos űrlapjait.
+Egy telepíthető eszköz, amely a kutató saját munkaterületén, a saját AI-asszisztensével (Claude Code, Codex, Copilot) végigvezet a TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságához (KEAB) benyújtandó kutatásetikai engedélykérelmen. Egy paranccsal kerül a projektbe. Utána beszélgetve eldönti, kell-e engedély, kikérdezi, ami a projekt leírásából nem derül ki, és kitölti a kar hivatalos űrlapjait.
 
 ## 2. Milyen problémát old meg?
 
@@ -29,7 +29,7 @@ A kutató letölti az űrlapokat a [kar oldaláról](https://tatk.elte.hu/bizott
 - **A kar hivatalos űrlapjai:** 7.1 Kutatásintegritási nyilatkozat, 7.2 Kutatásintegritási űrlap, 7.4 Adatkezelési terv, `.docx`. Ezeket az eszköz **nem tartalmazza**, hanem telepítéskor a kar oldaláról tölti le, hogy mindig a hatályos változattal dolgozzon.
 - **A kari szabályzat** (PDF, a kar oldaláról): ebből dönt és hivatkozik.
 - **Mennyiség:** egy projekt, három űrlap, plusz a mellékletek.
-- **Adatvédelem:** az eszköz a projekt *leírását* olvassa, a kutatási adatot nem. A `data/` mappához nem nyúlhat. Ezt telepítéskor be kell írnia az `AGENTS.md`-be.
+- **Adatvédelem:** az eszköz a projekt *leírását* és a kutatási eszközöket (kérdőív, interjúvázlat) olvassa. A nyers kutatási adatot (`data/`) alapból nem, csak ha a kérelemhez kell, és a kutató arra az alkalomra külön engedélyt ad. Ezt telepítéskor be kell írnia az `AGENTS.md`-be.
 
 **Ki használja, és hogyan:** felhasználói eszköz. A kutató a saját gépén dolgozik:
 
@@ -71,7 +71,7 @@ keab/
 - **dönt** jogalapról, és nem ad jogi tanácsot, csak a lehetőségeket sorolja fel, és megmondja, kihez kell fordulni;
 - **garantálja** az engedélyt: formát ellenőriz, nem etikát;
 - **foglalkozik** a vizsgálati eljárással (7.5), ami már futó kutatás bejelentése;
-- **olvassa** a kutatási adatot.
+- **olvassa** a kutatási adatot a kutató külön engedélye nélkül.
 
 ## 6. Honnan tudod, hogy jó?
 
