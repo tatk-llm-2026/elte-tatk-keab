@@ -1,6 +1,6 @@
 ## 1. Előkészítés
 
-- [ ] 1.1 Ellenőrizni Claude Code-ban, Codexben és Copilotban, hogy a projektbe tett skillek betöltődnek-e, és melyik támogat tiszta kontextusú segédágenst; az eredményt a `design.md` 3. és 7. döntéséhez feljegyezni
+- [ ] 1.1 Ellenőrizni Claude Code-ban, Codexben és Copilotban, hogy a projektbe tett skillek betöltődnek-e, melyik támogat tiszta kontextusú subagentet, és melyik asszisztensből melyik másik indítható parancssoron nem interaktív módban; az eredményt a `design.md` 3. és 7. döntéséhez feljegyezni
 - [ ] 1.2 Létrehozni a csomag vázát (`package.json`, parancssori belépési pont, tesztkeret), és ellenőrizni, hogy a `npx kutetika --help` helyben lefut
 - [ ] 1.3 Lefoglalni a `kutetika` nevet az npm-en egy üres előzetes kiadással, és ellenőrizni, hogy az `npm view kutetika` megtalálja
 
@@ -58,9 +58,10 @@
 
 - [ ] 9.1 Formai ellenőrzés a segédprogramban (üres kötelező mező, szószám, mellékletek, régi űrlap); ellenőrzés: tesztek szándékosan hibás beadványokkal, minden hibatípust megtalál
 - [ ] 9.2 A `kutetika-biralat` skill angolul: előállításkor a Word-fájlokat, előtte a `kerelem.md`-t, a `dontesek.md`-t nem, a szabályzatot és az űrlapokat kapja, súlyosság szerint rendezett kifogáslistát ad; ellenőrzés: egy 7.2–7.4 ellentmondást tartalmazó mintabeadványon megtalálja az ellentmondást mindkét hellyel
-- [ ] 9.3 Tiszta kontextus: segédágens, ahol van; ahol nincs, az előállítás a formai ellenőrzés után megáll, és új beszélgetést kér a bírálathoz (az 1.1 eredménye szerint); ellenőrzés: a bíráló nem hivatkozik olyanra, ami csak a beszélgetésben hangzott el
-- [ ] 9.4 Indítás előállításkor mindig, és kérésre a munkaanyagon; ellenőrzés: mindkét úton lefut, és a kérésre futtatott változat nem ad „mehet”-et
-- [ ] 9.5 „Mehet" állapot a `keab/.ellenorzes.json` alapján, érvénytelenítés a munkaanyag vagy egy Word-fájl módosításakor, felülbírálás figyelmeztetéssel és rögzítéssel; ellenőrzés: tesztek (nincs kifogás, módosítás utána, nem volt előállítás, felülbírált kifogás)
+- [ ] 9.3 A bíráló kiválasztása a segédprogramban (másik asszisztens a gépen, ha a kutató engedélyezte; különben subagent; különben új beszélgetés), az 1.1 eredménye szerint; ellenőrzés: tesztek mindhárom esetre, és mintaprojekten a bíráló nem hivatkozik olyanra, ami csak a beszélgetésben hangzott el
+- [ ] 9.4 Engedélykérés a másik asszisztens első használata előtt (második AI-szolgáltató, mi jut el hozzá), a válasz rögzítése a `dontesek.md`-ben és a `keab/.ellenorzes.json`-ban, ismételt kérdezés nélkül; ellenőrzés: engedélyezett és elutasított eset a mintaprojekten, a második előállításnál nincs újabb kérdés
+- [ ] 9.5 Indítás előállításkor mindig, és kérésre a munkaanyagon; ellenőrzés: mindkét úton lefut, és a kérésre futtatott változat nem ad „mehet”-et
+- [ ] 9.6 „Mehet" állapot a `keab/.ellenorzes.json` alapján, érvénytelenítés a munkaanyag vagy egy Word-fájl módosításakor, felülbírálás figyelmeztetéssel és rögzítéssel; ellenőrzés: tesztek (nincs kifogás, módosítás utána, nem volt előállítás, felülbírált kifogás)
 
 ## 10. Kipróbálás és kiadás
 

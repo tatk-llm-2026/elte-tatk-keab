@@ -11,6 +11,37 @@ Az ellenőrzést SHALL egy olyan bíráló végezze, amely nem látta a kérelem
 - **WHEN** egy űrlapmező válasza csak a beszélgetésben elhangzottakkal együtt érthető
 - **THEN** a bíráló kifogásolja, mert a papírból nem derül ki
 
+### Requirement: Ki a bíráló
+Az eszköz SHALL az alábbi sorrendben válassza ki a bírálót:
+1. ha a kutató gépén van egy másik támogatott asszisztens (pl. Claude Code-ból Codex, Codexből Claude Code), és a kutató engedélyezte a használatát, akkor a másik asszisztens bírál;
+2. különben a saját asszisztens subagentje, ha az asszisztens tud subagentet indítani;
+3. különben az eszköz új beszélgetés nyitását kéri a bírálathoz.
+
+A bírálat eredménye SHALL rögzítse, melyik asszisztens és milyen módon bírált.
+
+#### Scenario: Másik asszisztens bírál
+- **WHEN** a kutató Claude Code-ban dolgozik, a gépén a Codex is telepítve van, és engedélyezte a használatát
+- **THEN** a bírálatot a Codex végzi, és a `bead.md` rögzíti, hogy a Codex bírált
+
+#### Scenario: Nincs másik asszisztens
+- **WHEN** a gépen csak egy támogatott asszisztens van, és az tud subagentet indítani
+- **THEN** a bírálatot a saját asszisztens subagentje végzi
+
+#### Scenario: Se másik asszisztens, se subagent
+- **WHEN** a gépen csak egy asszisztens van, és az nem tud subagentet indítani
+- **THEN** az előállítás a Word-fájlok és a formai ellenőrzés után megáll, és az eszköz közérthetően kéri, hogy a kutató új beszélgetésben kérje a bírálatot
+
+### Requirement: Engedély a másik AI-szolgáltatóhoz
+Mielőtt a beadvány először egy másik asszisztenshez kerülne, az eszköz SHALL megkérdezze a kutatót, és SHALL közölje, hogy a beadvány (benne a kutatók neve, elérhetősége és a kutatás leírása) egy második AI-szolgáltatóhoz is eljut. A választ SHALL rögzítse a `dontesek.md`-ben, és a projektben a későbbi bírálatoknál SHALL ne kérdezzen újra, amíg a kutató meg nem változtatja.
+
+#### Scenario: A kutató nem engedélyezi
+- **WHEN** a gépen van másik asszisztens, de a kutató nem engedi a használatát
+- **THEN** a bírálatot a saját asszisztens subagentje végzi (vagy új beszélgetés), és a döntés a `dontesek.md`-be kerül
+
+#### Scenario: Második bírálat
+- **WHEN** a kutató korábban engedélyezte a másik asszisztenst, és újra előállítást kér
+- **THEN** az eszköz nem kérdez újra, a másik asszisztens bírál
+
 ### Requirement: Mit keres a bíráló
 Az ellenőrzés SHALL legalább ezeket vizsgálja: ellentmondás az űrlapok között (különösen a 7.2 és a 7.4 között), hiányzó melléklet, szabályzatnak nem megfelelő kutatásvezető, üres kötelező mező, szószámkorlát túllépése, olyan adatkezelés, amely nem szerepel az adatkezelési tervben. Ha a beadvány a kar oldalán elérhetőnél régebbi kari dokumentummal készül, SHALL ezt is kifogásként jelezze.
 

@@ -3,7 +3,7 @@
 A repóban még nincs kód. A motiváció a `proposal.md`-ben, a követelmények a `specs/` mappában vannak. A tervet ezek a korlátok alakítják:
 
 - A felhasználó kutató, nem fejlesztő. A telepítés legyen egy parancs, a használat beszélgetés.
-- Három asszisztenst kell támogatni (Claude Code, Codex, Copilot), amelyek hasonló, de nem azonos módon kezelik a skilleket és a segédágenseket.
+- Három asszisztenst kell támogatni (Claude Code, Codex, Copilot), amelyek hasonló, de nem azonos módon kezelik a skilleket és a subagenteket.
 - A kar űrlapjai táblázatos Word-dokumentumok, verziószám nélkül. A kar oldala jelenleg dokumentum-azonosítós letöltési linkeket ad (pl. `tatk.elte.hu/dstore/document/2231/...`).
 - A kitöltött űrlapnak Wordben megnyitva a kari űrlappal azonos szerkezetűnek kell lennie.
 
@@ -67,8 +67,14 @@ A segédprogram letölti a kar oldalát, megkeresi a hat űrlap és a két szab�
 - **Formai réteg (segédprogram):** üres kötelező mezők, szószámkorlát, a mellékletek megléte, régi űrlap. Ez gépi, és mindig ugyanazt adja.
 - **Tartalmi réteg (bíráló skill):** ellentmondások az űrlapok között, a szabályzatnak nem megfelelő tartalom, csak a beszélgetésből érthető válaszok.
 - Előállításkor a bíráló a kész Word-fájlokat olvassa, mert a bizottság is azt kapja. Előállítás előtti kérésnél a `kerelem.md`-t; ilyenkor „mehet" nem születik.
-- A bíráló tiszta kontextusban fut: ahol az asszisztens támogat segédágenst, ott segédágensként, amely csak a beadvány anyagát, a szabályzatot és az űrlapokat kapja meg. A `dontesek.md`-t szándékosan nem kapja meg, mert az a beszélgetés gondolatmenetét tartalmazza.
-- Ahol nincs segédágens, az előállítás a Word-fájlok és a formai ellenőrzés után megáll, és az eszköz új beszélgetés indítását kéri a bírálathoz. „Mehet" csak a bírálat lefutása után lehet; ezt a kutató közérthetően megtudja.
+- A bíráló mindig tiszta kontextusban fut, és csak a beadvány anyagát, a szabályzatot és az űrlapokat kapja meg. A `dontesek.md`-t szándékosan nem kapja meg, mert az a beszélgetés gondolatmenetét tartalmazza.
+- **A bíráló kiválasztása, preferencia-sorrendben:**
+  1. **Másik asszisztens** a gépen, parancssoron nem interaktív módban indítva (Claude Code-ból a Codex, Codexből vagy Copilotból a Claude Code). A segédprogram megnézi, melyik asszisztens parancssori programja érhető el, és a kutató engedélye után ezt hívja meg a bíráló utasításával és a fájlokkal.
+  2. **Subagent** a saját asszisztensben, ha támogatja.
+  3. **Új beszélgetés:** az előállítás a Word-fájlok és a formai ellenőrzés után megáll, és az eszköz új beszélgetés indítását kéri a bírálathoz.
+- *Miért a másik asszisztens az első:* egy másik gyártó modelljének más a vakfoltja, így az ellenséges bírálat függetlenebb. Ugyanez a minta ismert más skillcsomagokból is (pl. a gstack a Claude Code-ból Codexet hív második véleményért).
+- **Engedély:** a másik asszisztens használata a beadványt egy második AI-szolgáltatóhoz juttatja. Az eszköz ezért először megkérdezi a kutatót, a választ a `dontesek.md`-be írja, és a segédprogram a `keab/.ellenorzes.json`-ban is tárolja, hogy ne kérdezzen újra.
+- „Mehet" csak a bírálat lefutása után lehet. A bírálat eredménye rögzíti, melyik asszisztens és milyen módon bírált.
 - *Alternatíva:* a bírálat ugyanabban a beszélgetésben. Elvetve, mert így a bíráló a kutató fejével olvasna.
 
 ### 8. „Mehet": ujjlenyomat a beadandó fájlokról
@@ -83,7 +89,7 @@ Kitalált mintaprojektek készülnek a jellemző esetekre: iskolai kutatás kisk
 ## Risks / Trade-offs
 
 - [A kutató gépén nincs Node] → A README és a telepítési üzenet lépésről lépésre leírja a telepítést, és a hibaüzenet közérthető.
-- [Az asszisztensek eltérően kezelik a skilleket és a segédágenseket] → Az első feladatok között szerepel mindhárom ellenőrzése; ahol nincs segédágens, ott az új beszélgetéses megoldás él.
+- [Az asszisztensek eltérően kezelik a skilleket és a subagenteket] → Az első feladatok között szerepel mindhárom ellenőrzése; ahol nincs subagent, ott az új beszélgetéses megoldás él.
 - [A kar átalakítja az oldalát, és a linkek nem találhatók] → A figyelés ezt „nem sikerült ellenőrizni"-ként jelzi a kutatónak, a heti karbantartói figyelés pedig hibajegyet nyit.
 - [A kar módosít, és sokáig nincs új verzió] → A kutató figyelmeztetést kap, a bíráló kifogásként jelzi; a munka folytatható.
 - [A csak formázási változás rejtve marad] → Elfogadott kompromisszum (lásd 5. döntés).
