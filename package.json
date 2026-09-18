@@ -1,6 +1,6 @@
 {
   "name": "@arpadtamasi/elte-tatk-keab",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ELTE TáTK kutatásetikai engedélykérelem (KEAB) a kutató saját AI-asszisztensével",
   "type": "module",
   "bin": {
@@ -25,7 +25,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tatk-llm-2026/kutetika.git"
+    "url": "git+https://github.com/tatk-llm-2026/elte-tatk-keab.git"
+  },
+  "homepage": "https://tatk-llm-2026.github.io/elte-tatk-keab/",
+  "bugs": {
+    "url": "https://github.com/tatk-llm-2026/elte-tatk-keab/issues"
   },
   "dependencies": {
     "@xmldom/xmldom": "^0.9.12",

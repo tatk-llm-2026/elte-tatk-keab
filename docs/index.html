@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kutetika – KEAB-kérelem az AI-asszisztensével</title>
+<meta name="description" content="Telepíthető eszköz ELTE TáTK-s kutatóknak: a saját AI-asszisztensével beszélgetve készíti el a KEAB kutatásetikai engedélykérelmet a kar hivatalos űrlapjain.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%235b3fa0' stroke-width='3'/><path d='M10 16.5l4 4 8-9' fill='none' stroke='%235b3fa0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Spectral:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --tinta: #16233b;      /* szöveg */
+    --papir: #fbfcfe;      /* háttér */
+    --vonal: #9aa7bd;      /* űrlap vonalai */
+    --halvany: #e8edf5;    /* cellák háttere */
+    --pecset: #5b3fa0;     /* lila pecséttinta */
+    --kitoltott: #efeaf9;  /* beírt válasz háttere */
+    --szurke: #56627a;
+    --gutter: clamp(16px, 4vw, 48px);
+    --display: 'Spectral', Georgia, serif;
+    --torzs: 'Public Sans', system-ui, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--papir); color: var(--tinta);
+    font: 400 17px/1.6 var(--torzs);
+  }
+  a { color: var(--pecset); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 3px solid var(--pecset); outline-offset: 3px; border-radius: 2px; }
+  .keret { max-width: 1120px; margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Fejléc */
+  .fejlec { border-bottom: 1px solid var(--vonal); }
+  .fejlec .keret { display: flex; gap: 16px; justify-content: space-between; align-items: baseline; flex-wrap: wrap; padding-top: 18px; padding-bottom: 14px; }
+  .nev { font: 700 20px/1 var(--display); letter-spacing: .01em; }
+  .nev span { font: 400 13px var(--mono); color: var(--szurke); margin-left: 10px; letter-spacing: 0; }
+  .nemhivatalos { font-size: 13px; color: var(--szurke); }
+
+  /* Nyitó rész */
+  .nyito { padding: clamp(40px, 7vw, 88px) 0 clamp(48px, 7vw, 96px); }
+  .nyito .keret { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  h1 {
+    font: 500 clamp(36px, 4.6vw, 56px)/1.06 var(--display); letter-spacing: -.015em; margin: 0 0 22px;
+  }
+  h1 em { font-style: italic; color: var(--pecset); }
+  .egyben { white-space: nowrap; }
+  .lead { font-size: 19px; max-width: 34em; margin: 0 0 28px; }
+  .parancs {
+    display: flex; align-items: stretch; border: 1.5px solid var(--tinta); background: #fff; max-width: 100%;
+  }
+  .parancs code { flex: 1; min-width: 0; padding: 14px 16px; font: 500 15px/1.45 var(--mono); overflow-wrap: anywhere; }
+  .parancs button {
+    border: 0; border-left: 1.5px solid var(--tinta); background: var(--tinta); color: var(--papir);
+    font: 600 14px var(--torzs); padding: 0 18px; cursor: pointer;
+  }
+  .parancs button:hover { background: var(--pecset); }
+  .apro { font-size: 14px; color: var(--szurke); margin: 10px 0 0; }
+
+  /* Az űrlapdarab */
+  .urlap { position: relative; margin: 0 0 40px; }
+  .urlap-cim { font: 500 12px var(--mono); color: var(--szurke); margin: 0 0 8px; letter-spacing: .02em; }
+  table.kari { width: 100%; border-collapse: collapse; background: #fff; font-size: 15px; line-height: 1.4; }
+  table.kari td { border: 1px solid var(--vonal); padding: 10px 12px; vertical-align: top; }
+  table.kari td.kerdes { width: 46%; background: var(--halvany); }
+  table.kari td.valasz { background: var(--kitoltott); font-family: var(--torzs); }
+  table.kari td.bizottsagi { background: #fff; color: var(--szurke); font: 400 14px var(--mono); }
+  .kerdes small { display: block; color: var(--szurke); font-size: 12.5px; }
+  .gepel::after { content: ''; display: inline-block; width: 1px; height: 1.05em; background: var(--tinta); margin-left: 1px; vertical-align: -2px; animation: villog 1s steps(1) infinite; }
+  .kesz::after { display: none; }
+  @keyframes villog { 50% { opacity: 0; } }
+  .pecset {
+    position: absolute; right: -6px; bottom: -64px; transform: rotate(-9deg);
+    border: 3px solid var(--pecset); color: var(--pecset); border-radius: 10px; padding: 8px 16px 6px;
+    font: 700 30px/1 var(--display); letter-spacing: .08em; text-transform: uppercase; background: rgba(251,252,254,.82);
+    box-shadow: inset 0 0 0 2px var(--papir), inset 0 0 0 4px var(--pecset);
+    opacity: 0;
+  }
+  .pecset small { display: block; font: 500 10.5px/1.3 var(--mono); letter-spacing: .02em; text-transform: none; margin-top: 5px; }
+  .pecset.lent { animation: nyom .35s cubic-bezier(.2,1.6,.4,1) forwards; }
+  @keyframes nyom { from { opacity: 0; transform: rotate(-9deg) scale(1.5); } to { opacity: .94; transform: rotate(-9deg) scale(1); } }
+
+  /* Szakaszok */
+  section.resz { border-top: 1px solid var(--vonal); padding: clamp(40px, 6vw, 72px) 0; }
+  .resz .keret { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); }
+  h2 { font: 500 28px/1.15 var(--display); margin: 0; letter-spacing: -.005em; }
+  .resz p { margin: 0 0 14px; max-width: 40em; }
+
+  /* A beszélgetés menete */
+  ol.menet { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; counter-reset: lepes; }
+  ol.menet li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 0 16px; counter-increment: lepes; }
+  ol.menet li::before {
+    content: counter(lepes); grid-row: span 2; width: 34px; height: 34px; border: 1.5px solid var(--tinta); border-radius: 50%;
+    display: grid; place-items: center; font: 500 15px var(--mono);
+  }
+  .mondat { font: 500 italic 21px/1.3 var(--display); margin: 3px 0 4px; }
+  .mondat::before { content: '› '; font-style: normal; color: var(--pecset); }
+  ol.menet p { margin: 0; color: var(--tinta); }
+
+  pre.fa { margin: 0; background: #fff; border: 1px solid var(--vonal); padding: 18px 20px; font: 400 14px/1.75 var(--mono); overflow-x: auto; }
+  .fa b { font-weight: 500; }
+  .fa i { font-style: normal; color: var(--szurke); }
+
+  ul.nem { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  ul.nem li { border: 1px solid var(--vonal); background: #fff; padding: 14px 16px; }
+  ul.nem strong { display: block; font-weight: 700; }
+
+  .adat { background: var(--kitoltott); border-left: 4px solid var(--pecset); padding: 18px 20px; max-width: 44em; }
+  .adat p:last-child { margin-bottom: 0; }
+
+  ol.telepit { margin: 0 0 14px; padding-left: 22px; max-width: 42em; }
+  ol.telepit li { margin-bottom: 10px; padding-left: 4px; }
+  code.be { font: 500 14.5px var(--mono); background: var(--halvany); padding: 1px 6px; }
+
+  .labresz { border-top: 1px solid var(--vonal); padding: 28px 0 40px; font-size: 14px; color: var(--szurke); }
+  .labresz p { margin: 0 0 6px; max-width: 60em; }
+
+  @media (max-width: 860px) {
+    .nyito .keret, .resz .keret { grid-template-columns: minmax(0, 1fr); }
+    .pecset { right: 4px; bottom: -58px; font-size: 24px; }
+    .urlap { margin-bottom: 64px; }
+  }
+  @media (max-width: 480px) {
+    body { font-size: 16px; }
+    .parancs { flex-direction: column; }
+    .parancs button { border-left: 0; border-top: 1.5px solid var(--tinta); padding: 12px; }
+    table.kari { font-size: 14px; }
+    table.kari td { padding: 8px 9px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .gepel::after { animation: none; display: none; }
+    .pecset { opacity: .94; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<header class="fejlec">
+  <div class="keret">
+    <div class="nev">kutetika<span>@arpadtamasi/elte-tatk-keab</span></div>
+    <div class="nemhivatalos">Nem hivatalos kari eszköz. A kérelmet a KEAB bírálja el, nem ez a program.</div>
+  </div>
+</header>
+
+<main>
+  <div class="nyito">
+    <div class="keret">
+      <div>
+        <h1><span class="egyben">A KEAB&#8209;kérelem,</span> <em>beszélgetve</em> kitöltve.</h1>
+        <p class="lead">ELTE TáTK-s kutatóknak. A saját AI-asszisztense (Claude Code, Codex vagy GitHub Copilot) eldönti Önnel, kell-e kutatásetikai engedély. Kikérdezi, ami a projekt leírásából nem derül ki, és kitölti a kar hivatalos Word-űrlapjait: 7.1, 7.2, 7.4.</p>
+        <div class="parancs">
+          <code id="parancs">npx @arpadtamasi/elte-tatk-keab@latest init</code>
+          <button type="button" id="masol">Másolás</button>
+        </div>
+        <p class="apro">A kutatás projektmappájában futtassa. Node.js 20 vagy újabb kell hozzá.</p>
+      </div>
+
+      <figure class="urlap" aria-label="Részlet a kitöltött 7.2 Kutatásintegritási űrlapból">
+        <p class="urlap-cim">7.2 Kutatásintegritási űrlap · részlet</p>
+        <table class="kari">
+          <tr><td class="kerdes">Kutatási azonosító<small>(az Etikai Bizottság tölti ki!)</small></td><td class="bizottsagi">ELTE/TÁTK/KEAB/</td></tr>
+          <tr><td class="kerdes">A kérelmező (kutatásvezető) neve:</td><td class="valasz"><span data-szoveg="Dr. Minta Anna">Dr. Minta Anna</span></td></tr>
+          <tr><td class="kerdes">A kutatás címe:</td><td class="valasz"><span data-szoveg="Iskolai jóllét hetedikesek körében">Iskolai jóllét hetedikesek körében</span></td></tr>
+          <tr><td class="kerdes">A kutatás résztvevőinek életkora:</td><td class="valasz"><span data-szoveg="12–14 év; szülői hozzájárulással, igazgatói engedéllyel">12–14 év; szülői hozzájárulással, igazgatói engedéllyel</span></td></tr>
+        </table>
+        <div class="pecset" id="pecset" aria-hidden="true">Mehet<small>formailag rendben, nem engedély</small></div>
+      </figure>
+    </div>
+  </div>
+
+  <section class="resz" aria-labelledby="menet-cim">
+    <div class="keret">
+      <h2 id="menet-cim">Három mondat, ebben a sorrendben</h2>
+      <ol class="menet">
+        <li>
+          <p class="mondat">kell nekem etikai engedély?</p>
+          <p>Elolvassa a projekt leírását és a kari szabályzatot, és csak azt kérdezi meg, ami ezekből nem derül ki. Az eredmény: kell, nem kell vagy határeset, mindig a szabályzat pontjára hivatkozva. Azt is ellenőrzi, lehet-e a megnevezett személy a kutatásvezető.</p>
+        </li>
+        <li>
+          <p class="mondat">csináljuk meg a kérelmet</p>
+          <p>Megkérdezi, magyarul vagy angolul készüljön a beadvány. Utána kikérdezi azt is, amire a kutatók többnyire nem gondolnak: a kiskorú résztvevőket, az intézményvezetői hozzájárulást és az interjúk AI-alapú leiratkészítését. A válaszok egy olvasható munkaanyagba kerülnek, ezt kézzel is javíthatja.</p>
+        </li>
+        <li>
+          <p class="mondat">nézd át, mielőtt elküldöm</p>
+          <p>Egy független bíráló a bizottság szemével olvassa el a beadványt. Nem látta a beszélgetést, csak az űrlapokat és a szabályzatot, és azt keresi, miből lehetne hiánypótlás. „Mehet” csak akkor jár, ha az átnézés után semmi nem változott.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="resz" aria-labelledby="mappa-cim">
+    <div class="keret">
+      <h2 id="mappa-cim">Mi kerül a projektbe</h2>
+      <div>
+        <p>A projektben egyetlen új mappa jelenik meg, a <code class="be">keab/</code>. A Word-fájlok csak akkor készülnek el, amikor kéri, a munkaanyagból.</p>
+<pre class="fa"><b>keab/</b>
+  kerelem.md                         <i>munkaanyag: minden válasz itt van</i>
+  dontesek.md                        <i>mit javasolt a gép, mit döntött Ön</i>
+  7.2 Kutatásintegritási űrlap (VEZETEKNEV_DATUM).docx
+  7.4 Adatkezelési terv (VEZETEKNEV_DATUM).docx
+  7.1 Kutatásintegritási nyilatkozat (VEZETEKNEV_DATUM).docx
+  Tájékoztató és hozzájáruló nyilatkozat (VEZETEKNEV_DATUM).docx
+  bead.md                            <i>kinek, mit, milyen formában</i></pre>
+        <p class="apro">A kar űrlapjai és szabályzata magyarul és angolul benne vannak az eszközben. Használat közben az eszköz összeveti őket a <a href="https://tatk.elte.hu/bizottsagok/kutetika">kar oldalával</a>, és szól, ha a kar módosított valamit.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="resz" aria-labelledby="adat-cim">
+    <div class="keret">
+      <h2 id="adat-cim">A kutatási adatokhoz nem nyúl</h2>
+      <div class="adat">
+        <p>A projekt leírását és a kutatási eszközöket (kérdőív, interjúvázlat, tájékoztató) szabadon olvassa. A nyers adatot, vagyis a <code class="be">data/</code> mappát, a válaszokat, a felvételeket és a leiratokat, alapból nem.</p>
+        <p>Ha a kérelemhez mégis kell belőle valami, előbb megmondja, melyik fájlt nézné meg és miért, és hogy a tartalma az AI-szolgáltatóhoz kerül. Csak az Ön kifejezett engedélyével olvassa el, csak annyit, amennyi kell, és az engedély bekerül a <code class="be">dontesek.md</code>-be.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="resz" aria-labelledby="nem-cim">
+    <div class="keret">
+      <h2 id="nem-cim">Amit nem csinál</h2>
+      <ul class="nem">
+        <li><strong>Nem küldi el a kérelmet.</strong>A kutatásvezető küldi el, digitális aláírással, a saját címéről.</li>
+        <li><strong>Nem ad jogi tanácsot.</strong>Felsorolja a lehetőségeket, és megmondja, kihez forduljon.</li>
+        <li><strong>Nem garantálja az engedélyt.</strong>A formát ellenőrzi, az etikai döntés a bizottságé.</li>
+        <li><strong>Nem dönt Ön helyett.</strong>Minden döntés az Öné, és bekerül a döntésnaplóba.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="resz" aria-labelledby="telepit-cim">
+    <div class="keret">
+      <h2 id="telepit-cim">Telepítés</h2>
+      <div>
+        <ol class="telepit">
+          <li>Legyen a gépén <a href="https://nodejs.org/">Node.js</a> (20-as vagy újabb), és a három asszisztens közül legalább egy: Claude Code, Codex vagy GitHub Copilot.</li>
+          <li>A kutatás projektmappájában futtassa: <code class="be">npx @arpadtamasi/elte-tatk-keab@latest init</code></li>
+          <li>Nyissa meg a mappát az asszisztensében, és írja be: <em>kell nekem etikai engedély?</em></li>
+        </ol>
+        <p class="apro">Előzetes változat (0.1). Hibát vagy javaslatot a <a href="https://github.com/tatk-llm-2026/elte-tatk-keab/issues">GitHubon</a> jelezhet.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="labresz">
+  <div class="keret">
+    <p>A kutetika nem hivatalos eszköz, és nem az ELTE TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságának terméke. A hatályos űrlapok és a szabályzat a <a href="https://tatk.elte.hu/bizottsagok/kutetika">kar oldalán</a> érhetők el.</p>
+    <p>Forráskód: <a href="https://github.com/tatk-llm-2026/elte-tatk-keab">github.com/tatk-llm-2026/elte-tatk-keab</a> · MIT-licenc · A 7.5-ös vizsgálati eljárással nem foglalkozik.</p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var gomb = document.getElementById('masol');
+    gomb.addEventListener('click', function () {
+      var szoveg = document.getElementById('parancs').textContent;
+      var kesz = function () { gomb.textContent = 'Kimásolva'; setTimeout(function () { gomb.textContent = 'Másolás'; }, 1800); };
+      if (navigator.clipboard) navigator.clipboard.writeText(szoveg).then(kesz, function () {});
+    });
+
+    var pecset = document.getElementById('pecset');
+    var csendes = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (csendes) return;
+    var mezok = Array.prototype.slice.call(document.querySelectorAll('[data-szoveg]'));
+    mezok.forEach(function (m) { m.textContent = ''; });
+    var i = 0;
+    function kovetkezo() {
+      if (i >= mezok.length) { setTimeout(function () { pecset.classList.add('lent'); }, 350); return; }
+      var m = mezok[i], teljes = m.getAttribute('data-szoveg'), n = 0;
+      m.classList.add('gepel');
+      (function betu() {
+        m.textContent = teljes.slice(0, ++n);
+        if (n < teljes.length) setTimeout(betu, 24 + Math.random() * 30);
+        else { m.classList.add('kesz'); i++; setTimeout(kovetkezo, 260); }
+      })();
+    }
+    setTimeout(kovetkezo, 500);
+  })();
+</script>
+</body>
+</html>
