@@ -175,3 +175,24 @@ test('hónap elseje: 1-jén', () => {
   const { dom } = docxMegnyit(kitolt(urlap('7.4-hu'), mezoterkepBetolt('7.4', 'hu'), VALASZOK, { datum: new Date(2026, 9, 1) }));
   assert.match(szoveg(dom), /2026\. október 1-jén hatályos/);
 });
+
+test('7.2: a sablon eltérő betűs üres celláiba írt válasz is a dokumentum betűjét kapja', () => {
+  const terkep = mezoterkepBetolt('7.2', 'hu');
+  const valaszok = { ...VALASZOK, '7.2': Object.fromEntries(terkep.mezok.filter((m) => m.tipus === 'cella').map((m) => [m.azonosito, `Válasz ${m.azonosito}`])) };
+  const { dom } = docxMegnyit(kitolt(urlap('7.2-hu'), terkep, valaszok, { datum: DATUM }));
+  for (const m of terkep.mezok.filter((m) => m.tipus === 'cella')) {
+    const tc = cella(dom, m.hely);
+    for (const f of Array.from(tc.getElementsByTagNameNS(W, 'rFonts'))) {
+      assert.notEqual(f.getAttributeNS(W, 'ascii'), 'Times New Roman', `7.2/[${m.azonosito}]`);
+    }
+    assert.equal(tc.getElementsByTagNameNS(W, 'ind').length, 0, `7.2/[${m.azonosito}]`);
+  }
+});
+
+test('névelővel kezdődő cím idézőjelbe kerül, a névelő igazodik', () => {
+  const valaszok = { ...VALASZOK, '7.2': { ...VALASZOK['7.2'], 6: 'A magyarországi görögök levéltára' } };
+  const t74 = szoveg(docxMegnyit(kitolt(urlap('7.4-hu'), mezoterkepBetolt('7.4', 'hu'), valaszok, { datum: DATUM })).dom);
+  assert.match(t74, /^az „A magyarországi görögök levéltára”$/m);
+  const t71 = szoveg(docxMegnyit(kitolt(urlap('7.1-hu'), mezoterkepBetolt('7.1', 'hu'), valaszok, { datum: DATUM })).dom);
+  assert.match(t71, /^Az „A magyarországi görögök levéltára” című kutatás/m);
+});

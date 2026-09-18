@@ -138,10 +138,38 @@ export function valaszBekezdesek(valasz) {
     .filter(Boolean);
 }
 
+// A dokumentumban leggyakoribb betűtípus (a w:rFonts ascii értéke a szövegfutásokban).
+function fobetu(dom) {
+  const db = new Map();
+  for (const f of Array.from(dom.getElementsByTagNameNS(W, 'rFonts'))) {
+    if (f.parentNode?.parentNode?.localName !== 'r') continue;
+    const nev = f.getAttributeNS(W, 'ascii');
+    if (nev) db.set(nev, (db.get(nev) ?? 0) + 1);
+  }
+  return [...db].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+}
+
+// Ha a kari űrlap üres cellájában a dokumentumétól eltérő betűtípus maradt (pl. egy
+// másik programból bemásolt cella), a válasz a dokumentum alapformázását kapja:
+// így minden válasz egyforma betűvel és mérettel jelenik meg.
+function idegenFormatTorol(p, betu) {
+  const rPrk = [...gyerekek(p, 'r').map((r) => gyerekek(r, 'rPr')[0]), gyerekek(gyerekek(p, 'pPr')[0] ?? p, 'rPr')[0]].filter(Boolean);
+  const idegen = rPrk.some((rPr) => gyerekek(rPr, 'rFonts').some((f) => {
+    const nev = f.getAttributeNS(W, 'ascii');
+    return nev && betu && nev !== betu;
+  }));
+  if (!idegen) return;
+  for (const rPr of rPrk) for (const nev of ['rFonts', 'sz', 'szCs', 'lang']) for (const g of gyerekek(rPr, nev)) rPr.removeChild(g);
+  const pPr = gyerekek(p, 'pPr')[0];
+  if (pPr) for (const g of gyerekek(pPr, 'ind')) pPr.removeChild(g);
+}
+
 function cellaKitolt(dom, tc, valasz, { hozzafuz = false } = {}) {
   const ps = gyerekek(tc, 'p');
   const minta = hozzafuz ? ps.at(-1) : ps[0];
+  const betu = fobetu(dom);
   const ujak = valaszBekezdesek(valasz).map((b) => ujBekezdes(dom, minta, b));
+  if (!hozzafuz) for (const p of ujak) idegenFormatTorol(p, betu);
   if (!ujak.length) return;
   if (!hozzafuz) for (const p of ps) tc.removeChild(p);
   for (const p of ujak) tc.appendChild(p);
@@ -191,12 +219,16 @@ function bekezdesbenCserel(dom, p, minta, ertek, nyelv) {
     const teljes = reszek.join('');
     let kezdet = teljes.indexOf(minta, honnan);
     if (kezdet < 0) return csere;
+    let beirt = ertek;
     if (nyelv === 'hu') {
+      // Ha a beírt cím maga is névelővel kezdődik („A magyarországi…”), idézőjelbe tesszük:
+      // „az »A magyarországi…« című” helyett „az „A magyarországi…” című”.
+      if (/(^|\s)[Aa]z? $/.test(teljes.slice(0, kezdet)) && /^Az? /.test(ertek)) beirt = `„${ertek}”`;
       nevelotIgazit(ts, kezdet, ertek);
       reszek.splice(0, reszek.length, ...ts.map((t) => t.textContent));
       kezdet = reszek.join('').indexOf(minta, honnan);
     }
-    honnan = kezdet + ertek.replace(/\n/g, '').length;
+    honnan = kezdet + beirt.replace(/\n/g, '').length;
     const veg = kezdet + minta.length;
     let pozicio = 0;
     let elso = null;
@@ -217,7 +249,7 @@ function bekezdesbenCserel(dom, p, minta, ertek, nyelv) {
     elso.t.textContent = elotte;
     elso.t.setAttributeNS(XML_NS, 'xml:space', 'preserve');
     const elsoFutas = elso.t.parentNode;
-    const ujFutas = futas(dom, ertek, gyerekek(elsoFutas, 'rPr')[0] ?? null);
+    const ujFutas = futas(dom, beirt, gyerekek(elsoFutas, 'rPr')[0] ?? null);
     elsoFutas.parentNode.insertBefore(ujFutas, elsoFutas.nextSibling);
     if (utana) {
       if (utolso === elso) {
