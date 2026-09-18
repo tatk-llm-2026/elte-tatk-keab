@@ -2,7 +2,7 @@
 
 - [ ] 1.1 Ellenőrizni Claude Code-ban, Codexben és Copilotban, hogy a projektbe tett skillek betöltődnek-e, melyik támogat tiszta kontextusú subagentet, és melyik asszisztensből melyik másik indítható parancssoron nem interaktív módban; az eredményt a `design.md` 3. és 7. döntéséhez feljegyezni
 - [x] 1.2 Létrehozni a csomag vázát (`package.json`, parancssori belépési pont, tesztkeret), és ellenőrizni, hogy a `npx kutetika --help` helyben lefut
-- [ ] 1.3 Lefoglalni a `kutetika` nevet az npm-en egy üres előzetes kiadással, és ellenőrizni, hogy az `npm view kutetika` megtalálja
+- [x] 1.3 Az npm-név kiválasztása: `@arpadtamasi/elte-tatk-keab` (szabad, 2026-09-18); a korábban lefoglalt `kutetika` névről a kiadáskor kell dönteni (elavultnak jelölés vagy meghagyás)
 
 ## 2. Kari dokumentumok
 
@@ -68,4 +68,4 @@
 
 - [ ] 10.1 Mintaprojektek végigvitele mindhárom asszisztensben mindhárom képességgel; ellenőrzés: minden mintaprojekten elkészül a beadvány, és a „mehet" állapot elérhető
 - [x] 10.2 A README javítása a döntésekhez (a dokumentumok a csomagban vannak, helyi munkaanyag és Word-előállítás, verziózás, ellenséges ellenőrzés, angol beadvány, telepítési parancs); ellenőrzés: a README nem mond ellent a specifikációknak
-- [ ] 10.3 Kiadás az npm-en 1.0.0 verzióval; ellenőrzés: egy tiszta gépen a `npx kutetika@latest init` után a „kell nekem etikai engedély?" kérdésre a kutetika válaszol
+- [ ] 10.3 Kiadás az npm-en 1.0.0 verzióval; ellenőrzés: egy tiszta gépen a `npx @arpadtamasi/elte-tatk-keab@latest init` után a „kell nekem etikai engedély?" kérdésre a kutetika válaszol

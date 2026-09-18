@@ -22,7 +22,7 @@ A repóban még nincs kód. A motiváció a `proposal.md`-ben, a követelmények
 ## Decisions
 
 ### 1. Terjesztés: npm-csomag parancssori eszközzel
-A `kutetika` npm-csomag (a név szabad), `npx kutetika@latest init` indítással. Az eszköz tartalmaz egy kis parancssori programot is, amelyet a skillek hívnak (kitöltés, formai ellenőrzés, állapot, frissítésfigyelés).
+Az eszköz neve kutetika; az npm-csomag neve `@arpadtamasi/elte-tatk-keab` (a kari név alapján könnyebb rátalálni, a névtér megmutatja, kié), `npx @arpadtamasi/elte-tatk-keab@latest init` indítással. A korábban lefoglalt `kutetika` npm-név nem használt. Az eszköz tartalmaz egy kis parancssori programot is, amelyet a skillek hívnak (kitöltés, formai ellenőrzés, állapot, frissítésfigyelés).
 - *Miért:* a három asszisztens parancssori változata is npm-mel települ, így a Node többnyire már megvan a kutató gépén. A parancssori segédprogram egy helyen, tesztelhetően tartja a determinisztikus részeket.
 - *Alternatívák:* Python-csomag (a kutatók egy részének van Pythonja, de a telepítése gyakrabban akad el); csak skillek segédprogram nélkül (a Word-kitöltés és az ujjlenyomat akkor az asszisztensen múlna, és asszisztensenként eltérően működne).
 

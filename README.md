@@ -35,7 +35,7 @@ A kutató letölti az űrlapokat a [kar oldaláról](https://tatk.elte.hu/bizott
 **Ki használja, és hogyan:** felhasználói eszköz. A kutató a saját gépén dolgozik:
 
 ```text
-> npx kutetika@latest init              # skillek + űrlapok + szabályzat a projektbe
+> npx @arpadtamasi/elte-tatk-keab@latest init    # skillek + űrlapok + szabályzat a projektbe
 
 majd az AI-asszisztensben
 

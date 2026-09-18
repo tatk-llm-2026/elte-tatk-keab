@@ -1,10 +1,10 @@
 {
-  "name": "kutetika",
+  "name": "@arpadtamasi/elte-tatk-keab",
   "version": "0.0.0",
   "description": "ELTE TáTK kutatásetikai engedélykérelem (KEAB) a kutató saját AI-asszisztensével",
   "type": "module",
   "bin": {
-    "kutetika": "bin/kutetika.js"
+    "elte-tatk-keab": "bin/kutetika.js"
   },
   "files": [
     "bin",
@@ -20,6 +20,9 @@
     "test": "node --import ./test/beallitas.js --test"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tatk-llm-2026/kutetika.git"

@@ -26,7 +26,7 @@ A TáTK kutatásetikai engedélykérelme (KEAB) nem bonyolult, de a kitöltése 
 
 ## Impact
 
-- Új csomag az npm-en (`kutetika`), parancssori telepítővel.
+- Új csomag az npm-en (`@arpadtamasi/elte-tatk-keab`), parancssori telepítővel.
 - A kutató projektjében új mappák és fájlok: a skillek az asszisztensek helyén, a `keab/` kimeneti mappa, és jelölt bejegyzések az `AGENTS.md`-ben és az azt betöltő `CLAUDE.md`-ben.
 - Külső függőség: a kar oldala (https://tatk.elte.hu/bizottsagok/kutetika), amelyet az eszköz használatkor lekérdez.
 - A README több ponton ellentmond a döntéseknek (pl. „az eszköz nem tartalmazza az űrlapokat"), ezt a változtatás részeként javítani kell.
