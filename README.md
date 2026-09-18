@@ -2,7 +2,7 @@
 
 ## 1. Mi ez?
 
-Egy telepíthető eszköz, amely a kutató saját munkaterületén, a saját AI-asszisztensével (Claude Code, Codex, Copilot) végigvezet a TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságához (KEAB) benyújtandó kutatásetikai engedélykérelmen. Egy paranccsal kerül a projektbe. Utána beszélgetve eldönti, kell-e engedély, kikérdezi, ami a projekt leírásából nem derül ki, és kitölti a kar hivatalos űrlapjait.
+Egy telepíthető eszköz, amely a kutató saját munkaterületén, a saját AI-asszisztensével (Claude Code, Codex, Copilot) végigvezet a TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságához (KEAB) benyújtandó kutatásetikai engedélykérelmen. Egy paranccsal kerül a projektbe. Utána beszélgetve eldönti, kell-e engedély, kikérdezi, ami a projekt leírásából nem derül ki, és kitölti a kar hivatalos űrlapjait. Beadás előtt egy független bíráló a bizottság szemével átnézi.
 
 ## 2. Milyen problémát old meg?
 
@@ -26,24 +26,25 @@ A kutató letölti az űrlapokat a [kar oldaláról](https://tatk.elte.hu/bizott
 **A bemenet:**
 
 - **A kutató projektje:** a git repó.
-- **A kar hivatalos űrlapjai:** 7.1 Kutatásintegritási nyilatkozat, 7.2 Kutatásintegritási űrlap, 7.4 Adatkezelési terv, `.docx`. Ezeket az eszköz **nem tartalmazza**, hanem telepítéskor a kar oldaláról tölti le, hogy mindig a hatályos változattal dolgozzon.
-- **A kari szabályzat** (PDF, a kar oldaláról): ebből dönt és hivatkozik.
+- **A kar hivatalos űrlapjai:** 7.1 Kutatásintegritási nyilatkozat, 7.2 Kutatásintegritási űrlap, 7.4 Adatkezelési terv, `.docx`, magyarul és angolul. Ezek **a csomagban vannak**, a kar oldaláról (https://tatk.elte.hu/bizottsagok/kutetika) letöltve.
+- **A kari szabályzat** (PDF, magyarul és angolul, a csomagban): ebből dönt és hivatkozik. Az eszköz fejezetekre bontott szöveges változatot is kap belőle, hogy pontosan tudjon hivatkozni.
+- **Hatályos változat:** használatkor az eszköz összeveti a csomagolt dokumentumokat a kar oldalával. Ha a kar módosított valamit, szól, és megmondja, melyik kutetika-verzió illik az új dokumentumokhoz. A munkát nem állítja meg. A kutetika verziószáma a kar dokumentumainak változását követi.
 - **Mennyiség:** egy projekt, három űrlap, plusz a mellékletek.
 - **Adatvédelem:** az eszköz a projekt *leírását* és a kutatási eszközöket (kérdőív, interjúvázlat) olvassa. A nyers kutatási adatot (`data/`) alapból nem, csak ha a kérelemhez kell, és a kutató arra az alkalomra külön engedélyt ad. Ezt telepítéskor be kell írnia az `AGENTS.md`-be.
 
 **Ki használja, és hogyan:** felhasználói eszköz. A kutató a saját gépén dolgozik:
 
 ```text
-> npx install -g @kutetika@latest              # skillek + űrlapok + szabályzat a projektbe
-> kutetika init
+> npx kutetika@latest init              # skillek + űrlapok + szabályzat a projektbe
 
-majd az ai agentben
+majd az AI-asszisztensben
 
 > kell nekem etikai engedély?  
 > csináljuk meg a kérelmet     
 > nézd át, mielőtt elküldöm    
 ```
 
+A telepítéshez Node.js kell a gépen.
 
 ## 5. Mi jön ki?
 
@@ -51,13 +52,22 @@ Egy `keab/` mappa a projektben:
 
 ```text
 keab/
+  kerelem.md                                    ← munkaanyag: minden válasz ide kerül, kézzel is javítható
   dontesek.md                                   ← mit döntött a kutató, mit javasolt a gép
   7.2 Kutatásintegritási űrlap (VEZETEKNEV_DATUM).docx
   7.4 Adatkezelési terv (VEZETEKNEV_DATUM).docx
   7.1 Kutatásintegritási nyilatkozat (VEZETEKNEV_DATUM).docx
-  tajekoztato-es-hozzajarulo-nyilatkozat.docx
+  Tájékoztató és hozzájáruló nyilatkozat (VEZETEKNEV_DATUM).docx
   bead.md                                       ← kinek, mit, mikor
 ```
+
+**Hogyan készül:**
+
+- **A beadvány nyelve** magyar vagy angol. Az elején rákérdez, és ez független attól, milyen nyelven beszélget a kutató.
+- **A munkaanyag:** beszélgetés közben minden a `kerelem.md`-be kerül. A kutató és az eszköz is ezt javítja, a Word-fájlokat nem.
+- **Előállítás:** a Word-fájlok csak akkor készülnek el, amikor a kutató kéri („állítsd elő a beadványt”). Egy lépésben fut le a kari dokumentumok ellenőrzése, a Word-fájlok kitöltése, a formai ellenőrzés és a független bírálat.
+- **Független bírálat:** a bíráló nem látta a beszélgetést, csak a beadványt, az űrlapokat és a szabályzatot. Azt keresi, miből lehetne hiánypótlás. Lehet a gépen lévő másik asszisztens (pl. Codexben dolgozva a Claude), ha a kutató ehhez engedélyt ad, vagy a saját asszisztens tiszta lappal.
+- **„Mehet”:** csak akkor jár, ha a bírálat lefutott, és pontosan arra a változatra szól, amelyet a bíráló látott. Ha utána bármi módosul, újra elő kell állítani. A kutató felülbírálhatja a kifogásokat; ez indoklással bekerül a `dontesek.md`-be és a `bead.md`-be.
 
 **Egy konkrét példa:**
 
@@ -77,9 +87,16 @@ keab/
 
 **Mihez hasonlítom:** a bizottság döntéséhez
 
+**Addig is:** kitalált mintaprojekteken próbáljuk ki a jellemző esetekre (iskolai kutatás kiskorúakkal, interjúk AI-leiratkészítéssel, anonimizált adatok másodelemzése, doktorandusz mint kutatásvezető, angol beadvány). A program gépi részei automatikus teszteket kapnak.
+
 ## 7. Mi hiányzik, és mi az első lépés?
 
 **Ami hiányzik:**
 
-- az eszköz
+- az eszköz első változata elkészült, de még nincs kiadva;
+- kipróbálás a mintaprojekteken mindhárom asszisztensben (a Copilot még egyáltalán nincs kipróbálva);
+- visszajelzés egy nem fejlesztő kutatótól;
+- a bizottság véleménye.
+
+A tervezés részletei az [openspec/changes/elso-valtozat](openspec/changes/elso-valtozat/) mappában vannak.
 

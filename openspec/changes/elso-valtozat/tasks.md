@@ -67,5 +67,5 @@
 ## 10. Kipróbálás és kiadás
 
 - [ ] 10.1 Mintaprojektek végigvitele mindhárom asszisztensben mindhárom képességgel; ellenőrzés: minden mintaprojekten elkészül a beadvány, és a „mehet" állapot elérhető
-- [ ] 10.2 A README javítása a döntésekhez (a dokumentumok a csomagban vannak, helyi munkaanyag és Word-előállítás, verziózás, ellenséges ellenőrzés, angol beadvány, telepítési parancs); ellenőrzés: a README nem mond ellent a specifikációknak
+- [x] 10.2 A README javítása a döntésekhez (a dokumentumok a csomagban vannak, helyi munkaanyag és Word-előállítás, verziózás, ellenséges ellenőrzés, angol beadvány, telepítési parancs); ellenőrzés: a README nem mond ellent a specifikációknak
 - [ ] 10.3 Kiadás az npm-en 1.0.0 verzióval; ellenőrzés: egy tiszta gépen a `npx kutetika@latest init` után a „kell nekem etikai engedély?" kérdésre a kutetika válaszol
