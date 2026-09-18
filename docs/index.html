@@ -120,7 +120,39 @@
   .labresz { border-top: 1px solid var(--vonal); padding: 28px 0 40px; font-size: 14px; color: var(--szurke); }
   .labresz p { margin: 0 0 6px; max-width: 60em; }
 
+
+  /* Előállítás: négy Word-fájl készül */
+  section.gyartas { border-top: 1px solid var(--vonal); padding: clamp(44px, 6vw, 80px) 0; background: #f3f5f9; }
+  .gyartas .keret { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .gyartas h2 { margin-bottom: 18px; }
+  .kerdesor { font: 500 italic 21px/1.3 var(--display); margin: 0 0 18px; }
+  .kerdesor::before { content: '› '; font-style: normal; color: var(--pecset); }
+  ul.lepesek { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 15.5px; }
+  ul.lepesek li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; align-items: start; color: var(--szurke); transition: color .3s; }
+  ul.lepesek li::before { content: ''; width: 16px; height: 16px; margin-top: 3px; border: 1.5px solid var(--vonal); border-radius: 50%; transition: all .3s; }
+  ul.lepesek li.kesz { color: var(--tinta); }
+  ul.lepesek li.kesz::before { border-color: var(--pecset); background: var(--pecset) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.3l2.6 2.6L12 5.5' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat; }
+  .dokok { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2.4vw, 28px); align-items: start; padding-top: 34px; }
+  .dok { display: grid; gap: 12px; }
+  .koteg { position: relative; aspect-ratio: 210 / 297; }
+  .lap { position: absolute; inset: 0; background: #fff; border: 1px solid var(--vonal); box-shadow: 0 1px 2px rgba(22,35,59,.06);
+         transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .3s; }
+  .lap.hatso { opacity: 0; }
+  .lap.hatso.lent { opacity: 1; }
+  .elso { z-index: 20; padding: 11% 10%; display: grid; align-content: start; gap: 6%; overflow: hidden; }
+  .elso .fej { height: 5px; width: 55%; background: var(--tinta); opacity: .75; }
+  .elso .sor { display: grid; grid-template-columns: 42% 1fr; gap: 5%; }
+  .elso .sor i { display: block; height: 5px; background: var(--halvany); }
+  .elso .sor b { display: block; height: 5px; background: var(--pecset); opacity: .55; transform-origin: left; transform: scaleX(0); transition: transform .5s ease-out; }
+  .elso .sor b.tele { transform: scaleX(1); }
+  .word { position: absolute; right: 7%; bottom: 5%; font: 700 11px var(--torzs); color: #fff; background: #2b579a; padding: 2px 5px; border-radius: 2px; letter-spacing: .02em; z-index: 21; }
+  .doknev { font: 600 13.5px/1.3 var(--torzs); min-height: 2.6em; }
+  .dok .adat { font: 400 12.5px/1.4 var(--mono); color: var(--szurke); background: none; border: 0; padding: 0; }
+  .gyartas .apro { margin-top: 22px; }
+
   @media (max-width: 860px) {
+    .gyartas .keret { grid-template-columns: minmax(0, 1fr); }
+    .dokok { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 34px; max-width: 420px; }
     .nyito .keret, .resz .keret { grid-template-columns: minmax(0, 1fr); }
     .pecset { right: 4px; bottom: -58px; font-size: 24px; }
     .urlap { margin-bottom: 64px; }
@@ -171,6 +203,28 @@
       </figure>
     </div>
   </div>
+
+  <section class="gyartas" aria-labelledby="gyartas-cim">
+    <div class="keret">
+      <div>
+        <h2 id="gyartas-cim">Egy mondatra elkészül a beadvány</h2>
+        <p class="kerdesor">állítsd elő a beadványt</p>
+        <ul class="lepesek" id="lepesek">
+          <li>A kari űrlapok egyeznek a kar oldalán lévőkkel</li>
+          <li>A válaszok bekerülnek a hivatalos Word-űrlapokba</li>
+          <li>Formai ellenőrzés: üres mezők, szószámok, mellékletek</li>
+          <li>Független bírálat a bizottság szemével</li>
+        </ul>
+        <p class="apro">A számok egy valódi próbakérelemből valók. A Word-fájlok a kar eredeti űrlapjai, a formázásuk megmarad.</p>
+      </div>
+      <div class="dokok" id="dokok">
+        <div class="dok" data-oldal="11" data-szo="2784"><div class="koteg"></div><div class="doknev">7.2 Kutatásintegritási űrlap</div><div class="adat"><span class="szam">0</span> szó · kb. 11 oldal</div></div>
+        <div class="dok" data-oldal="5" data-szo="1283"><div class="koteg"></div><div class="doknev">7.4 Adatkezelési terv</div><div class="adat"><span class="szam">0</span> szó · kb. 5 oldal</div></div>
+        <div class="dok" data-oldal="1" data-szo="205"><div class="koteg"></div><div class="doknev">7.1 Kutatásintegritási nyilatkozat</div><div class="adat"><span class="szam">0</span> szó · 1 oldal</div></div>
+        <div class="dok" data-oldal="2" data-szo="298"><div class="koteg"></div><div class="doknev">Tájékoztató és hozzájáruló nyilatkozat</div><div class="adat"><span class="szam">0</span> szó · kb. 2 oldal</div></div>
+      </div>
+    </div>
+  </section>
 
   <section class="resz" aria-labelledby="menet-cim">
     <div class="keret">
@@ -280,6 +334,73 @@
       })();
     }
     setTimeout(kovetkezo, 500);
+  })();
+
+  (function () {
+    var csendes = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var dokok = Array.prototype.slice.call(document.querySelectorAll('#dokok .dok'));
+    var lepesek = Array.prototype.slice.call(document.querySelectorAll('#lepesek li'));
+    var ezres = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0'); };
+    // A kötegek felépítése: a hátsó lapok eltolva, az első lapon űrlapsorok.
+    dokok.forEach(function (d) {
+      var k = d.querySelector('.koteg'), n = +d.getAttribute('data-oldal');
+      for (var i = n - 1; i >= 1; i--) {
+        var l = document.createElement('div');
+        l.className = 'lap hatso';
+        l.style.zIndex = 20 - i;
+        l.dataset.eltolas = i;
+        k.appendChild(l);
+      }
+      var e = document.createElement('div');
+      e.className = 'lap elso';
+      var h = '<div class="fej"></div>';
+      for (var j = 0; j < 9; j++) h += '<div class="sor"><i></i><b></b></div>';
+      e.innerHTML = h;
+      k.appendChild(e);
+      var w = document.createElement('span'); w.className = 'word'; w.textContent = 'W'; k.appendChild(w);
+    });
+    function lapotLerak(l) {
+      var i = +l.dataset.eltolas;
+      l.classList.add('lent');
+      l.style.transform = 'translate(' + (i * 3) + 'px,' + (-i * 3) + 'px)';
+    }
+    function kesz() {
+      lepesek.forEach(function (li) { li.classList.add('kesz'); });
+      dokok.forEach(function (d) {
+        d.querySelectorAll('.lap.hatso').forEach(lapotLerak);
+        d.querySelectorAll('.sor b').forEach(function (b) { b.classList.add('tele'); });
+        d.querySelector('.szam').textContent = ezres(d.getAttribute('data-szo'));
+      });
+    }
+    if (csendes || !('IntersectionObserver' in window)) { kesz(); return; }
+    var indult = false;
+    function indit() {
+      if (indult) return; indult = true;
+      lepesek[0].classList.add('kesz');
+      setTimeout(function () { lepesek[1].classList.add('kesz'); }, 2900);
+      setTimeout(function () { lepesek[2].classList.add('kesz'); }, 3500);
+      setTimeout(function () { lepesek[3].classList.add('kesz'); }, 4300);
+      dokok.forEach(function (d, di) {
+        var hatsok = Array.prototype.slice.call(d.querySelectorAll('.lap.hatso')).reverse();
+        var sorok = Array.prototype.slice.call(d.querySelectorAll('.sor b'));
+        var cel = +d.getAttribute('data-szo'), szam = d.querySelector('.szam');
+        var kezdet = 500 + di * 180, hossz = 2200;
+        sorok.forEach(function (b, i) { setTimeout(function () { b.classList.add('tele'); }, kezdet + i * 200); });
+        hatsok.forEach(function (l, i) { setTimeout(function () { lapotLerak(l); }, kezdet + (i + 1) * (hossz / (hatsok.length + 1))); });
+        var t0 = null;
+        function szamol(t) {
+          if (t0 === null) t0 = t;
+          var x = Math.min(1, (t - t0 - kezdet) / hossz);
+          if (x > 0) szam.textContent = ezres(Math.round(cel * (1 - Math.pow(1 - x, 3))));
+          if (x < 1) requestAnimationFrame(szamol);
+        }
+        requestAnimationFrame(szamol);
+      });
+    }
+    var figyelo = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { indit(); figyelo.disconnect(); }
+    }, { threshold: 0.35 });
+    figyelo.observe(document.getElementById('dokok'));
   })();
 </script>
 </body>
