@@ -90,6 +90,8 @@ A segédprogram letölti a kar oldalát, megkeresi a hat űrlap és a két szab�
 
 A Copilot új parancssori programja a fejlesztői gépen nem volt telepítve (csak a régi `gh copilot` bővítmény, amely nem asszisztens), ezért ezt még ki kell próbálni.
 
+**A másik asszisztens elkülönítése (2026-09-18):** a Claude Code `--restricted` módja a fájleszközöket a munkakönyvtárra (a bírálati csomagra) korlátozza, és nem futtat parancsot, így ott az elkülönítés technikai. A Codex `--sandbox read-only` módja az írást tiltja, az olvasást nem; ott a korlát csak utasítás. A projektgazda ezt elfogadta azzal a feltétellel, hogy az engedélykérés ezt kimondja. Mindkét bíráló szűkített környezeti változókkal, a felhasználói beállítások nélkül fut. A csomag a Word-fájlok szöveges másolatát is tartalmazza, mert a korlátozott bíráló a tömörített Word-fájlt nem tudja kibontani (ezt a valódi kipróbálás mutatta meg).
+
 ### 8. „Mehet": ujjlenyomat a beadandó fájlokról
 Az előállításkori ellenőrzés eredményét a segédprogram a `keab/.ellenorzes.json`-ba írja: időpont, a `kerelem.md` és a beadandó Word-fájlok ujjlenyomata, a kifogások és a felülbírált kifogások. A „mehet" állapotot mindig ebből számolja újra: ha a munkaanyag vagy bármelyik beadandó fájl ujjlenyomata eltér, a „mehet" nem érvényes. A `bead.md` ember által olvasható összefoglalót kap ugyanerről.
 

@@ -4,9 +4,19 @@ import { tmpdir } from 'node:os';
 import { randomUUID } from 'node:crypto';
 import { allapotIr, allapotOlvas, anyagBetolt, hash, kifogasErvenyes, kifogasokRendez, naplo, olvas, pillanatEgyezik, szoveg, zarol } from './munkafolyamat.js';
 import { allapotSzamit, beadIr } from './ellenorzes.js';
+import { kulsoFuttat, kulsoParancs } from './kulso.js';
+import { docxMegnyit, szerkezetesSzoveg } from './docx.js';
+
+export { kulsoParancs };
 
 const SZOLGALTATOK = { claude: 'Anthropic', codex: 'OpenAI' };
 export const ADATKOZLES = 'A beadvány, a kutatók neve, elérhetősége és a kutatás leírása egy második AI-szolgáltatóhoz jut. Ez személyes adatok kezelése lehet; szerepeljen az adatkezelési tervben. Nyers kutatási adat, beszélgetés, AGENTS.md és dontesek.md nem kerül átadásra.';
+// Mennyire zárt a másik asszisztens: ezt a kutatónak az engedély előtt tudnia kell.
+export const ELKULONITES = {
+  claude: 'A Claude Code korlátozott módban fut: csak a bírálati mappa fájljait olvashatja, parancsot nem futtathat, semmit nem írhat.',
+  codex: 'A Codex írási jog nélkül fut, és azt az utasítást kapja, hogy csak a bírálati mappát olvassa. Ez utasítás, nem zár: technikailag a számítógép más fájljait is elolvashatná, és azok tartalma az OpenAI-hoz kerülhetne.',
+};
+export const tajekoztatas = (asszisztens) => `${ADATKOZLES} ${ELKULONITES[asszisztens]}`;
 
 export function elerhetoAsszisztensek(env = process.env, platform = process.platform) {
   // Windowson az npm .cmd indítófájlt telepít, nem .exe-t.
@@ -25,13 +35,13 @@ export function elerhetoAsszisztensek(env = process.env, platform = process.plat
 
 // A másik asszisztens mint bíráló csak akkor jöhet szóba, ha van elkülönített futtató.
 // Amíg nincs, nem kérünk rá engedélyt, mert az engedély zsákutcába vezetne.
-export const KULSO_FUTTATO_VAN = false;
+export const KULSO_FUTTATO_VAN = process.env.KUTETIKA_NINCS_KULSO !== '1';
 
 export function biraloValaszt({ asszisztens, subagent = false, elerheto = elerhetoAsszisztensek(), engedelyek = {}, kulsoFuttato = KULSO_FUTTATO_VAN } = {}) {
   if (!['claude', 'codex', 'copilot'].includes(asszisztens)) throw new Error('A saját asszisztens neve szükséges: claude, codex vagy copilot.');
   const masik = ['codex', 'claude'].filter((n) => n !== asszisztens).find((n) => elerheto.includes(n) && engedelyek[n] !== false);
   if (kulsoFuttato && masik) {
-    if (engedelyek[masik] === undefined) return { mod: 'engedelyre-var', asszisztens: masik, szolgaltato: SZOLGALTATOK[masik], tajekoztatas: ADATKOZLES };
+    if (engedelyek[masik] === undefined) return { mod: 'engedelyre-var', asszisztens: masik, szolgaltato: SZOLGALTATOK[masik], tajekoztatas: tajekoztatas(masik) };
     if (engedelyek[masik] === true) return { mod: 'kulso', asszisztens: masik, szolgaltato: SZOLGALTATOK[masik] };
   }
   return { mod: subagent === true ? 'subagent' : 'uj-beszelgetes', asszisztens };
@@ -42,19 +52,13 @@ export async function engedelyRogzit(root, { asszisztens, engedely } = {}) {
     if (!Object.hasOwn(SZOLGALTATOK, asszisztens) || typeof engedely !== 'boolean') throw new Error('Név szerinti szolgáltatói engedély szükséges (claude/codex, true/false).');
     const s = allapotOlvas(root);
     if (s.engedelyek[asszisztens] !== engedely) {
-      naplo(root, { tipus: 'kulso-szolgaltatoi-engedely', asszisztens, szolgaltato: SZOLGALTATOK[asszisztens], gepiJavaslat: ADATKOZLES, kutatoiDontes: engedely });
+      naplo(root, { tipus: 'kulso-szolgaltatoi-engedely', asszisztens, szolgaltato: SZOLGALTATOK[asszisztens], gepiJavaslat: tajekoztatas(asszisztens), kutatoiDontes: engedely });
       s.engedelyek[asszisztens] = engedely;
       if (s.futas?.keres?.asszisztens === asszisztens && s.futas.biralat?.allapot !== 'kesz') s.futas.keres = null;
       allapotIr(root, s);
     }
-    return { allapot: 'rogzitve', asszisztens, engedely, tajekoztatas: ADATKOZLES };
+    return { allapot: 'rogzitve', asszisztens, engedely, tajekoztatas: tajekoztatas(asszisztens) };
   });
-}
-
-export function kulsoParancs(asszisztens) {
-  if (asszisztens === 'codex') return { program: 'codex', argumentumok: ['exec', '--sandbox', 'read-only', '--ephemeral', '--skip-git-repo-check', '-'], stdin: true };
-  if (asszisztens === 'claude') return { program: 'claude', argumentumok: ['-p', '--output-format', 'json', '--tools', 'Read', '--allowedTools', 'Read', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}', '--setting-sources', '', '--no-session-persistence'], stdin: true };
-  throw new Error('Nem támogatott külső bíráló.');
 }
 
 function csomagKeszit(root, f) {
@@ -67,6 +71,8 @@ function csomagKeszit(root, f) {
     if (reszek.length > 1) mkdirSync(join(mappa, ...reszek.slice(0, -1)), { recursive: true, mode: 0o700 });
     writeFileSync(join(mappa, nev), bytes, { flag: 'wx', mode: 0o400 });
     manifest[nev] = hash(bytes);
+    // A Word-fájl tömörített, a korlátozott bíráló nem tudja kibontani: szöveges másolat mellé.
+    if (/\.docx$/i.test(nev)) masol(`${nev}.txt`, Buffer.from(szerkezetesSzoveg(docxMegnyit(bytes).dom)));
   };
   const csatolt = f.tipus === 'vegleges' ? f.csatolando : ['keab/kerelem.md', ...(f.mellekletek ?? []).map((m) => m.fajl)];
   for (const fajl of csatolt) {
@@ -88,7 +94,9 @@ function csomagKeszit(root, f) {
 export async function biralatIndit(root, s, options = {}) {
   const f = s.futas;
   if (!pillanatEgyezik(root, f)) throw new Error('A pillanatkép elavult; új előállítás szükséges.');
-  const valasztas = biraloValaszt({ ...options, engedelyek: s.engedelyek, kulsoFuttato: typeof options.elkulonitettFuttato === 'function' });
+  // A tesztek saját futtatót adhatnak; null: nincs külső futtató.
+  const futtato = options.elkulonitettFuttato === undefined ? (KULSO_FUTTATO_VAN ? kulsoFuttat : null) : options.elkulonitettFuttato;
+  const valasztas = biraloValaszt({ ...options, engedelyek: s.engedelyek, kulsoFuttato: typeof futtato === 'function' });
   f.keres = { ...valasztas, azonosito: randomUUID(), token: f.token, nyelv: f.nyelv, tipus: f.tipus };
   f.biralat = { allapot: valasztas.mod === 'engedelyre-var' ? 'engedelyre-var' : 'biralatra-var' };
   allapotIr(root, s);
@@ -99,16 +107,15 @@ export async function biralatIndit(root, s, options = {}) {
     allapotIr(root, s);
     if (valasztas.mod === 'kulso') {
       f.keres.parancs = kulsoParancs(valasztas.asszisztens);
-      f.keres.elkulonites = { csakCsomag: true, orokoltKornyezet: false, projektHozzaferes: false, elozmenyek: false, iras: false };
-      if (typeof options.elkulonitettFuttato !== 'function') {
-        f.biralat = { allapot: 'blokkolt-kulso-futtato', hiba: 'Nincs igazoltan elkülönített futtató. A read-only kapcsoló önmagában nem tiltja más fájlok olvasását. Nem történt szolgáltatói hívás.' };
-      } else {
-        const eredmeny = await options.elkulonitettFuttato(structuredClone(f.keres));
-        eredmenyAlkalmaz(root, s, eredmeny);
-      }
+      f.keres.elkulonites = { csakCsomag: true, orokoltKornyezet: false, elozmenyek: false, iras: false,
+        olvasasKorlat: valasztas.asszisztens === 'claude' ? 'technikai' : 'utasitas', leiras: ELKULONITES[valasztas.asszisztens] };
+      allapotIr(root, s);
+      const eredmeny = await futtato(structuredClone(f.keres));
+      eredmenyAlkalmaz(root, s, eredmeny);
     }
-  } catch {
-    f.biralat = { allapot: 'sikertelen-biralat', hiba: 'Nem sikerült a független bírálat vagy a csomag előkészítése; nincs jóváhagyás. Új bírálati átadás szükséges.' };
+  } catch (e) {
+    f.biralat = { allapot: 'sikertelen-biralat', hiba: 'Nem sikerült a független bírálat vagy a csomag előkészítése; nincs jóváhagyás. Új bírálati átadás szükséges.',
+      ok: e instanceof Error ? e.message.slice(0, 500) : null };
   }
   allapotIr(root, s);
   beadIr(root, s);

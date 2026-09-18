@@ -102,7 +102,19 @@ node .kutetika/bin/kutetika.js eloallit . '{"asszisztens":"claude","subagent":tr
   researcher the manual edit will be lost, suggest moving the fix into `kerelem.md`,
   and only after explicit agreement re-run with the given `felulirasMegerosites`
   token.
+- If the answer is `engedelyre-var`, another assistant on this computer could review
+  independently. Before anything is sent, explain in plain words what the `tajekoztatas`
+  text says: what the second AI provider receives, and how strictly it is confined
+  (Claude Code: technically limited to the review folder; Codex: only instructed, it
+  could technically read other files on the computer). Ask for an explicit yes or no,
+  then run `kulso-engedely` with `{"asszisztens":<the other one>,"engedely":true|false}`
+  and `biralat-folytat`. A no is fine: then you review as described below.
 - Reviewer handoff, `keres.mod`:
+  - `kulso`: the other assistant has already reviewed (this takes a few minutes, tell
+    the researcher to wait). If `biralat.allapot` is `sikertelen-biralat`, tell the
+    researcher the reason in `biralat.ok` in plain words (e.g. the other assistant is
+    not logged in or hit its usage limit). Offer to retry later with `biralat-folytat`,
+    or to withdraw the permission (`kulso-engedely` with `false`) so that you review.
   - `subagent`: start a subagent with a clean context, give it only the staging folder
     (`keres.mappa`) and the instruction in `keres.utasitas`; it follows
     `biralo/SKILL.md` there. Record its JSON with `biralat-rogzit`.

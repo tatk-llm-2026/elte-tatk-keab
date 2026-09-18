@@ -17,7 +17,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test"
+    "test": "node --import ./test/beallitas.js --test"
   },
   "license": "MIT",
   "repository": {

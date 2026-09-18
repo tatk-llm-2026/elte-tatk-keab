@@ -29,8 +29,8 @@ test('bírálóválasztás: külső preferencia, engedélykérés, elutasítás,
   assert.equal(biraloValaszt({ asszisztens: 'copilot', elerheto: ['claude'], engedelyek: { claude: false }, kulsoFuttato: true }).mod, 'uj-beszelgetes');
   assert.equal(biraloValaszt({ asszisztens: 'copilot', elerheto: ['claude', 'codex'], engedelyek: { codex: false }, kulsoFuttato: true }).asszisztens, 'claude');
   // Elkülönített futtató nélkül nem kér engedélyt, a saját asszisztens bírál.
-  assert.equal(biraloValaszt({ asszisztens: 'claude', elerheto: ['codex'], subagent: true }).mod, 'subagent');
-  assert.equal(biraloValaszt({ asszisztens: 'claude', elerheto: ['codex'], engedelyek: { codex: true } }).mod, 'uj-beszelgetes');
+  assert.equal(biraloValaszt({ asszisztens: 'claude', elerheto: ['codex'], subagent: true, kulsoFuttato: false }).mod, 'subagent');
+  assert.equal(biraloValaszt({ asszisztens: 'claude', elerheto: ['codex'], engedelyek: { codex: true }, kulsoFuttato: false }).mod, 'uj-beszelgetes');
   const ker = biraloValaszt({ asszisztens: 'claude', elerheto: ['codex'], kulsoFuttato: true });
   assert.equal(ker.mod, 'engedelyre-var');
   assert.match(ker.tajekoztatas, /második AI-szolgáltató/);
@@ -47,7 +47,7 @@ test('PATH-felderítés nem indít programot; kizárólag engedélyezett parancs
   writeFileSync(join(root, 'claude.cmd'), '@echo off');
   assert.deepEqual(elerhetoAsszisztensek({ Path: root, PATHEXT: '.EXE;.CMD' }, 'win32'), ['claude']);
   assert.ok(kulsoParancs('codex').argumentumok.includes('read-only'));
-  assert.ok(kulsoParancs('claude').argumentumok.includes('Read'));
+  assert.ok(kulsoParancs('claude').argumentumok.includes('--restricted'));
   assert.throws(() => kulsoParancs('copilot'));
 });
 
@@ -85,7 +85,8 @@ test('külső mock csak kész Wordöt, kari anyagot, bírálói skillt kap; nem 
     hivva++;
     assert.equal(k.elkulonites.orokoltKornyezet, false);
     assert.ok(!k.fajlok['beadvany/kerelem.md']);
-    assert.equal(Object.keys(k.fajlok).filter((f) => f.startsWith('beadvany/')).length, 4);
+    assert.equal(Object.keys(k.fajlok).filter((f) => f.startsWith('beadvany/') && f.endsWith('.docx')).length, 4);
+    assert.equal(Object.keys(k.fajlok).filter((f) => f.startsWith('beadvany/') && f.endsWith('.docx.txt')).length, 4);
     for (const nev of Object.keys(k.fajlok)) {
       assert.match(nev, /^(beadvany|kari|biralo)\//);
       assert.doesNotMatch(nev, /AGENTS|dontesek|data\/|\.git/);

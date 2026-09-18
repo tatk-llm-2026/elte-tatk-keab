@@ -18,6 +18,9 @@ You receive exactly one staging folder. It contains only:
 - `beadvany/` — the submission (finished Word files, or the `kerelem.md` working draft
   for an early review), plus attachments,
 - `kari/` — the faculty forms and the regulation text (`.md` and `.pdf`),
+- next to every `.docx` file a plain-text copy (`<name>.docx.txt`, table rows and
+  cells marked `[sor]` and `[cella]`). Read these copies; you do not need to unpack
+  the Word files.
 - `biralo/SKILL.md` — this file.
 
 You MUST NOT read, request or use anything else: no project files, no `AGENTS.md`, no
