@@ -55,8 +55,8 @@ export async function zarol(root, munka) {
     // A megszakadt (már nem futó) művelet zárolását eltávolítjuk.
     let pid;
     try { pid = Number(readFileSync(ut, 'utf8').trim()); } catch {}
-    if (fut(pid)) throw new Error('Egy másik kutetika-művelet még fut. Várja meg, amíg befejeződik, és próbálja újra.');
-    try { unlinkSync(ut); lefoglal(); } catch { throw new Error('Egy másik kutetika-művelet most indult el. Próbálja újra kicsit később.'); }
+    if (fut(pid)) throw new Error('Egy másik kutetika-művelet még fut. Várd meg, amíg befejeződik, és próbáld újra.');
+    try { unlinkSync(ut); lefoglal(); } catch { throw new Error('Egy másik kutetika-művelet most indult el. Próbáld újra kicsit később.'); }
   }
   try { return await munka(); } finally { unlinkSync(ut); }
 }

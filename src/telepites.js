@@ -2,6 +2,7 @@
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { CSOMAG_GYOKER, csomagJson, PROGRAM_MAPPA } from './csomag.js';
+import { ir, naplo, olvas, zarol } from './munkafolyamat.js';
 
 export { PROGRAM_MAPPA };
 
@@ -23,7 +24,28 @@ function fuggosegKonyvtar(nev, kiindulo) {
   }
 }
 
-export function agentsBlokk(verzio) {
+// A kutató beállításai (pl. hol vannak a nyers adatok). A kutató is szerkesztheti,
+// de az asszisztens a nyers-adat paranccsal írja, hogy az AGENTS.md is frissüljön.
+export const BEALLITASOK = 'keab/beallitasok.json';
+
+export function beallitasOlvas(cel) {
+  try {
+    const b = JSON.parse(olvas(cel, BEALLITASOK).toString('utf8').replace(/^\uFEFF/, ''));
+    return b && typeof b === 'object' && !Array.isArray(b) ? b : {};
+  } catch { return {}; }
+}
+
+function nyersAdatSor(helyek) {
+  if (Array.isArray(helyek) && helyek.length) {
+    return `- Raw research data in this project (recorded by the researcher in \`${BEALLITASOK}\`): ${helyek.map((h) => `\`${h}\``).join(', ')}. Also treat as raw data any other file with responses, recordings, transcripts or datasets.`;
+  }
+  if (Array.isArray(helyek)) {
+    return `- The researcher stated that this project contains no raw research data (\`${BEALLITASOK}\`). If you still find responses, recordings, transcripts or datasets, treat them as raw data.`;
+  }
+  return `- Where the raw research data are kept has not been recorded yet. Before reading anything beyond the project description and the research instruments, ask the researcher which folders or files contain raw data, and record the answer with \`node ${PROGRAM_MAPPA}/bin/kutetika.js nyers-adat . '{"helyek":["<folder or file>", …]}'\` (an empty list if there is none). Until then treat any file that may contain responses, recordings, transcripts or datasets as raw data.`;
+}
+
+export function agentsBlokk(verzio, helyek) {
   return `${BLOKK_KEZDET}
 ## kutetika – ELTE TáTK research ethics application (KEAB)
 
@@ -34,7 +56,8 @@ Talk to the researcher in the language they use. The researcher is responsible f
 ### Research data protection
 
 - You may read the project description and the research instruments (questionnaires, interview guides, information sheets, recruitment texts) without asking.
-- Do not read raw research data by default: the \`data/\` folder, responses, recordings, transcripts, or any file containing them.
+${nyersAdatSor(helyek)}
+- Do not read raw research data by default.
 - If the ethics application genuinely needs something from raw data (e.g. whether a dataset is truly anonymous, or what kinds of data it contains), first tell the researcher which file you want to read and why, and that its content will be sent to the AI provider. Read it only after the researcher explicitly agrees for this occasion and this file. Read only what is needed (e.g. column names, not responses).
 - If the researcher declines, do not read it; ask questions instead.
 - Record every such permission in \`keab/dontesek.md\`.
@@ -67,7 +90,7 @@ export function agentsFrissit(szoveg, blokk, { kezdetJelolo = BLOKK_KEZDET, vegJ
     return szoveg.slice(0, kezdetek[0]) + blokk + szoveg.slice(vegek[0] + vegJelolo.length);
   }
   if (kezdetek.length || vegek.length) {
-    throw new Error(`A kutetika-blokk jelölői (${kezdetJelolo}, ${vegJelolo}) sérültek vagy többször szerepelnek. Javítsa kézzel, hogy pontosan egy blokk maradjon, vagy törölje mindkét jelölőt, és futtassa újra.`);
+    throw new Error(`A kutetika-blokk jelölői (${kezdetJelolo}, ${vegJelolo}) sérültek vagy többször szerepelnek. Javítsd kézzel, hogy pontosan egy blokk maradjon, vagy töröld mindkét jelölőt, és futtasd újra.`);
   }
   const elvalaszto = szoveg.endsWith('\n') ? sorveg : sorveg + sorveg;
   return `${szoveg}${elvalaszto}${blokk}${sorveg}`;
@@ -105,11 +128,18 @@ export function telepit(cel, { csomagGyoker = CSOMAG_GYOKER } = {}) {
   }
   irt.push(`${PROGRAM_MAPPA}/`);
 
+  irt.push(...utasitasokIr(cel, pkg.version));
+  return { verzio: pkg.version, skillek, irt };
+}
+
+// Az AGENTS.md és a CLAUDE.md kutetika-blokkja; a nyers adatok helyét a beállításokból veszi.
+export function utasitasokIr(cel, verzio) {
+  const irt = [];
   const agentsUt = join(cel, 'AGENTS.md');
   const claudeUt = join(cel, 'CLAUDE.md');
   // Mindkettőt előbb kiszámoljuk, hogy sérült jelölőnél egyik fájl se módosuljon.
   const regi = existsSync(agentsUt) ? readFileSync(agentsUt, 'utf8') : null;
-  const ujAgents = agentsFrissit(regi, agentsBlokk(pkg.version));
+  const ujAgents = agentsFrissit(regi, agentsBlokk(verzio, beallitasOlvas(cel).nyersAdat));
   // Ha a CLAUDE.md ugyanaz a fájl, mint az AGENTS.md (link), a szabályok már benne vannak.
   const ugyanaz = existsSync(claudeUt) && existsSync(agentsUt) && realpathSync(claudeUt) === realpathSync(agentsUt);
   const claudeRegi = !ugyanaz && existsSync(claudeUt) ? readFileSync(claudeUt, 'utf8') : null;
@@ -120,8 +150,25 @@ export function telepit(cel, { csomagGyoker = CSOMAG_GYOKER } = {}) {
     writeFileSync(claudeUt, ujClaude);
     irt.push('CLAUDE.md');
   }
+  return irt;
+}
 
-  return { verzio: pkg.version, skillek, irt };
+// A kutató megadja, hol vannak a nyers adatok; bekerül a beállításokba, a döntésnaplóba és az AGENTS.md-be.
+export async function nyersAdatRogzit(root, { helyek } = {}) {
+  return zarol(root, () => {
+    if (!Array.isArray(helyek) || helyek.some((h) => typeof h !== 'string' || !h.trim() || h.includes('..') || /^([a-zA-Z]:)?[\\/]/.test(h))) {
+      throw new Error('A helyek a projekten belüli mappák vagy fájlok listája legyen (pl. ["data/", "interjuk/"]); üres lista, ha nincs nyers adat.');
+    }
+    const lista = [...new Set(helyek.map((h) => h.trim().replace(/\\/g, '/')))];
+    const b = beallitasOlvas(root);
+    b.nyersAdat = lista;
+    ir(root, BEALLITASOK, `${JSON.stringify(b, null, 2)}\n`);
+    naplo(root, { tipus: 'nyers-adat-helye', kutatoiDontes: lista });
+    let verzio;
+    try { verzio = JSON.parse(olvas(join(root, PROGRAM_MAPPA), 'package.json')).version; } catch { verzio = csomagJson().version; }
+    utasitasokIr(root, verzio);
+    return { allapot: 'rogzitve', nyersAdat: lista };
+  });
 }
 
 export function zaroUzenet({ verzio, skillek }) {
@@ -135,8 +182,8 @@ Mi került a projektbe:
   - az adatvédelmi szabály az AGENTS.md végén, a Claude Code a CLAUDE.md-ből tölti be
 
 Hogyan tovább:
-  Nyissa meg ezt a mappát az AI-asszisztensében (Claude Code, Codex vagy Copilot),
-  és írja be például:
+  Nyisd meg ezt a mappát az AI-asszisztensedben (Claude Code, Codex vagy Copilot),
+  és írd be például:
     kell nekem etikai engedély?
     csináljuk meg a kérelmet
     nézd át, mielőtt elküldöm

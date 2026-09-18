@@ -30,7 +30,7 @@ A kutató letölti az űrlapokat a [kar oldaláról](https://tatk.elte.hu/bizott
 - **A kari szabályzat** (PDF, magyarul és angolul, a csomagban): ebből dönt és hivatkozik. Az eszköz fejezetekre bontott szöveges változatot is kap belőle, hogy pontosan tudjon hivatkozni.
 - **Hatályos változat:** használatkor az eszköz összeveti a csomagolt dokumentumokat a kar oldalával. Ha a kar módosított valamit, szól, és megmondja, melyik kutetika-verzió illik az új dokumentumokhoz. A munkát nem állítja meg. A kutetika verziószáma a kar dokumentumainak változását követi.
 - **Mennyiség:** egy projekt, három űrlap, plusz a mellékletek.
-- **Adatvédelem:** az eszköz a projekt *leírását* és a kutatási eszközöket (kérdőív, interjúvázlat) olvassa. A nyers kutatási adatot (`data/`) alapból nem, csak ha a kérelemhez kell, és a kutató arra az alkalomra külön engedélyt ad. Ezt telepítéskor be kell írnia az `AGENTS.md`-be.
+- **Adatvédelem:** az eszköz a projekt *leírását* és a kutatási eszközöket (kérdőív, interjúvázlat) olvassa. A nyers kutatási adatot alapból nem; hogy hol van, azt a kutatótól kérdezi meg, és a beállításai közé jegyzi (`keab/beallitasok.json`). Beleolvasni csak akkor fog, ha a kérelemhez kell, és a kutató arra az alkalomra külön engedélyt ad. Ezt telepítéskor be kell írnia az `AGENTS.md`-be.
 
 **Ki használja, és hogyan:** felhasználói eszköz. A kutató a saját gépén dolgozik:
 

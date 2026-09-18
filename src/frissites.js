@@ -45,7 +45,7 @@ function uzenetek(eredmeny) {
   const modositott = eredmeny.elteresek.map((d) => d.azonosito).join(', ');
   if (eredmeny.allapot === 'egyezik') return [];
   if (eredmeny.allapot === 'frissites-elerheto') {
-    return [`A kar módosította ezeket: ${modositott}. Frissítsen a kutetika ${eredmeny.ujVerzio} verziójára. A munka folytatható.`];
+    return [`A kar módosította ezeket: ${modositott}. Frissíts a kutetika ${eredmeny.ujVerzio} verziójára. A munka folytatható.`];
   }
   if (eredmeny.allapot === 'nincs-illo-verzio') {
     return [`A kar módosította ezeket: ${modositott}, de még nincs hozzájuk illő kutetika-verzió. A munka folytatható.`];

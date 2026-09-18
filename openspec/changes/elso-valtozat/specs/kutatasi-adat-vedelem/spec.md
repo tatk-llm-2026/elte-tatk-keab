@@ -12,7 +12,7 @@ Az eszköz SHALL szabadon olvashassa a projekt leírását és a kutatási eszk�
 - **THEN** az eszköz engedélykérés nélkül elolvassa
 
 ### Requirement: Nyers kutatási adat csak engedéllyel
-Az eszköz SHALL alapból ne olvassa a nyers kutatási adatot (a `data/` mappát, válaszokat, felvételeket, leiratokat). Ha a kérelemhez szükséges, SHALL előbb megmondja, melyik fájlt nézné meg és miért, és hogy a tartalom az AI-szolgáltatóhoz kerül, és SHALL csak a kutató arra az alkalomra adott kifejezett engedélyével olvassa. Az engedély SHALL csak arra az alkalomra és fájlra szóljon. Az eszköz SHALL csak annyit olvasson, amennyi szükséges.
+Az eszköz SHALL alapból ne olvassa a nyers kutatási adatot (válaszokat, felvételeket, leiratokat, adatállományokat). Hogy a projektben hol van nyers adat, azt SHALL a kutatótól kérdezze meg, és a `keab/beallitasok.json`-ban, valamint az `AGENTS.md` kutetika-blokkjában rögzítse. Ha a kérelemhez szükséges, SHALL előbb megmondja, melyik fájlt nézné meg és miért, és hogy a tartalom az AI-szolgáltatóhoz kerül, és SHALL csak a kutató arra az alkalomra adott kifejezett engedélyével olvassa. Az engedély SHALL csak arra az alkalomra és fájlra szóljon. Az eszköz SHALL csak annyit olvasson, amennyi szükséges.
 
 #### Scenario: Engedélykérés
 - **WHEN** az adatkezelési tervhez tudni kell, milyen adatfajták vannak egy adatfájlban

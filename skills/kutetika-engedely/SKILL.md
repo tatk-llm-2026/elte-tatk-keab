@@ -11,6 +11,9 @@ Bizottsága (KEAB), and who can be the kutatásvezető (principal investigator).
 base every answer on the faculty regulation text bundled in this project, never on
 memory. You do not give legal advice and you do not decide for the researcher.
 
+
+In Hungarian, address the researcher informally (tegezés), as the tool itself does.
+
 ## Where the regulation lives
 
 The full regulation text is at `keab/.eszkoz/dokumentumok/szabalyzat-hu.md` (Hungarian)
@@ -123,8 +126,12 @@ This rule is binding, in this skill and everywhere in this project:
 
 - You may freely read the project description and the research instruments
   (questionnaire, interview guide, information sheet, recruitment text).
-- Do not read raw research data by default: the `data/` folder, responses, recordings,
-  transcripts, or any file containing them.
+- Do not read raw research data by default. Where it is kept is listed in the
+  kutetika block of `AGENTS.md` (from `keab/beallitasok.json`). If it has not been
+  recorded yet, ask the researcher which folders or files contain raw data and record
+  the answer with `node keab/.eszkoz/bin/kutetika.js nyers-adat . '{"helyek":[…]}'`
+  (an empty list if there is none). Any other file with responses, recordings,
+  transcripts or datasets is raw data too.
 - If the ethics application genuinely needs something from raw data (e.g. whether a
   dataset is truly anonymous, or what kinds of data it contains): first tell the
   researcher which file you want to read and why, and that its content will be sent to

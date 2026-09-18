@@ -144,7 +144,24 @@ test('init: kapcsoló, nem létező mappa és a saját mappa elutasítva', async
   const cel = ujProjekt();
   assert.throws(() => initCel(['--help']), /Használat/);
   assert.throws(() => initCel([join(cel, 'nincs')]), /Nincs ilyen mappa/);
-  assert.throws(() => initCel([cel], { otthon: cel }), /projektmappájába/);
+  assert.throws(() => initCel([cel], { otthon: cel }), /kutatásod mappájába/);
   assert.equal(initCel([cel]), cel);
   assert.ok(!existsSync(join(cel, 'nincs')));
+});
+
+test('nyers adatok helye: amíg nincs rögzítve, rákérdez; rögzítés után a lista az AGENTS.md-ben, újratelepítés után is', async () => {
+  const { nyersAdatRogzit } = await import('../src/telepites.js');
+  const cel = ujProjekt();
+  init(cel);
+  assert.match(readFileSync(join(cel, 'AGENTS.md'), 'utf8'), /has not been recorded yet/);
+  await nyersAdatRogzit(cel, { helyek: ['interjuk/', 'valaszok.csv'] });
+  const agents = readFileSync(join(cel, 'AGENTS.md'), 'utf8');
+  assert.match(agents, /`interjuk\/`, `valaszok\.csv`/);
+  assert.doesNotMatch(agents, /not been recorded/);
+  assert.match(readFileSync(join(cel, 'keab/dontesek.md'), 'utf8'), /nyers-adat-helye/);
+  init(cel);
+  assert.match(readFileSync(join(cel, 'AGENTS.md'), 'utf8'), /`interjuk\/`, `valaszok\.csv`/);
+  await nyersAdatRogzit(cel, { helyek: [] });
+  assert.match(readFileSync(join(cel, 'AGENTS.md'), 'utf8'), /no raw research data/);
+  for (const hibas of [['../mas'], ['/abs'], [''], 'data/']) await assert.rejects(nyersAdatRogzit(cel, { helyek: hibas }));
 });

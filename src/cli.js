@@ -6,6 +6,7 @@ Használat:
   kutetika --version   a telepített változat
 
 Gépi parancsok: kutetika <parancs> [projektmappa] [JSON-beállítások]
+  nyers-adat          hol vannak a nyers kutatási adatok (AGENTS.md is frissül)
   vaz                 üres keab/kerelem.md a beadvány nyelvén (meglévőt nem ír felül)
   eloallit             frissítés, Word, formai ellenőrzés, bírálói átadás
   munkaanyag-biralat   korai bírálat, Word és mehet nélkül

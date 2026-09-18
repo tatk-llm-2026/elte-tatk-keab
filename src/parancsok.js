@@ -2,7 +2,7 @@ import { existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { resolve } from 'node:path';
 import { regisztral } from './cli.js';
-import { telepit, zaroUzenet } from './telepites.js';
+import { nyersAdatRogzit, telepit, zaroUzenet } from './telepites.js';
 import { eloallit, munkaanyagBiralat } from './eloallitas.js';
 import { allapot, felulbiral } from './ellenorzes.js';
 import { biralatFolytat, biralatRogzit, engedelyRogzit } from './biralat.js';
@@ -12,9 +12,9 @@ import { objektum, vazIr } from './munkafolyamat.js';
 export function initCel(args, { otthon = homedir() } = {}) {
   if (args.length > 1 || args.some((a) => a.startsWith('-'))) throw new Error('Használat: kutetika init [projektmappa]');
   const cel = resolve(args[0] ?? process.cwd());
-  if (!existsSync(cel) || !statSync(cel).isDirectory()) throw new Error(`Nincs ilyen mappa: ${cel}. Előbb hozza létre, vagy lépjen be a projekt mappájába.`);
+  if (!existsSync(cel) || !statSync(cel).isDirectory()) throw new Error(`Nincs ilyen mappa: ${cel}. Előbb hozd létre, vagy lépj be a projekted mappájába.`);
   // A saját (home) mappában a .claude/skills és a CLAUDE.md minden projektre hatna.
-  if (realpathSync(cel) === realpathSync(otthon)) throw new Error(`A kutetikát a kutatás projektmappájába telepítse, ne a saját mappájába (${cel}).`);
+  if (realpathSync(cel) === realpathSync(otthon)) throw new Error(`A kutetikát a kutatásod mappájába telepítsd, ne a saját (felhasználói) mappádba (${cel}).`);
   return cel;
 }
 
@@ -29,6 +29,7 @@ regisztral('init', async (args) => {
 const KOZOS = ['asszisztens', 'subagent', 'mellekletek'];
 const MUVELETEK = {
   vaz: { fut: vazIr, kulcsok: ['nyelv'] },
+  'nyers-adat': { fut: nyersAdatRogzit, kulcsok: ['helyek'] },
   eloallit: { fut: eloallit, kulcsok: [...KOZOS, 'datum', 'felulirasMegerosites'] },
   'munkaanyag-biralat': { fut: munkaanyagBiralat, kulcsok: KOZOS },
   'biralat-folytat': { fut: biralatFolytat, kulcsok: ['asszisztens', 'subagent'] },

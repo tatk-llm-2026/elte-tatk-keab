@@ -75,7 +75,7 @@ export async function eloallit(root, options = {}) {
     const felulirasToken = hash(JSON.stringify(pillanatkep(root, generalt)));
     if (modositott.length && options.felulirasMegerosites !== felulirasToken) return {
       mehet: false, allapot: 'feluliras-megerositest-ker', felulirasToken, modositott,
-      figyelmeztetesek: [...frissites.figyelmeztetesek, 'A kézzel módosított vagy ismeretlen eredetű Word-fájlok felülíródnak. Előbb vigye át a javítást a kerelem.md-be, vagy a kutató kifejezett jóváhagyásával adja meg a felulirasMegerosites tokent.'],
+      figyelmeztetesek: [...frissites.figyelmeztetesek, 'A kézzel módosított vagy ismeretlen eredetű Word-fájlok felülíródnak. Előbb vidd át a javítást a kerelem.md-be, vagy a kutató kifejezett jóváhagyásával add meg a felulirasMegerosites tokent.'],
     };
     const kimenetek = URLAPOK.map((u) => [nevek[u], kitolt(olvas(gyoker, `dokumentumok/${u}-${draft.nyelv}.docx`), terkepBetolto(u, draft.nyelv), draft.valaszok, { datum })]);
     kimenetek.push([nevek.tajekoztato, tajekoztatoWord(draft.tajekoztato)]);

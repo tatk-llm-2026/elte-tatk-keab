@@ -12,6 +12,9 @@ the helper program at `keab/.eszkoz/bin/kutetika.js` — always call it through 
 protocol below; never write Word files yourself. Your job is the conversation and the
 `keab/kerelem.md` working draft.
 
+
+In Hungarian, address the researcher informally (tegezés), as the tool itself does.
+
 ## Core rules
 
 - The single source of content is `keab/kerelem.md`. The researcher reads and edits it
@@ -94,7 +97,7 @@ node keab/.eszkoz/bin/kutetika.js eloallit . '{"asszisztens":"claude","subagent"
   `{"fajl":"keab/<name>","hely":"<draft field>","tipus":"kutatasi-eszkoz|tajekoztato|hozzajarulas|toborzas","nemNyersAdat":true}`.
   Agree this list with the researcher first (kutatási eszközök, tájékoztató,
   hozzájáruló nyilatkozatok, toborzó szöveg, igazolások). If there are no attachments,
-  pass `[]`. Never list `data/` files or raw research data.
+  pass `[]`. Never list raw research data files.
 - The command runs, in order: update check, Word generation from the draft, formal
   checks, and hands the result to the independent reviewer. There is no separate way
   to write Word files — do not try to.
@@ -143,8 +146,12 @@ This rule is binding, in this skill and everywhere in this project:
 
 - You may freely read the project description and the research instruments
   (questionnaire, interview guide, information sheet, recruitment text).
-- Do not read raw research data by default: the `data/` folder, responses, recordings,
-  transcripts, or any file containing them.
+- Do not read raw research data by default. Where it is kept is listed in the
+  kutetika block of `AGENTS.md` (from `keab/beallitasok.json`). If it has not been
+  recorded yet, ask the researcher which folders or files contain raw data and record
+  the answer with `node keab/.eszkoz/bin/kutetika.js nyers-adat . '{"helyek":[…]}'`
+  (an empty list if there is none). Any other file with responses, recordings,
+  transcripts or datasets is raw data too.
 - If the ethics application genuinely needs something from raw data (e.g. whether a
   dataset is truly anonymous, or what kinds of data it contains): first tell the
   researcher which file you want to read and why, and that its content will be sent to

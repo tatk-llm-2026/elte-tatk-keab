@@ -47,6 +47,8 @@
     font: 500 clamp(36px, 4.6vw, 56px)/1.06 var(--display); letter-spacing: -.015em; margin: 0 0 22px;
   }
   h1 em { font-style: italic; color: var(--pecset); }
+  a.csendes { color: inherit; text-decoration-thickness: 2px; text-decoration-color: var(--vonal); text-underline-offset: 6px; }
+  a.csendes:hover { text-decoration-color: var(--pecset); }
   .egyben { white-space: nowrap; }
   .lead { font-size: 19px; max-width: 34em; margin: 0 0 28px; }
   .parancs {
@@ -140,7 +142,7 @@
 <header class="fejlec">
   <div class="keret">
     <div class="nev">kutetika<span>@arpadtamasi/elte-tatk-keab</span></div>
-    <div class="nemhivatalos">Nem hivatalos kari eszköz. A kérelmet a KEAB bírálja el, nem ez a program.</div>
+    <div class="nemhivatalos">Nem hivatalos kari eszköz. A kérelmet a <a href="https://tatk.elte.hu/bizottsagok/kutetika">KEAB</a> bírálja el, nem ez a program.</div>
   </div>
 </header>
 
@@ -148,8 +150,8 @@
   <div class="nyito">
     <div class="keret">
       <div>
-        <h1><em>AI támogatás</em> a <span class="egyben">KEAB&#8209;kérelem</span> kitöltéséhez</h1>
-        <p class="lead">ELTE TáTK-s kutatóknak. A kutatásod leírásából, kódjaiból segít kitölteni a kutatásetikai engedélyt. Ellenőrzi is, hogy a bizottság ne dobja vissza formai vagy alapvető tartalmi problémák miatt.</p>
+        <h1><em>AI támogatás</em> a <span class="egyben"><a class="csendes" href="https://tatk.elte.hu/bizottsagok/kutetika">KEAB</a>&#8209;kérelem</span> kitöltéséhez</h1>
+        <p class="lead">ELTE TáTK-s kutatóknak. A kutatásod leírásából, kódjaiból segít kitölteni a kutatásetikai engedélyt. Átnézi azt is, mi miatt dobhatná vissza a bizottság: formai hibákat és alapvető tartalmi hiányokat keres.</p>
         <div class="parancs">
           <code id="parancs">npx @arpadtamasi/elte-tatk-keab@latest init</code>
           <button type="button" id="masol">Másolás</button>
@@ -165,7 +167,7 @@
           <tr><td class="kerdes">A kutatás címe:</td><td class="valasz"><span data-szoveg="Iskolai jóllét hetedikesek körében">Iskolai jóllét hetedikesek körében</span></td></tr>
           <tr><td class="kerdes">A kutatás résztvevőinek életkora:</td><td class="valasz"><span data-szoveg="12–14 év; szülői hozzájárulással, igazgatói engedéllyel">12–14 év; szülői hozzájárulással, igazgatói engedéllyel</span></td></tr>
         </table>
-        <div class="pecset" id="pecset" aria-hidden="true">Mehet<small>formailag rendben, nem engedély</small></div>
+        <div class="pecset" id="pecset" aria-hidden="true">Mehet<small>rendben, szerintem át fog menni</small></div>
       </figure>
     </div>
   </div>
@@ -210,9 +212,9 @@
 
   <section class="resz" aria-labelledby="adat-cim">
     <div class="keret">
-      <h2 id="adat-cim">A kutatási adatokhoz nem nyúl</h2>
+      <h2 id="adat-cim">Vigyáz az adataidra</h2>
       <div class="adat">
-        <p>A projekt leírását és a kutatási eszközöket (kérdőív, interjúvázlat, tájékoztató) szabadon olvassa. A nyers adatot, vagyis a <code class="be">data/</code> mappát, a válaszokat, a felvételeket és a leiratokat, alapból nem.</p>
+        <p>A projekt leírását és a kutatási eszközöket (kérdőív, interjúvázlat, tájékoztató) szabadon olvassa. A nyers adatokat (válaszokat, felvételeket, leiratokat, adatállományokat) alapból nem. Hogy ezek hol vannak a projektedben, azt tőled kérdezi meg, és feljegyzi a beállításaid közé.</p>
         <p>Ha a kérelemhez mégis kell belőle valami, előbb megmondja, melyik fájlt nézné meg és miért, és hogy a tartalma az AI-szolgáltatóhoz kerül. Csak a kifejezett engedélyeddel olvassa el, csak annyit, amennyi kell, és az engedély bekerül a <code class="be">dontesek.md</code>-be.</p>
       </div>
     </div>
@@ -247,7 +249,7 @@
 
 <footer class="labresz">
   <div class="keret">
-    <p>A kutetika nem hivatalos eszköz, és nem az ELTE TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságának terméke. A hatályos űrlapok és a szabályzat a <a href="https://tatk.elte.hu/bizottsagok/kutetika">kar oldalán</a> érhetők el.</p>
+    <p>A kutetika nem hivatalos eszköz, és nem az ELTE TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságának (<a href="https://tatk.elte.hu/bizottsagok/kutetika">KEAB</a>) terméke. A hatályos űrlapok és a szabályzat a <a href="https://tatk.elte.hu/bizottsagok/kutetika">kar oldalán</a> érhetők el.</p>
     <p>Forráskód: <a href="https://github.com/tatk-llm-2026/elte-tatk-keab">github.com/tatk-llm-2026/elte-tatk-keab</a> · MIT-licenc · A 7.5-ös vizsgálati eljárással nem foglalkozik.</p>
   </div>
 </footer>
