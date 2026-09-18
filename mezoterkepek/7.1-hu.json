@@ -1,0 +1,57 @@
+{
+  "dokumentum": "7.1-hu",
+  "urlap": "7.1",
+  "nyelv": "hu",
+  "cim": "Kutatásintegritási nyilatkozat",
+  "ujjlenyomat": "szoveg-sha256:e36b156c757f58a8d36f1770a893f057dbf919a24fd078a9c370b4f098f8c18e",
+  "mezok": [
+    {
+      "azonosito": "kutatas-cime",
+      "tipus": "helykitolto",
+      "kerdes": "A kutatás címe",
+      "minta": "[kutatás címe]",
+      "forras": "7.2/6"
+    },
+    {
+      "azonosito": "telepules",
+      "tipus": "helykitolto",
+      "kerdes": "A nyilatkozat kelte: település",
+      "minta": "[település]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "ev",
+      "tipus": "helykitolto",
+      "kerdes": "Év",
+      "minta": "[év]",
+      "alapertek": "mai-ev"
+    },
+    {
+      "azonosito": "ho",
+      "tipus": "helykitolto",
+      "kerdes": "Hónap",
+      "minta": "[hó]",
+      "alapertek": "mai-honap"
+    },
+    {
+      "azonosito": "nap",
+      "tipus": "helykitolto",
+      "kerdes": "Nap",
+      "minta": "[nap]",
+      "alapertek": "mai-nap"
+    },
+    {
+      "azonosito": "resztvevok",
+      "tipus": "sorok",
+      "kerdes": "A kutatás résztvevői (a kutatásban személyes adatot kezelő közreműködők): Név | Neptun kód | Szerepkör",
+      "fejlec": "Név (nyomtatott betűkkel)",
+      "hely": {
+        "tablazat": 0,
+        "sor": 1,
+        "cella": 0
+      },
+      "oszlopok": 3,
+      "kotelezo": true
+    }
+  ]
+}

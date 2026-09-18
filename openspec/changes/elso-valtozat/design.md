@@ -30,6 +30,7 @@ A `kutetika` npm-csomag (a név szabad), `npx kutetika@latest init` indítással
 - Skillek a három asszisztens helyére: `.claude/skills/`, `.agents/skills/`, `.github/skills/`. Egy forrásból másolva, azonos tartalommal.
 - `.kutetika/`: a csomagolt kari dokumentumok (eredeti `.docx` és `.pdf`), a szabályzat kinyert szöveges változata, a mezőtérképek és a `jegyzek.json` (verzió, dokumentumok forráscíme és ujjlenyomata).
 - `AGENTS.md`: a kutetika-blokk `<!-- kutetika:kezdet -->` és `<!-- kutetika:veg -->` jelölők között, így újratelepítéskor cserélhető.
+- `CLAUDE.md`: azonos jelölők közé tett `@AGENTS.md` betöltés. A Claude Code nem olvassa automatikusan az `AGENTS.md`-t; ezt a korábbi kipróbálás állapította meg, és a projektgazda jóváhagyta a kivételt. A telepítő a két utasításfájl jelölt blokkjain kívüli saját tartalmat és sorvégeket megőrzi, hiányzó fájlt létrehoz, újratelepítéskor nem dupláz.
 - A `keab/` mappát nem az inicializálás, hanem az első kérelem hozza létre, és az újratelepítés nem nyúl hozzá.
 - *Miért a szabályzat szöveges változata:* az asszisztensek a PDF-et drágán és pontatlanul olvassák. A kiadáskor kinyert, fejezetekre bontott szöveg pontos hivatkozást tesz lehetővé.
 
@@ -57,6 +58,8 @@ A kérelem tartalma a `keab/kerelem.md` munkaanyagban gyűlik: űrlaponként egy
 Az ujjlenyomat a dokumentum normalizált szövegének (szóközök és sortörések egységesítve) SHA-256 kivonata, nem a fájl bájtjaié.
 - *Miért:* ha a kar csak újramenti a fájlt, a bájtok változnak, a tartalom nem. Bájtalapú ujjlenyomatnál ez fölösleges főverziót és riasztást okozna.
 - *Kompromisszum:* a csak formázási változás rejtve marad. Ezt elfogadjuk, mert a kitöltést a szöveg és a táblázatszerkezet határozza meg; a mezőtérkép szerkezetellenőrzése a táblázat változását külön is észreveszi.
+- A Word-dokumentumok szövege a táblázat sor- és cellahatárait is jelöli, így a szerkezet változása is új ujjlenyomatot ad.
+- *Kivétel, a szabályzat PDF-jei:* ezeknél a fájl bájtjaiból készül az ujjlenyomat. A PDF szövegének kinyeréséhez nagy függőség kellene a kutató gépén, a kar pedig a PDF-et nem menti újra, hanem cseréli. Ha mégis téves riasztás jön, az új verzió kiadásakor kiderül, hogy a szöveg nem változott.
 
 ### 6. Frissítésfigyelés
 A segédprogram letölti a kar oldalát, megkeresi a hat űrlap és a két szabályzat linkjét, letölti őket, és összeveti az ujjlenyomatokat a `jegyzek.json`-nal. Eltérésnél lekérdezi az npm-ről a kiadott verziókat. Minden verzió `package.json`-ja tartalmazza a dokumentum-ujjlenyomatokat, így a csomag letöltése nélkül kideríthető, melyik verzió illik az új dokumentumokhoz.
@@ -77,6 +80,16 @@ A segédprogram letölti a kar oldalát, megkeresi a hat űrlap és a két szab�
 - „Mehet" csak a bírálat lefutása után lehet. A bírálat eredménye rögzíti, melyik asszisztens és milyen módon bírált.
 - *Alternatíva:* a bírálat ugyanabban a beszélgetésben. Elvetve, mert így a bíráló a kutató fejével olvasna.
 
+**Ellenőrzött képességek (2026-09-17, feladat 1.1):**
+
+| Asszisztens | Projekt-skillek | Subagent | Nem interaktív indítás |
+|---|---|---|---|
+| Claude Code 2.1.236 | igen (`.claude/skills/`) | igen | `claude -p` |
+| Codex CLI 0.147.0 | igen (`.agents/skills/`) | igen (`multi_agent` stabil) | `codex exec -s read-only --ephemeral -o <fájl>` |
+| GitHub Copilot CLI | nem ellenőrzött | nem ellenőrzött | nem ellenőrzött |
+
+A Copilot új parancssori programja a fejlesztői gépen nem volt telepítve (csak a régi `gh copilot` bővítmény, amely nem asszisztens), ezért ezt még ki kell próbálni.
+
 ### 8. „Mehet": ujjlenyomat a beadandó fájlokról
 Az előállításkori ellenőrzés eredményét a segédprogram a `keab/.ellenorzes.json`-ba írja: időpont, a `kerelem.md` és a beadandó Word-fájlok ujjlenyomata, a kifogások és a felülbírált kifogások. A „mehet" állapotot mindig ebből számolja újra: ha a munkaanyag vagy bármelyik beadandó fájl ujjlenyomata eltér, a „mehet" nem érvényes. A `bead.md` ember által olvasható összefoglalót kap ugyanerről.
 
@@ -85,6 +98,8 @@ A GitHub-repóban hetente automatikusan lefut ugyanaz a frissítésfigyelés, é
 
 ### 10. Tesztelés kitalált kutatásokon
 Kitalált mintaprojektek készülnek a jellemző esetekre: iskolai kutatás kiskorúakkal; interjús kutatás AI-leiratkészítéssel; anonimizált adatok másodelemzése (határeset); doktorandusz mint megnevezett kutatásvezető; angol beadvány. A segédprogram részei automatikus tesztet kapnak, a skilleket ezeken a mintaprojekteken próbáljuk ki mindhárom asszisztensben.
+
+A projektgazda jóváhagyta a háromrendszeres automatikus tesztelést: a `.github/workflows/tesztek.yml` minden feltöltéskor, változtatási kérelemnél és kézi indításra futtatja az `npm test` parancsot Windowson, macOS-en és Linuxon, Node 20, 22 és 24 mellett. A beállítás helyben elkészült; a távoli futás még nincs ellenőrizve, feltöltés nem történt.
 
 ## Risks / Trade-offs
 

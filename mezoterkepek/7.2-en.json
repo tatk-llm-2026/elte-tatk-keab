@@ -1,0 +1,825 @@
+{
+  "dokumentum": "7.2-en",
+  "urlap": "7.2",
+  "nyelv": "en",
+  "cim": "Research integrity application form",
+  "ujjlenyomat": "szoveg-sha256:094d2a436ad69bc085f3564919d48abba58217fd0bea6172ff652e4621b7807e",
+  "mezok": [
+    {
+      "azonosito": "azonosito",
+      "tipus": "bizottsagi",
+      "kerdes": "Research registration no. (filled by the Ethics Committee):",
+      "kerdesHely": {
+        "tablazat": 0,
+        "sor": 0,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 0,
+        "sor": 0,
+        "cella": 2
+      }
+    },
+    {
+      "azonosito": "1",
+      "tipus": "cella",
+      "kerdes": "The applicant’s (head of research) name:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 0,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 0,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "2",
+      "tipus": "cella",
+      "kerdes": "Academic rank:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 1,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 1,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "3",
+      "tipus": "cella",
+      "kerdes": "Place of work (Faculty/Institute/Department):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 2,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 2,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "4",
+      "tipus": "cella",
+      "kerdes": "Position: public servant at ELTE yes/no",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 3,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 3,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "5",
+      "tipus": "cella",
+      "kerdes": "E-mail address:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 4,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 4,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "6",
+      "tipus": "cella",
+      "kerdes": "Title of the research:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 5,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 5,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "7",
+      "tipus": "cella",
+      "kerdes": "The field(s) of research:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 6,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 6,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "8",
+      "tipus": "cella",
+      "kerdes": "Other researchers participating in the research (e.g., student):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 7,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 7,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "9",
+      "tipus": "cella",
+      "kerdes": "Expected date of the beginning and end of the research:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 8,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 8,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "10",
+      "tipus": "cella",
+      "kerdes": "Financial resource of the research (research grant or other):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 9,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 9,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "11",
+      "tipus": "cella",
+      "kerdes": "Submission date of the application:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 10,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 10,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null,
+      "alapertek": "mai-datum"
+    },
+    {
+      "azonosito": "12",
+      "tipus": "cella",
+      "kerdes": "Purpose of research (min. 100, max. 200 words):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 11,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 11,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": {
+        "min": 100,
+        "max": 200
+      }
+    },
+    {
+      "azonosito": "13",
+      "tipus": "cella",
+      "kerdes": "Age of the research participants:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 12,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 12,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "14",
+      "tipus": "cella-hozzafuzes",
+      "kerdes": "The form of approval depends on the age of the research participants. Please underline, which documents you are attaching:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 13,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 13,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "15",
+      "tipus": "cella",
+      "kerdes": "Means of selecting the research participants. (How do you intend to recruit and select the participants?) (If necessary, please attach the relevant documentation: advertisement, letter to the head of institution etc.)",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 14,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 14,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "16",
+      "tipus": "cella",
+      "kerdes": "Locations of the research (if relevant):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 15,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 15,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "17",
+      "tipus": "cella",
+      "kerdes": "Brief (max. 200 words) introduction into the research methods. (The planned procedure should be described rather than the theoretic background.)",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 16,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 16,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": {
+        "min": null,
+        "max": 200
+      }
+    },
+    {
+      "azonosito": "18",
+      "tipus": "cella",
+      "kerdes": "Is there a conflict of interest between different institutions or groups? Which are they? How do you intend to handle these conflicts during the research and its publication?",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 17,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 17,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "19",
+      "tipus": "cella",
+      "kerdes": "Will the data collected during the research enable the identification of the participants? Do you plan to collect personal data?",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 18,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 18,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "20",
+      "tipus": "cella",
+      "kerdes": "What kind of ready-made questionnaires, tests and other measuring tools do you want to use (if any)? Please attach the questionnaires and tests to the application, include the link of online questionnaires, and mention the ethically relevant factors related to the development of measuring tools.",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 19,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 19,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "21",
+      "tipus": "cella",
+      "kerdes": "What appliances, instruments and scripts do you intend to use? Please attach their documentation (unless they have been approved in an earlier approval procedure.)",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 20,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 20,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "22",
+      "tipus": "cella",
+      "kerdes": "Please describe how you intend to ensure the short- and long-time processing and archiving of the data and how you ensure that they will not allow the identification of participants. Also, if you process personal data (name, e-mail address), how will you protect those data?",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 21,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 21,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "23",
+      "tipus": "cella",
+      "kerdes": "Please describe how you intend to inform the community concerned about the results of the research.",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 22,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 22,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "24",
+      "tipus": "cella",
+      "kerdes": "Please describe how you are going to publish the research results. Please include the Open Science solutions.",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 23,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 23,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "25",
+      "tipus": "cella",
+      "kerdes": "Please describe what tools you intend to use to ensure the integrity of the research. E.g., hypotheses, research proposal’s preliminary registration (e.g., https://osf.io )",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 24,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 24,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "26",
+      "tipus": "cella",
+      "kerdes": "Please describe how you plan to archive the anonymized or anonymous data and the research documentation. Who will be able to access the data and documentation and in what way? Please include the Open Science solutions.",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 25,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 25,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "igen-magyarazat-utmutato",
+      "tipus": "utmutato",
+      "kerdes": "If your answer to any of the questions is YES, please describe how you make sure that no bodily or psychological harm is done to any persons or groups during the research.",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 0,
+        "cella": 1
+      }
+    },
+    {
+      "azonosito": "27",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research create any unpleasant situations?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "28",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research include the use of incentives or gifts?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "29",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research involve disabled people?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "30",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research involve mental patients or people at risk of developing a mental illness?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "31",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research involve the participation of members of social minorities (or any other vulnerable groups)?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "32",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research involve the risk of injury to the contributors or participants?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "33",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research involve the deception of the participants or the partial concealment of its purpose?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "34",
+      "tipus": "igen-nem",
+      "kerdes": "Will the research involve a procedure that may, even involuntarily, cause anxiety or suffering (e.g., in-depth interviews)?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NO",
+        "igen": "YES"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "35",
+      "tipus": "cella",
+      "kerdes": "If the preliminary consent of the data subjects is difficult to obtain (e.g., research at public places), how will you ensure the participants’ protection, their retrospective or continuous information and involvement, and how do you justify the absence of preliminary information?",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 0,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 0,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "36",
+      "tipus": "cella",
+      "kerdes": "If the research does not directly affect any persons (e.g., analysis of documents, historical or archival research or the research of public spaces) but there are some persons directly affected by the research (personal data connected to them), what kind of ethical problems may emerge related to them (the possibility of identification, their right to form an opinion etc.) and how will you respond to them? Also, if there are directly and indirectly affected persons involved, how will you separate them during the research? If the data make the identity of persons possible, the general rules of data processing (cf. Consent to data processing and its Annex) apply.",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 1,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 1,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "37",
+      "tipus": "cella",
+      "kerdes": "If the research is participatory research or action research, how will you ensure and in what way do you plan the active involvement of the persons? Please describe what effects the research may exert on the given group or persons involved, and the places or communities it forms. Will the participants have an option to comment on the research results? If they will, how, and if not, why not?",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 2,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 2,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "38",
+      "tipus": "cella",
+      "kerdes": "Will the research have (indirect) social impacts? How may these impacts influence the participants (especially if vulnerable social groups are involved)?",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 3,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 3,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "39",
+      "tipus": "cella",
+      "kerdes": "If you also pursue archival research, how will you make sure that the personal data are protected during the research and at its publication? During archival research, please take into account the stipulations of section 24 of Act LXVI. of 1995.",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 4,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 4,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "40",
+      "tipus": "cella",
+      "kerdes": "Will the research entail any further ethical concerns that were not mentioned in the answers given to the above questions? If so, please briefly discuss them.",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 5,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 5,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    }
+  ]
+}

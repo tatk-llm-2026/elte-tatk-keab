@@ -1,0 +1,60 @@
+name: Kari dokumentumok figyelése
+
+on:
+  schedule:
+    - cron: '17 7 * * 1'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: kari-dokumentumok-figyelese
+  cancel-in-progress: false
+
+jobs:
+  ellenorzes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      eredmeny: ${{ steps.figyeles.outputs.eredmeny }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - id: figyeles
+        run: node scripts/figyeles.js
+
+  hibajegy:
+    if: always()
+    needs: ellenorzes
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/github-script@v7
+        env:
+          FIGYELES_EREDMENY: ${{ needs.ellenorzes.outputs.eredmeny }}
+        with:
+          script: |
+            const { hibajegyBiztosit } = await import(`${process.env.GITHUB_WORKSPACE}/scripts/figyeles.js`);
+            let eredmeny;
+            try {
+              eredmeny = JSON.parse(process.env.FIGYELES_EREDMENY);
+            } catch {
+              eredmeny = { allapot: 'nem-ellenorizheto', elteresek: [], figyelmeztetesek: ['Az ellenőrző feladat nem adott eredményt; a futási naplót ellenőrizni kell.'] };
+            }
+            const valasz = await hibajegyBiztosit(github, context.repo, eredmeny);
+            if (valasz.figyelmeztetes) core.warning(valasz.figyelmeztetes);
+            core.info(JSON.stringify(valasz));

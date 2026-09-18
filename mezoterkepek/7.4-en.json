@@ -1,0 +1,159 @@
+{
+  "dokumentum": "7.4-en",
+  "urlap": "7.4",
+  "nyelv": "en",
+  "cim": "Plan for data processing",
+  "ujjlenyomat": "szoveg-sha256:8147e0d626eea5b32e9bbe146df294d5042069834a9eb1ade486c29cd83a2016",
+  "mezok": [
+    {
+      "azonosito": "kutatas-cime",
+      "tipus": "helykitolto",
+      "kerdes": "Title of research",
+      "minta": "[title of research]",
+      "forras": "7.2/6"
+    },
+    {
+      "azonosito": "azonosito",
+      "tipus": "bizottsagi",
+      "kerdes": "Registration number of research",
+      "minta": "[registration number of research]"
+    },
+    {
+      "azonosito": "jogszabalyok",
+      "tipus": "megerosites",
+      "kerdes": "I have reviewed the validity of the referred acts of law (yes/no)",
+      "minta": "[the validity of the referred acts of law needs reviewing]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "keszult",
+      "tipus": "helykitolto",
+      "kerdes": "Date of document",
+      "minta": "[date of document]",
+      "alapertek": "mai-datum-napjan"
+    },
+    {
+      "azonosito": "felelos",
+      "tipus": "helykitolto",
+      "kerdes": "Responsibility: research or research group",
+      "minta": "[research / research group]",
+      "valasztas": [
+        "research",
+        "research group"
+      ],
+      "kotelezo": true
+    },
+    {
+      "azonosito": "3",
+      "tipus": "bekezdes",
+      "kerdes": "Purpose of research",
+      "utmutato": "brief, simple description of the research",
+      "minta": "[brief, simple description of the research]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "4",
+      "tipus": "bekezdes",
+      "kerdes": "Scope and source of personal data to be processed",
+      "utmutato": "the accurate, brief description of the personal data to be processed including their sources",
+      "minta": "[the accurate, brief description of the personal data to be processed including their sources]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "5",
+      "tipus": "bekezdes",
+      "kerdes": "Responsibility for data processing",
+      "utmutato": "Please indicate who is responsible for the processing of data throughout the entire data cycle. Please also include the responsible person’s contact details.",
+      "minta": "[Please indicate who is responsible for the processing of data throughout the entire data cycle. Please also include the responsible person’s contact details.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "6",
+      "tipus": "bekezdes",
+      "kerdes": "Steps of the research and the procedure of processing personal data",
+      "utmutato": "Detailed description of the steps of realisation of the research and the processing of personal data from the collection of the personal data to their storing; it is necessary in every case to also record the time of destruction of the personal data; it is necessary to include information about the processing of the personal data of all involved (participants and contributors) and also who collect the personal data, if and how they handle them while processing them, and at which point of the research these data are handed over to the head of research (anonymized research data are not necessary to include here).",
+      "minta": "[Detailed description of the steps of realisation of the research and the processing of personal data from the collection of the personal data to their storing; it is necessary in every case to also record the time of destruction of the personal data; it is necessary to include information about the processing of the personal data of all involved (participants and contributors) and also who collect the personal data, if and how they handle them while processing them, and at which point of the research these data are handed over to the head of research (anonymized research data are not necessary to include here).]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "7",
+      "tipus": "bekezdes",
+      "kerdes": "Securities of the enforceability of the rights of the affected",
+      "utmutato": "Detailed description of the measures ensuring the enforcement of the rights of the affected, whose personal data are processed, especially but not exclusively the measures taken towards the exercising of their rights to withdraw their previously given consent, the correction of data, their access to knowing the stored data and their being informed in connection with any data processing incidents. E.g., means of giving information, channels of communication, responsible persons, proceedings",
+      "minta": "[Detailed description of the measures ensuring the enforcement of the rights of the affected, whose personal data are processed, especially but not exclusively the measures taken towards the exercising of their rights to withdraw their previously given consent, the correction of data, their access to knowing the stored data and their being informed in connection with any data processing incidents. E.g., means of giving information, channels of communication, responsible persons, proceedings]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "8",
+      "tipus": "bekezdes",
+      "kerdes": "Technical and administrative measures to ensure data protection",
+      "utmutato": "Detailed description of how the protection of personal data is ensured during the research, such as but not exclusively who may access the personal data, how they document the access, what kind of statements these persons make, what protective measures (information technology or other) are taken to prevent personal data to be accessed by unauthorized people and what procedures of anonymization (or pseudonymization) are employed etc.",
+      "minta": "[Detailed description of how the protection of personal data is ensured during the research, such as but not exclusively who may access the personal data, how they document the access, what kind of statements these persons make, what protective measures (information technology or other) are taken to prevent personal data to be accessed by unauthorized people and what procedures of anonymization (or pseudonymization) are employed etc.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "9",
+      "tipus": "bekezdes",
+      "kerdes": "Description of the research data",
+      "utmutato": "Please describe what kind of data of scientific value are collected or recorded; please understand the concept of data in the broader sense, extending it, besides quantitative data, to data of qualitative research, photographs, films and data collected from the internet.",
+      "minta": "[Please describe what kind of data of scientific value are collected or recorded; please understand the concept of data in the broader sense, extending it, besides quantitative data, to data of qualitative research, photographs, films and data collected from the internet.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "10",
+      "tipus": "bekezdes",
+      "kerdes": "Presentation of the available data",
+      "utmutato": "Please write a review on the data available in the research topic and on why they are not appropriate for answering the research question. This will make the value of the proposed research and the necessity for data collecting clear.",
+      "minta": "[Please write a review on the data available in the research topic and on why they are not appropriate for answering the research question. This will make the value of the proposed research and the necessity for data collecting clear.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "11",
+      "tipus": "bekezdes",
+      "kerdes": "Format of the data",
+      "utmutato": "Please describe here, in what format the data are submitted, disseminated and archived.",
+      "minta": "[Please describe here, in what format the data are submitted, disseminated and archived.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "12",
+      "tipus": "bekezdes",
+      "kerdes": "Metadata",
+      "utmutato": "Please summarise here, what kind of metadata you add to the created data to assist the clear understanding of those wo access them.",
+      "minta": "[Please summarise here, what kind of metadata you add to the created data to assist the clear understanding of those wo access them.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "13",
+      "tipus": "bekezdes",
+      "kerdes": "Storing and safety copies",
+      "utmutato": "Please describe here, where and in what form the collected data will be stored. The best practice is the storing of (anonymized) data at several different places.",
+      "minta": "[Please describe here, where and in what form the collected data will be stored. The best practice is the storing of (anonymized) data at several different places.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "14",
+      "tipus": "bekezdes",
+      "kerdes": "Intellectual property and data property",
+      "utmutato": "Please indicate who possesses ownership of the data and other intellectual properties, such as developed scales.",
+      "minta": "[Please indicate who possesses ownership of the data and other intellectual properties, such as developed scales.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "15",
+      "tipus": "bekezdes",
+      "kerdes": "Accessibility and sharing",
+      "utmutato": "Please describe in what form, scope and where you are going to make the research data available.",
+      "minta": "[Please describe in what form, scope and where you are going to make the research data available.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "16",
+      "tipus": "bekezdes",
+      "kerdes": "Costs of data processing",
+      "utmutato": "Please summarize briefly, from what sources you are going to cover the expenses of the publication and archiving of the anonymized data.",
+      "minta": "[Please summarize briefly, from what sources you are going to cover the expenses of the publication and archiving of the anonymized data.]",
+      "kotelezo": true
+    }
+  ]
+}

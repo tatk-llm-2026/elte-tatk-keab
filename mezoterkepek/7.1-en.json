@@ -1,0 +1,57 @@
+{
+  "dokumentum": "7.1-en",
+  "urlap": "7.1",
+  "nyelv": "en",
+  "cim": "Statement of research integrity",
+  "ujjlenyomat": "szoveg-sha256:2d163e6d3e97ec731d9970ab84ce01878597874f7a50167cb8be8d0d3e3ee7e4",
+  "mezok": [
+    {
+      "azonosito": "kutatas-cime",
+      "tipus": "helykitolto",
+      "kerdes": "Title of research",
+      "minta": "[title of research]",
+      "forras": "7.2/6"
+    },
+    {
+      "azonosito": "telepules",
+      "tipus": "helykitolto",
+      "kerdes": "Place of the statement",
+      "minta": "[place]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "ev",
+      "tipus": "helykitolto",
+      "kerdes": "Year",
+      "minta": "[year]",
+      "alapertek": "mai-ev"
+    },
+    {
+      "azonosito": "ho",
+      "tipus": "helykitolto",
+      "kerdes": "Month",
+      "minta": "[month]",
+      "alapertek": "mai-honap"
+    },
+    {
+      "azonosito": "nap",
+      "tipus": "helykitolto",
+      "kerdes": "Day",
+      "minta": "[day]",
+      "alapertek": "mai-nap"
+    },
+    {
+      "azonosito": "resztvevok",
+      "tipus": "sorok",
+      "kerdes": "Research participants (contributors processing personal data): Name | Neptun ID | Role",
+      "fejlec": "Name (printed)",
+      "hely": {
+        "tablazat": 0,
+        "sor": 1,
+        "cella": 0
+      },
+      "oszlopok": 3,
+      "kotelezo": true
+    }
+  ]
+}

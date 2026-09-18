@@ -1,0 +1,69 @@
+{
+  "kutetikaVerzio": "0.0.0",
+  "dokumentumok": [
+    {
+      "azonosito": "7.1-hu",
+      "nyelv": "hu",
+      "tipus": "docx",
+      "fajl": "7.1-hu.docx",
+      "forras": "https://tatk.elte.hu/dstore/document/2230/7.1%20Kutat%C3%A1sintegrit%C3%A1si%20nyilatkozat%20%28KUTATASVEZETO%20NEVE_DATUM%29.docx",
+      "ujjlenyomat": "szoveg-sha256:e36b156c757f58a8d36f1770a893f057dbf919a24fd078a9c370b4f098f8c18e"
+    },
+    {
+      "azonosito": "7.2-hu",
+      "nyelv": "hu",
+      "tipus": "docx",
+      "fajl": "7.2-hu.docx",
+      "forras": "https://tatk.elte.hu/dstore/document/2231/7.2%20Kutat%C3%A1sintegrit%C3%A1si%20%C5%B1rlap%20%28KUTATASVEZETO%20NEVE_DATUM%29.docx",
+      "ujjlenyomat": "szoveg-sha256:1208713ffed5bb63ff88c26cac76681f8711bac4931bc756ccca704916378d37"
+    },
+    {
+      "azonosito": "7.4-hu",
+      "nyelv": "hu",
+      "tipus": "docx",
+      "fajl": "7.4-hu.docx",
+      "forras": "https://tatk.elte.hu/dstore/document/2232/7.4%20Adatkezel%C3%A9si%20terv%20minta%20%28KUTATASVEZETO%20NEVE_DATUM%29.docx",
+      "ujjlenyomat": "szoveg-sha256:815efdefdbfa7a0fd75dc43f9d2cd3bb2137d916bfe34f30c9d58d38eeaa4db3"
+    },
+    {
+      "azonosito": "7.1-en",
+      "nyelv": "en",
+      "tipus": "docx",
+      "fajl": "7.1-en.docx",
+      "forras": "https://tatk.elte.hu/dstore/document/2238/7.1%20Statement%20of%20research%20integrity%20%28HEAD%20OF%20RESEARCH_DATE%29.docx",
+      "ujjlenyomat": "szoveg-sha256:2d163e6d3e97ec731d9970ab84ce01878597874f7a50167cb8be8d0d3e3ee7e4"
+    },
+    {
+      "azonosito": "7.2-en",
+      "nyelv": "en",
+      "tipus": "docx",
+      "fajl": "7.2-en.docx",
+      "forras": "https://tatk.elte.hu/dstore/document/2239/7.2%20Research%20integrity%20application%20form%20%28HEAD%20OF%20RESEARCH_DATE%29.docx",
+      "ujjlenyomat": "szoveg-sha256:094d2a436ad69bc085f3564919d48abba58217fd0bea6172ff652e4621b7807e"
+    },
+    {
+      "azonosito": "7.4-en",
+      "nyelv": "en",
+      "tipus": "docx",
+      "fajl": "7.4-en.docx",
+      "forras": "https://tatk.elte.hu/dstore/document/2240/7.4%20Plan%20for%20data%20processing%20-%20sample%20%28HEAD%20OF%20RESEARCH_DATE%29.docx",
+      "ujjlenyomat": "szoveg-sha256:8147e0d626eea5b32e9bbe146df294d5042069834a9eb1ade486c29cd83a2016"
+    },
+    {
+      "azonosito": "szabalyzat-hu",
+      "nyelv": "hu",
+      "tipus": "pdf",
+      "fajl": "szabalyzat-hu.pdf",
+      "forras": "https://tatk.elte.hu/dstore/document/2296/Kutatasetikai_Szabalyzat_ELTE_TaTK.pdf",
+      "ujjlenyomat": "fajl-sha256:5333320db27bced4a69b33e1597639da23089b721057c495955e0248e83ea60d"
+    },
+    {
+      "azonosito": "szabalyzat-en",
+      "nyelv": "en",
+      "tipus": "pdf",
+      "fajl": "szabalyzat-en.pdf",
+      "forras": "https://tatk.elte.hu/dstore/document/2297/Research_Ethics_Regulations_ELTE_TaTK.pdf",
+      "ujjlenyomat": "fajl-sha256:aa075bbf0ca72d05bc314c52360d010eaec3d751dc3f0b3509387a6dee79eb63"
+    }
+  ]
+}

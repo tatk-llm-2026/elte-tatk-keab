@@ -1,0 +1,159 @@
+{
+  "dokumentum": "7.4-hu",
+  "urlap": "7.4",
+  "nyelv": "hu",
+  "cim": "Adatkezelési terv",
+  "ujjlenyomat": "szoveg-sha256:815efdefdbfa7a0fd75dc43f9d2cd3bb2137d916bfe34f30c9d58d38eeaa4db3",
+  "mezok": [
+    {
+      "azonosito": "kutatas-cime",
+      "tipus": "helykitolto",
+      "kerdes": "A kutatás címe",
+      "minta": "[kutatás címe]",
+      "forras": "7.2/6"
+    },
+    {
+      "azonosito": "azonosito",
+      "tipus": "bizottsagi",
+      "kerdes": "A kutatás azonosítószáma",
+      "minta": "[a kutatás azonosítószáma]"
+    },
+    {
+      "azonosito": "jogszabalyok",
+      "tipus": "megerosites",
+      "kerdes": "A hivatkozott jogszabályok hatályosságát felülvizsgáltam (igen/nem)",
+      "minta": "[hivatkozott jogszabályok hatályosságának felülvizsgálata szükséges]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "keszult",
+      "tipus": "helykitolto",
+      "kerdes": "Az adatkezelési terv elkészültének dátuma",
+      "minta": "[dokumentum elkészültének dátuma]-n",
+      "alapertek": "mai-datum-napjan"
+    },
+    {
+      "azonosito": "felelos",
+      "tipus": "helykitolto",
+      "kerdes": "A felelősséget vállaló vezető: kutatás vagy kutatócsoport",
+      "minta": "[kutatás / kutatócsoport]",
+      "valasztas": [
+        "kutatás",
+        "kutatócsoport"
+      ],
+      "kotelezo": true
+    },
+    {
+      "azonosito": "3",
+      "tipus": "bekezdes",
+      "kerdes": "A kutatás célja",
+      "utmutato": "a kutatás céljának rövid, közérthető, szabatos leírása",
+      "minta": "[a kutatás céljának rövid, közérthető, szabatos leírása]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "4",
+      "tipus": "bekezdes",
+      "kerdes": "A kezelendő személyes adatok köre és azok forrása",
+      "utmutato": "a kezelendő személyes adatok pontos, célra törő bemutatása, beleértve azok forrásának megjelölését",
+      "minta": "[a kezelendő személyes adatok pontos, célra törő bemutatása, beleértve azok forrásának megjelölését]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "5",
+      "tipus": "bekezdes",
+      "kerdes": "Felelősség tisztázása",
+      "utmutato": "írja le, hogy ki vállal felelősséget az adatok kezeléséért a teljes adatciklus során, itt fel kell tüntetni a felelős elérhetőségét is",
+      "minta": "[írja le, hogy ki vállal felelősséget az adatok kezeléséért a teljes adatciklus során, itt fel kell tüntetni a felelős elérhetőségét is]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "6",
+      "tipus": "bekezdes",
+      "kerdes": "A kutatás lépései és a személyes adatok kezelésének folyamata",
+      "utmutato": "a kutatás lépéseinek és a személyes adatok kezelésének részletes leírása a személyes adatok gyűjtésétől annak megsemmisítéséig, beleértve a személyes adatok tárolását is; minden esetben szükséges rögzíteni a személyes adatok végleges megsemmisítésének időpontját is; itt ki kell térni a kutatásba bevont összes személy személyes – tehát a résztvevők és a közreműködők – adatainak kezelésére is, valamint arra is, hogy akik a személyes adatokat gyűjtik, végeznek-e vele és ha igen, milyen műveletet, a kutatási folyamat mely pontján adják át az adatokat a kutatásvezetőnek – nem kell kitérni ebben a részben az anonimizált kutatási adatokra",
+      "minta": "[a kutatás lépéseinek és a személyes adatok kezelésének részletes leírása a személyes adatok gyűjtésétől annak megsemmisítéséig, beleértve a személyes adatok tárolását is; minden esetben szükséges rögzíteni a személyes adatok végleges megsemmisítésének időpontját is; itt ki kell térni a kutatásba bevont összes személy személyes – tehát a résztvevők és a közreműködők – adatainak kezelésére is, valamint arra is, hogy akik a személyes adatokat gyűjtik, végeznek-e vele és ha igen, milyen műveletet, a kutatási folyamat mely pontján adják át az adatokat a kutatásvezetőnek – nem kell kitérni ebben a részben az anonimizált kutatási adatokra]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "7",
+      "tipus": "bekezdes",
+      "kerdes": "Az érintett jogai gyakorlati érvényesíthetőségének biztosítékai",
+      "utmutato": "ebben a fejezetben kell ismertetni a személyes adatok érintettjeinek jogérvényesítési lehetőségeit biztosító intézkedéseket, így különösen, de nem kizárólag a tájékozott beleegyezéshez, a korábban adott hozzájárulás visszavonásához, az adatok pontosításához, a tárolt adatok megismeréséhez, valamint az adatvédelmi incidens kapcsán történő tájékoztatáshoz fűződő jogok gyakorlásának biztosításához tett intézkedéseket, pl.: tájékoztatás módja, biztosított csatornák, felelős személyek, eljárásrendek",
+      "minta": "[ebben a fejezetben kell ismertetni a személyes adatok érintettjeinek jogérvényesítési lehetőségeit biztosító intézkedéseket, így különösen, de nem kizárólag a tájékozott beleegyezéshez, a korábban adott hozzájárulás visszavonásához, az adatok pontosításához, a tárolt adatok megismeréséhez, valamint az adatvédelmi incidens kapcsán történő tájékoztatáshoz fűződő jogok gyakorlásának biztosításához tett intézkedéseket, pl.: tájékoztatás módja, biztosított csatornák, felelős személyek, eljárásrendek]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "8",
+      "tipus": "bekezdes",
+      "kerdes": "Az adatvédelmet biztosító technikai és szervezési intézkedések",
+      "utmutato": "itt kell ismertetni, hogy milyen módon biztosított a kutatás során a személyes adatok védelme, így például, de nem kizárólag kik férhetnek hozzá a személyes adatokhoz, a hozzáférést hogyan dokumentálják, milyen nyilatkozatot tesznek ezek a személyek, milyen informatikai és egyéb védelmi intézkedések történnek a személyes adatok illetéktelen kézbe kerülésének megakadályozása érdekében, milyen álnevesítési (pszeudonimizációs) vagy anonimizációs eljárások kerülnek alkalmazásra, stb.",
+      "minta": "[itt kell ismertetni, hogy milyen módon biztosított a kutatás során a személyes adatok védelme, így például, de nem kizárólag kik férhetnek hozzá a személyes adatokhoz, a hozzáférést hogyan dokumentálják, milyen nyilatkozatot tesznek ezek a személyek, milyen informatikai és egyéb védelmi intézkedések történnek a személyes adatok illetéktelen kézbe kerülésének megakadályozása érdekében, milyen álnevesítési (pszeudonimizációs) vagy anonimizációs eljárások kerülnek alkalmazásra, stb.]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "9",
+      "tipus": "bekezdes",
+      "kerdes": "A kutatási adatok leírása",
+      "utmutato": "itt ismertesse, hogy milyen tudományos értékű adatok kerülnek felvételre vagy gyűjtésre; az adat fogalmát értelmezze széleskörűen, kiterjesztve a kvantitatív adatok mellett a kvalitatív kutatások adataira, de akár fényképekre, filmfelvételekre, valamint internetről gyűjtött adatokra is",
+      "minta": "[itt ismertesse, hogy milyen tudományos értékű adatok kerülnek felvételre vagy gyűjtésre; az adat fogalmát értelmezze széleskörűen, kiterjesztve a kvantitatív adatok mellett a kvalitatív kutatások adataira, de akár fényképekre, filmfelvételekre, valamint internetről gyűjtött adatokra is]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "10",
+      "tipus": "bekezdes",
+      "kerdes": "Az elérhető adatok bemutatása",
+      "utmutato": "közöljön áttekintést a kutatási témában már elérhető adatokról és arról, hogy azok miért nem alkalmasak a kutatási kérdés megválaszolására; ez világossá teszi a tervezett kutatás értékét, az adatgyűjtés szükségességét",
+      "minta": "[közöljön áttekintést a kutatási témában már elérhető adatokról és arról, hogy azok miért nem alkalmasak a kutatási kérdés megválaszolására; ez világossá teszi a tervezett kutatás értékét, az adatgyűjtés szükségességét]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "11",
+      "tipus": "bekezdes",
+      "kerdes": "Az adatok formátuma",
+      "utmutato": "itt ismertesse, hogy milyen formátumú adatok kerülnek leadásra, terjesztésre, illetve archiválásra",
+      "minta": "[itt ismertesse, hogy milyen formátumú adatok kerülnek leadásra, terjesztésre, illetve archiválásra]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "12",
+      "tipus": "bekezdes",
+      "kerdes": "Metaadatok",
+      "utmutato": "itt foglalja össze, hogy a létrehozott adatok mellett milyen metaadatokat biztosít, amellyel segíti az adatokhoz hozzáférők pontos megértését",
+      "minta": "[itt foglalja össze, hogy a létrehozott adatok mellett milyen metaadatokat biztosít, amellyel segíti az adatokhoz hozzáférők pontos megértését]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "13",
+      "tipus": "bekezdes",
+      "kerdes": "Tárolás és biztonsági másolatok",
+      "utmutato": "írja le, hogy az összegyűjtött adatokat hol, milyen formában tárolja majd; a legjobb gyakorlat az (anonimizált) adatok többszörös eltérő helyeken történő tárolása",
+      "minta": "[írja le, hogy az összegyűjtött adatokat hol, milyen formában tárolja majd; a legjobb gyakorlat az (anonimizált) adatok többszörös eltérő helyeken történő tárolása]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "14",
+      "tipus": "bekezdes",
+      "kerdes": "Szellemi tulajdon és adattulajdon",
+      "utmutato": "rögzítse, hogy ki rendelkezik az adatok, illetve az esetleges egyéb szellemi termékek, például kifejlesztett skálák tulajdonjogával",
+      "minta": "[rögzítse, hogy ki rendelkezik az adatok, illetve az esetleges egyéb szellemi termékek, például kifejlesztett skálák tulajdonjogával]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "15",
+      "tipus": "bekezdes",
+      "kerdes": "Elérhetőség és megosztás",
+      "utmutato": "írja le, hogy milyen formában, milyen körben és hol teszi elérhetővé a kutatás adatait",
+      "minta": "[írja le, hogy milyen formában, milyen körben és hol teszi elérhetővé a kutatás adatait]",
+      "kotelezo": true
+    },
+    {
+      "azonosito": "16",
+      "tipus": "bekezdes",
+      "kerdes": "Adatkezelés költségei",
+      "utmutato": "foglalja össze röviden, hogy milyen forrásból fedezi az anonimizált adatok nyilvánossá tételének, illetve archiválásának költségeit",
+      "minta": "[foglalja össze röviden, hogy milyen forrásból fedezi az anonimizált adatok nyilvánossá tételének, illetve archiválásának költségeit]",
+      "kotelezo": true
+    }
+  ]
+}

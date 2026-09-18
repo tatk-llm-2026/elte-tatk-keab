@@ -1,0 +1,43 @@
+{
+  "name": "kutetika",
+  "version": "0.0.0",
+  "description": "ELTE TáTK kutatásetikai engedélykérelem (KEAB) a kutató saját AI-asszisztensével",
+  "type": "module",
+  "bin": {
+    "kutetika": "bin/kutetika.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "skills",
+    "dokumentumok",
+    "mezoterkepek"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tatk-llm-2026/kutetika.git"
+  },
+  "dependencies": {
+    "@xmldom/xmldom": "^0.9.12",
+    "fflate": "^0.8.3"
+  },
+  "kutetika": {
+    "dokumentumok": {
+      "7.1-hu": "szoveg-sha256:e36b156c757f58a8d36f1770a893f057dbf919a24fd078a9c370b4f098f8c18e",
+      "7.2-hu": "szoveg-sha256:1208713ffed5bb63ff88c26cac76681f8711bac4931bc756ccca704916378d37",
+      "7.4-hu": "szoveg-sha256:815efdefdbfa7a0fd75dc43f9d2cd3bb2137d916bfe34f30c9d58d38eeaa4db3",
+      "7.1-en": "szoveg-sha256:2d163e6d3e97ec731d9970ab84ce01878597874f7a50167cb8be8d0d3e3ee7e4",
+      "7.2-en": "szoveg-sha256:094d2a436ad69bc085f3564919d48abba58217fd0bea6172ff652e4621b7807e",
+      "7.4-en": "szoveg-sha256:8147e0d626eea5b32e9bbe146df294d5042069834a9eb1ade486c29cd83a2016",
+      "szabalyzat-hu": "fajl-sha256:5333320db27bced4a69b33e1597639da23089b721057c495955e0248e83ea60d",
+      "szabalyzat-en": "fajl-sha256:aa075bbf0ca72d05bc314c52360d010eaec3d751dc3f0b3509387a6dee79eb63"
+    }
+  }
+}

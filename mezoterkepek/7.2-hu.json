@@ -1,0 +1,825 @@
+{
+  "dokumentum": "7.2-hu",
+  "urlap": "7.2",
+  "nyelv": "hu",
+  "cim": "Kutatásintegritási űrlap",
+  "ujjlenyomat": "szoveg-sha256:1208713ffed5bb63ff88c26cac76681f8711bac4931bc756ccca704916378d37",
+  "mezok": [
+    {
+      "azonosito": "azonosito",
+      "tipus": "bizottsagi",
+      "kerdes": "Kutatási azonosító (az Etikai Bizottság tölti ki!):",
+      "kerdesHely": {
+        "tablazat": 0,
+        "sor": 0,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 0,
+        "sor": 0,
+        "cella": 2
+      }
+    },
+    {
+      "azonosito": "1",
+      "tipus": "cella",
+      "kerdes": "A kérelmező (kutatásvezető) neve:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 0,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 0,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "2",
+      "tipus": "cella",
+      "kerdes": "Tudományos fokozata:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 1,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 1,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "3",
+      "tipus": "cella",
+      "kerdes": "Munkahelye (Kar/Intézet/Tanszék):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 2,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 2,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "4",
+      "tipus": "cella",
+      "kerdes": "Beosztása: ELTE közalkalmazott igen/nem",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 3,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 3,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "5",
+      "tipus": "cella",
+      "kerdes": "E-mail címe:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 4,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 4,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "6",
+      "tipus": "cella",
+      "kerdes": "A kutatás címe:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 5,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 5,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "7",
+      "tipus": "cella",
+      "kerdes": "A kutatás tudományterülete(i):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 6,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 6,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "8",
+      "tipus": "cella",
+      "kerdes": "A kutatásban részt vevő további kutatók (pl. hallgató):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 7,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 7,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "9",
+      "tipus": "cella",
+      "kerdes": "A kutatás kezdetének és befejezésének várható időpontja:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 8,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 8,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "10",
+      "tipus": "cella",
+      "kerdes": "A kutatás fedezetét biztosító forrás (pályázat vagy más):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 9,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 9,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "11",
+      "tipus": "cella",
+      "kerdes": "A kérelem beadásának dátuma:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 10,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 10,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null,
+      "alapertek": "mai-datum"
+    },
+    {
+      "azonosito": "12",
+      "tipus": "cella",
+      "kerdes": "A kutatás célja (min. 100, max. 200 szó):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 11,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 11,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": {
+        "min": 100,
+        "max": 200
+      }
+    },
+    {
+      "azonosito": "13",
+      "tipus": "cella",
+      "kerdes": "A kutatás résztvevőinek életkora:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 12,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 12,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "14",
+      "tipus": "cella-hozzafuzes",
+      "kerdes": "A beleegyezés megtételének módját befolyásolja a kutatás résztvevőinek életkora. Húzza alá, mely dokumentumokat csatolja:",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 13,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 13,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "15",
+      "tipus": "cella",
+      "kerdes": "A résztvevők kiválasztásának módja. (Milyen módon toborozza, választja ki a résztvevőket?) (Szükség esetén csatolja a megfelelő dokumentációt: hirdetés, intézmény-vezetőnek írandó levél, stb.)",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 14,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 14,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "16",
+      "tipus": "cella",
+      "kerdes": "A kutatás helyszínei (amennyiben releváns):",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 15,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 15,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "17",
+      "tipus": "cella",
+      "kerdes": "A kutatás lebonyolításának rövid (max. 200 szó), összefoglaló ismertetése. (Nem az elméleti háttér, hanem a tervezett eljárás bemutatása szükséges.)",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 16,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 16,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": {
+        "min": null,
+        "max": 200
+      }
+    },
+    {
+      "azonosito": "18",
+      "tipus": "cella",
+      "kerdes": "A kutatás által érintett témában különböző intézmények, csoportok érdekei ütköznek? Melyek ezek? Hogyan kezeli a kutatás, illetve a publikáció során?",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 17,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 17,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "19",
+      "tipus": "cella",
+      "kerdes": "A kutatás során gyűjtött adatok lehetővé teszik a személyek azonosítását? Azaz terveznek-e személyes adatot gyűjteni?",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 18,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 18,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "20",
+      "tipus": "cella",
+      "kerdes": "Milyen kész kérdőíveket, teszteket, egyéb mérőeszközöket stb. kíván alkalmazni (ha vannak ilyenek)? Kérjük a kérdőíveket és teszteket a kérelem végéhez csatolni, az online kérdőívek linkjét feltüntetni, illetve a tervezett mérőeszközök kialakítására vonatkozó etikailag releváns főbb tényezőket megemlíteni.",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 19,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 19,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "21",
+      "tipus": "cella",
+      "kerdes": "Milyen berendezéseket, műszereket, eszközöket, szkripteket alkalmaz? Kérjük ezek dokumentációját csatolni (ez nem szükséges, ha azok egy korábbi eljárásban már jóvá lettek hagyva).",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 20,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 20,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "22",
+      "tipus": "cella",
+      "kerdes": "Ismertesse, milyen módon biztosítja a felvett adatok bizalmas, rövid és hosszú távú kezelését, archiválását, és azt, hogy azokból a résztvevő ne legyen azonosítható. Illetve, ha személyes adatokat kezel (pl. résztvevő neve, e-mail címe, stb.), akkor hogyan biztosítja a résztvevők és azok adatainak védelmét?",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 21,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 21,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "23",
+      "tipus": "cella",
+      "kerdes": "Ismertesse, hogy milyen módon biztosítja az érintett közösség tájékoztatását a kutatás eredményeiről!",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 22,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 22,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "24",
+      "tipus": "cella",
+      "kerdes": "Ismertesse, hogy milyen módon tervezi publikálni a kutatás eredményeit? Térjen ki az Open science megoldásokra!",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 23,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 23,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "25",
+      "tipus": "cella",
+      "kerdes": "Ismertesse, hogy milyen eszközöket alkalmaz a kutatásintegritás előzetes biztosítása érdekében? Pl.: a hipotézisek, kutatási terv előzetes regisztrálása (pl.: https://osf.io )",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 24,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 24,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "26",
+      "tipus": "cella",
+      "kerdes": "Ismertesse, hogy milyen formában tervezi az anonimizált vagy anonim adatok, illetve a kutatási dokumentáció archiválását? Ki milyen formában férhet hozzá az adatokhoz, dokumentációhoz? Térjen ki az Open science megoldásokra!",
+      "kerdesHely": {
+        "tablazat": 1,
+        "sor": 25,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 1,
+        "sor": 25,
+        "cella": 2
+      },
+      "kotelezo": true,
+      "szoszam": null
+    },
+    {
+      "azonosito": "igen-magyarazat-utmutato",
+      "tipus": "utmutato",
+      "kerdes": "Amennyiben bármelyik kérdésre IGEN-nel válaszolt, ismertesse, hogyan gondoskodik arról, hogy a részt vevő személyekben, illetve csoportokban testi és lelki kár ne essék a vizsgálat folyamán.",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 0,
+        "cella": 1
+      }
+    },
+    {
+      "azonosito": "27",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat kellemetlen helyzetek létrehozásával?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 1,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "28",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat incentíva vagy ajándék alkalmazásával?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 2,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "29",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat fogyatékossággal élő személyek részvételével?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 3,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "30",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat mentális betegek vagy mentálisan veszélyeztetett egyének részvételével?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 4,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "31",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat társadalmi kisebbségek (vagy más sérülékeny csoport tagjainak) részvételével?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 5,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "32",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat testi sérülés veszélyével akár a kutatás résztvevői, akár a kutatás közreműködői szempontjából?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 6,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "33",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat a résztvevők megtévesztésével, a célok részleges elhallgatásával?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 7,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "34",
+      "tipus": "igen-nem",
+      "kerdes": "Jár-e a vizsgálat olyan eljárással, amely akár szándéktalanul is szorongást vagy szenvedést okozhat (pl. mélyinterjú)?",
+      "kerdesHely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 4
+      },
+      "nemHely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 2
+      },
+      "igenHely": {
+        "tablazat": 2,
+        "sor": 8,
+        "cella": 3
+      },
+      "valaszok": {
+        "nem": "NEM",
+        "igen": "IGEN"
+      },
+      "kotelezo": true
+    },
+    {
+      "azonosito": "35",
+      "tipus": "cella",
+      "kerdes": "Amennyiben a kutatásban nehezen biztosítható az érintettek előzetes beleegyezésének elnyerése (pl. kutatás nyilvános terepen), hogyan biztosítja a résztvevők védelmét, utólagos vagy folyamatos tájékoztatását, bevonását; illetve mivel indokolja az előzetes tájékoztatás elmaradását?",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 0,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 0,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "36",
+      "tipus": "cella",
+      "kerdes": "Amennyiben a kutatás nem közvetlenül személyekre irányul (pl. dokumentumelemzés, történeti kutatás vagy levéltári kutatás vagy nyilvános terek kutatása), de vannak közvetetten érintett személyek (rájuk vonatkozó személyes adatok): velük kapcsolatban milyen etikai problémák merülnek fel (beazonosíthatóság, joguk a véleményformálásra, stb.), és hogyan válaszol ezekre? Illetve amennyiben vannak közvetlenül és közvetetten érintettek, hogyan különíti el őket a kutatás során? Amennyiben az adatok személyek azonosítását lehetővé teszik, úgy erre a helyzetre az adatkezelésre vonatkozó általános érvényű szabályok (ld. Hozzájárulás adatkezeléshez, ill. ennek Melléklete) érvényesek.",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 1,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 1,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "37",
+      "tipus": "cella",
+      "kerdes": "Ha részvételi vagy akciókutatásról van szó, fejtse ki röviden, hogyan biztosítja, és milyen módon tervezi a személyek aktív bevonását, valamint mutassa be, hogy a kutatásnak milyen hatásai lehetnek az adott csoportra, személy(ek)re, aki(ke)t bevon, illetve az adott helyszínekre, közösségekre, amiket alakít. A résztvevőknek lehetőségük van-e, és ha igen, milyen módon, ha nem, miért nem, arra, hogy a kutatás eredményeihez hozzászóljanak?",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 2,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 2,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "38",
+      "tipus": "cella",
+      "kerdes": "A kutatásnak vannak-e (áttételes) társadalmi hatásai? Beavatkozik-e társadalmi folyamatokba? Ezek a hatások milyen módon befolyásolhatják a résztvevőket (különösen, ha érzékeny társadalmi csoportról van szó)?",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 3,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 3,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "39",
+      "tipus": "cella",
+      "kerdes": "Ha levéltári kutatást is folytat, hogyan ügyel a személyes adatok védelmére a kutatás során és az eredmények publikálásakor? Levéltári kutatás során kérjük, vegye figyelembe a köziratokról, a közlevéltárakról és a magánlevéltári anyag védelméről szóló 1995. évi LXVI. törvény 24.§-ban foglaltakat!",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 4,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 4,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    },
+    {
+      "azonosito": "40",
+      "tipus": "cella",
+      "kerdes": "Van-e bármilyen további etikai vonatkozása a vizsgálatnak, amelyre a fenti kérdésekre adott válaszokban nem történt utalás? Ha igen, kérjük, röviden ismertesse:",
+      "kerdesHely": {
+        "tablazat": 3,
+        "sor": 5,
+        "cella": 1
+      },
+      "hely": {
+        "tablazat": 3,
+        "sor": 5,
+        "cella": 2
+      },
+      "kotelezo": false,
+      "szoszam": null
+    }
+  ]
+}
