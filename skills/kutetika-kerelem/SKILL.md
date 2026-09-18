@@ -8,7 +8,7 @@ description: Prepare the ELTE TáTK KEAB ethics application by interviewing the 
 You guide a researcher (not a developer) through preparing the ethics application for
 the ELTE TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottsága (KEAB). The
 deterministic parts (Word files, word counts, formal checks, "mehet" state) belong to
-the helper program at `.kutetika/bin/kutetika.js` — always call it through the CLI
+the helper program at `keab/.eszkoz/bin/kutetika.js` — always call it through the CLI
 protocol below; never write Word files yourself. Your job is the conversation and the
 `keab/kerelem.md` working draft.
 
@@ -26,10 +26,10 @@ protocol below; never write Word files yourself. Your job is the conversation an
 
 ## Working draft lifecycle
 
-- At the start of the session run `node .kutetika/bin/kutetika.js frissites .` and pass
+- At the start of the session run `node keab/.eszkoz/bin/kutetika.js frissites .` and pass
   any `figyelmeztetesek` to the researcher in plain words (work can always continue).
 - Create the empty skeleton with the helper, after the submission language is decided:
-  `node .kutetika/bin/kutetika.js vaz . '{"nyelv":"hu"}'` (or `"en"`). It never
+  `node keab/.eszkoz/bin/kutetika.js vaz . '{"nyelv":"hu"}'` (or `"en"`). It never
   overwrites an existing `keab/kerelem.md` (answer `mar-letezik`). Never type the
   skeleton by hand.
 - After every answer, write it into the draft under the correct `## [id]` heading. Keep
@@ -62,7 +62,7 @@ protocol below; never write Word files yourself. Your job is the conversation an
 
 ## Helper commands
 
-All commands: `node .kutetika/bin/kutetika.js <command> . '<JSON options>'`. They answer
+All commands: `node keab/.eszkoz/bin/kutetika.js <command> . '<JSON options>'`. They answer
 with one line of JSON. On Windows (PowerShell) quotes inside the JSON may get lost:
 write the options to `keab/.beallitas.json` and pass `@keab/.beallitas.json` instead.
 
@@ -87,7 +87,7 @@ When the researcher asks to produce the submission ("állítsd elő a beadványt
 one step, for example:
 
 ```bash
-node .kutetika/bin/kutetika.js eloallit . '{"asszisztens":"claude","subagent":true,"mellekletek":[]}'
+node keab/.eszkoz/bin/kutetika.js eloallit . '{"asszisztens":"claude","subagent":true,"mellekletek":[]}'
 ```
 
 - `mellekletek` is the agreed attachment list, each item
@@ -128,7 +128,7 @@ node .kutetika/bin/kutetika.js eloallit . '{"asszisztens":"claude","subagent":tr
   their reason and record it with `felulbiral` (it is logged in `keab/dontesek.md`).
 - If a command answers `Egy másik kutetika-művelet még fut`, wait and retry; do not
   delete files in `keab/`.
-- Before submitting, run `node .kutetika/bin/kutetika.js allapot .` and only report
+- Before submitting, run `node keab/.eszkoz/bin/kutetika.js allapot .` and only report
   "mehet" when the tool itself reports `mehet: true`.
 
 ## bead.md and sending
@@ -158,7 +158,7 @@ This rule is binding, in this skill and everywhere in this project:
 ## Facultative and ethics boundaries
 
 - Do not give legal advice; cite the regulation
-  (`.kutetika/dokumentumok/szabalyzat-*.md`) and point to the KEAB titkárság
+  (`keab/.eszkoz/dokumentumok/szabalyzat-*.md`) and point to the KEAB titkárság
   (keab@tatk.elte.hu) for legal questions.
 - The 7.5 investigation form is out of scope; so is the 7.3 evaluator form.
 - Talk in the researcher's language; write the draft in the submission language.

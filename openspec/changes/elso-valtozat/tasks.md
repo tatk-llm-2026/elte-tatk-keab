@@ -23,7 +23,7 @@
 
 ## 4. Telepítés
 
-- [x] 4.1 `init` parancs: skillek a három asszisztens helyére, `.kutetika/` a dokumentumokkal és mezőtérképekkel; ellenőrzés: teszt egy üres és egy meglévő fájlokat tartalmazó projekten, a meglévő fájlok változatlanok
+- [x] 4.1 `init` parancs: skillek a három asszisztens helyére, a program `keab/.eszkoz/` almappában a dokumentumokkal és mezőtérképekkel; ellenőrzés: teszt egy üres és egy meglévő fájlokat tartalmazó projekten, a meglévő fájlok változatlanok
 - [x] 4.2 AGENTS.md-blokk és a CLAUDE.md-ben jelölt @AGENTS.md-betöltés, létrehozással vagy hozzáfűzéssel; ellenőrzés: tesztek meglévő fájlokkal és nélkülük, kétszeri telepítéssel, Windows-sorvégekkel; a saját tartalom változatlan
 - [x] 4.3 Újratelepítés: a blokk és a csomag fájljai frissülnek, a blokk nem duplázódik, a `keab/` érintetlen; ellenőrzés: teszt kétszeri inicializálással
 - [ ] 4.4 Közérthető záróüzenet az `init` végén (`zaroUzenet`); ellenőrzés: egy nem fejlesztő tesztelő el tudja indítani a használatot az üzenet alapján — ehhez a kutatói visszajelzés kell

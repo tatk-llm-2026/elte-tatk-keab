@@ -1,10 +1,11 @@
 // A kutetika telepítése a kutató projektjébe.
 import { cpSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
-import { CSOMAG_GYOKER, csomagJson } from './csomag.js';
+import { CSOMAG_GYOKER, csomagJson, PROGRAM_MAPPA } from './csomag.js';
+
+export { PROGRAM_MAPPA };
 
 export const SKILL_HELYEK = ['.claude/skills', '.agents/skills', '.github/skills'];
-export const PROGRAM_MAPPA = '.kutetika';
 export const BLOKK_KEZDET = '<!-- kutetika:kezdet -->';
 export const BLOKK_VEG = '<!-- kutetika:veg -->';
 // A CLAUDE.md saját jelölőt kap: ha a CLAUDE.md az AGENTS.md-re mutat (vagy fordítva),
@@ -26,7 +27,7 @@ export function agentsBlokk(verzio) {
   return `${BLOKK_KEZDET}
 ## kutetika – ELTE TáTK research ethics application (KEAB)
 
-This project uses kutetika ${verzio}. Its skills (\`kutetika-engedely\`, \`kutetika-kerelem\`, \`kutetika-biralat\`) guide the researcher through the KEAB ethics application. The faculty documents, field maps and the helper program (\`node ${PROGRAM_MAPPA}/bin/kutetika.js\`) are in \`${PROGRAM_MAPPA}/\`; do not edit them by hand. The application is written in \`keab/\`.
+This project uses kutetika ${verzio}. Its skills (\`kutetika-engedely\`, \`kutetika-kerelem\`, \`kutetika-biralat\`) guide the researcher through the KEAB ethics application. The faculty documents, field maps and the helper program (\`node ${PROGRAM_MAPPA}/bin/kutetika.js\`) are in \`${PROGRAM_MAPPA}/\`; do not edit them by hand. The application itself (working draft, decisions, Word files) is written in \`keab/\`.
 
 Talk to the researcher in the language they use. The researcher is responsible for every decision; warn, never block.
 
@@ -90,7 +91,7 @@ export function telepit(cel, { csomagGyoker = CSOMAG_GYOKER } = {}) {
     }
   }
 
-  // A program a kari dokumentumokkal és a mezőtérképekkel a .kutetika mappába.
+  // A program a kari dokumentumokkal és a mezőtérképekkel a keab/.eszkoz mappába.
   // Így a projekt önálló: a skillek a telepített változatot hívják, internet nélkül is.
   const program = join(cel, PROGRAM_MAPPA);
   rmSync(program, { recursive: true, force: true });
@@ -130,7 +131,7 @@ A kutetika ${verzio} bekerült ebbe a projektbe.
 Mi került a projektbe:
   - ${skillek.length} skill a Claude Code, a Codex és a Copilot számára
     (.claude/skills, .agents/skills, .github/skills)
-  - a kar hivatalos űrlapjai és szabályzata, magyarul és angolul (.kutetika/)
+  - a kar hivatalos űrlapjai és szabályzata, magyarul és angolul (keab/.eszkoz/)
   - az adatvédelmi szabály az AGENTS.md végén, a Claude Code a CLAUDE.md-ből tölti be
 
 Hogyan tovább:

@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -19,7 +19,7 @@ test('üres projekt: skillek, program, dokumentumok, AGENTS.md', () => {
     }
   }
   for (const f of ['bin/kutetika.js', 'dokumentumok/7.2-hu.docx', 'dokumentumok/szabalyzat-en.md', 'mezoterkepek/7.4-en.json', 'node_modules/fflate/package.json']) {
-    assert.ok(existsSync(join(cel, '.kutetika', f)), f);
+    assert.ok(existsSync(join(cel, 'keab/.eszkoz', f)), f);
   }
   const agents = readFileSync(join(cel, 'AGENTS.md'), 'utf8');
   assert.ok(agents.startsWith(BLOKK_KEZDET));
@@ -28,15 +28,15 @@ test('üres projekt: skillek, program, dokumentumok, AGENTS.md', () => {
   assert.ok(claude.startsWith(CLAUDE_KEZDET));
   assert.match(claude, /@AGENTS\.md/);
   assert.match(kimenet, /kell nekem etikai engedély\?/);
-  assert.ok(!existsSync(join(cel, 'keab')), 'az init nem hoz létre keab mappát');
+  assert.deepEqual(readdirSync(join(cel, 'keab')), ['.eszkoz'], 'az init a keab mappában csak a programot hozza létre');
 });
 
 test('a projektbe másolt program önállóan fut, és eléri a mezőtérképeket', () => {
   const cel = ujProjekt();
   init(cel);
-  const verzio = execFileSync('node', [join(cel, '.kutetika/bin/kutetika.js'), '--version'], { encoding: 'utf8', cwd: tmpdir() });
+  const verzio = execFileSync('node', [join(cel, 'keab/.eszkoz/bin/kutetika.js'), '--version'], { encoding: 'utf8', cwd: tmpdir() });
   assert.match(verzio, /^\d+\.\d+\.\d+/);
-  const modul = pathToFileURL(join(cel, '.kutetika/src/kerelem.js')).href;
+  const modul = pathToFileURL(join(cel, 'keab/.eszkoz/src/kerelem.js')).href;
   const kod = `import(${JSON.stringify(modul)}).then((k) => console.log(k.vazKeszit('hu').length))`;
   assert.ok(Number(execFileSync('node', ['-e', kod], { encoding: 'utf8', cwd: tmpdir() })) > 1000);
 });
@@ -60,9 +60,9 @@ test('újratelepítés: a blokk nem duplázódik, a keab mappa érintetlen, a cs
   const cel = ujProjekt();
   writeFileSync(join(cel, 'AGENTS.md'), '# Saját\n');
   init(cel);
-  mkdirSync(join(cel, 'keab'));
+  mkdirSync(join(cel, 'keab'), { recursive: true });
   writeFileSync(join(cel, 'keab', 'kerelem.md'), 'munka');
-  writeFileSync(join(cel, '.kutetika', 'dokumentumok', 'regi-fajl.txt'), 'régi');
+  writeFileSync(join(cel, 'keab/.eszkoz', 'dokumentumok', 'regi-fajl.txt'), 'régi');
   writeFileSync(join(cel, '.claude', 'skills', 'kutetika-kerelem', 'SKILL.md'), 'elavult');
   const agents = readFileSync(join(cel, 'AGENTS.md'), 'utf8').replace('Do not read raw research data by default', 'ELAVULT');
   writeFileSync(join(cel, 'AGENTS.md'), `${agents}\nUtána írt saját sor.\n`);
@@ -73,7 +73,7 @@ test('újratelepítés: a blokk nem duplázódik, a keab mappa érintetlen, a cs
   assert.match(uj, /Utána írt saját sor\./);
   assert.ok(uj.startsWith('# Saját\n'));
   assert.equal(readFileSync(join(cel, 'keab', 'kerelem.md'), 'utf8'), 'munka');
-  assert.ok(!existsSync(join(cel, '.kutetika', 'dokumentumok', 'regi-fajl.txt')));
+  assert.ok(!existsSync(join(cel, 'keab/.eszkoz', 'dokumentumok', 'regi-fajl.txt')));
   assert.notEqual(readFileSync(join(cel, '.claude', 'skills', 'kutetika-kerelem', 'SKILL.md'), 'utf8'), 'elavult');
 });
 

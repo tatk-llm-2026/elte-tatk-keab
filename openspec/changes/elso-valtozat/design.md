@@ -28,10 +28,10 @@ Az eszköz neve kutetika; az npm-csomag neve `@arpadtamasi/elte-tatk-keab` (a ka
 
 ### 2. Mi kerül a kutató projektjébe
 - Skillek a három asszisztens helyére: `.claude/skills/`, `.agents/skills/`, `.github/skills/`. Egy forrásból másolva, azonos tartalommal.
-- `.kutetika/`: a csomagolt kari dokumentumok (eredeti `.docx` és `.pdf`), a szabályzat kinyert szöveges változata, a mezőtérképek és a `jegyzek.json` (verzió, dokumentumok forráscíme és ujjlenyomata).
+- `keab/.eszkoz/`: a program, a csomagolt kari dokumentumok (eredeti `.docx` és `.pdf`), a szabályzat kinyert szöveges változata, a mezőtérképek és a `jegyzek.json` (verzió, dokumentumok forráscíme és ujjlenyomata).
 - `AGENTS.md`: a kutetika-blokk `<!-- kutetika:kezdet -->` és `<!-- kutetika:veg -->` jelölők között, így újratelepítéskor cserélhető.
 - `CLAUDE.md`: azonos jelölők közé tett `@AGENTS.md` betöltés. A Claude Code nem olvassa automatikusan az `AGENTS.md`-t; ezt a korábbi kipróbálás állapította meg, és a projektgazda jóváhagyta a kivételt. A telepítő a két utasításfájl jelölt blokkjain kívüli saját tartalmat és sorvégeket megőrzi, hiányzó fájlt létrehoz, újratelepítéskor nem dupláz.
-- A `keab/` mappát nem az inicializálás, hanem az első kérelem hozza létre, és az újratelepítés nem nyúl hozzá.
+- A program a `keab/` mappán belül, rejtett almappában van, így a kutató projektjében egyetlen új mappa jelenik meg (a projektgazda döntése, 2026-09-18). Az újratelepítés csak a `keab/.eszkoz/` almappát cseréli; a kutató anyagaihoz a `keab/`-ben nem nyúl.
 - *Miért a szabályzat szöveges változata:* az asszisztensek a PDF-et drágán és pontatlanul olvassák. A kiadáskor kinyert, fejezetekre bontott szöveg pontos hivatkozást tesz lehetővé.
 
 ### 3. Három skill

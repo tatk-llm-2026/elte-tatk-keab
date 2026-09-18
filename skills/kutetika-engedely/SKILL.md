@@ -13,15 +13,15 @@ memory. You do not give legal advice and you do not decide for the researcher.
 
 ## Where the regulation lives
 
-The full regulation text is at `.kutetika/dokumentumok/szabalyzat-hu.md` (Hungarian)
-and `.kutetika/dokumentumok/szabalyzat-en.md` (English). Quote it by chapter number
+The full regulation text is at `keab/.eszkoz/dokumentumok/szabalyzat-hu.md` (Hungarian)
+and `keab/.eszkoz/dokumentumok/szabalyzat-en.md` (English). Quote it by chapter number
 and title, for example "5.1.1. Az eljárásra kötelezettek köre". If the file is missing,
 say so and point the researcher to https://tatk.elte.hu/bizottsagok/kutetika — do not
 invent section numbers.
 
 ## Before asking anything
 
-First run `node .kutetika/bin/kutetika.js frissites .` (the faculty documents check).
+First run `node keab/.eszkoz/bin/kutetika.js frissites .` (the faculty documents check).
 If it returns `figyelmeztetesek`, tell the researcher in plain words; the work can
 continue either way.
 

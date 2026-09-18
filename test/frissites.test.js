@@ -20,9 +20,9 @@ const nap = 86_400_000;
 function projekt(t, verzio = jegyzek.kutetikaVerzio) {
   const gyoker = mkdtempSync(join(tmpdir(), 'kutetika-frissites-'));
   t.after(() => rmSync(gyoker, { recursive: true, force: true }));
-  mkdirSync(join(gyoker, '.kutetika', 'dokumentumok'), { recursive: true });
-  writeFileSync(join(gyoker, '.kutetika', 'dokumentumok', 'jegyzek.json'), JSON.stringify({ ...jegyzek, kutetikaVerzio: verzio }));
-  writeFileSync(join(gyoker, '.kutetika', 'package.json'), JSON.stringify({ name: 'kutetika', version: verzio }));
+  mkdirSync(join(gyoker, 'keab/.eszkoz', 'dokumentumok'), { recursive: true });
+  writeFileSync(join(gyoker, 'keab/.eszkoz', 'dokumentumok', 'jegyzek.json'), JSON.stringify({ ...jegyzek, kutetikaVerzio: verzio }));
+  writeFileSync(join(gyoker, 'keab/.eszkoz', 'package.json'), JSON.stringify({ name: 'kutetika', version: verzio }));
   return gyoker;
 }
 
@@ -203,7 +203,7 @@ test('a force megkerüli a gyorsítótárat, a cache:false nem olvas és nem ír
   const net = halozat();
   await ellenoriz(gyoker, net);
   assert.equal((await ellenoriz(gyoker, net, { force: true })).gyorsitotar, false);
-  const cacheUt = join(gyoker, '.kutetika', 'frissites-cache.json');
+  const cacheUt = join(gyoker, 'keab/.eszkoz', 'frissites-cache.json');
   const elotte = readFileSync(cacheUt, 'utf8');
   await ellenoriz(gyoker, net, { cache: false, now: () => kezdet + 1 });
   assert.equal(net.hivasok.length, 27);
@@ -238,8 +238,8 @@ test('más csomagverzió és más dokumentumhalmaz érvényteleníti a gyorsít�
   await ellenoriz(gyoker, net);
   const uj = structuredClone(jegyzek);
   uj.kutetikaVerzio = '1.0.0';
-  writeFileSync(join(gyoker, '.kutetika', 'package.json'), JSON.stringify({ name: 'kutetika', version: '1.0.0' }));
-  const ut = join(gyoker, '.kutetika', 'dokumentumok', 'jegyzek.json');
+  writeFileSync(join(gyoker, 'keab/.eszkoz', 'package.json'), JSON.stringify({ name: 'kutetika', version: '1.0.0' }));
+  const ut = join(gyoker, 'keab/.eszkoz', 'dokumentumok', 'jegyzek.json');
   writeFileSync(ut, JSON.stringify(uj));
   assert.equal((await ellenoriz(gyoker, net)).gyorsitotar, false);
   uj.dokumentumok[0].ujjlenyomat = `szoveg-sha256:${'0'.repeat(64)}`;
@@ -254,7 +254,7 @@ test('hibás, jövőbeli és ismeretlen állapotú gyorsítótárat nem használ
   const gyoker = projekt(t);
   const net = halozat();
   await ellenoriz(gyoker, net);
-  const cacheUt = join(gyoker, '.kutetika', 'frissites-cache.json');
+  const cacheUt = join(gyoker, 'keab/.eszkoz', 'frissites-cache.json');
   const cache = JSON.parse(readFileSync(cacheUt, 'utf8'));
   for (const tartalom of ['{hibas', JSON.stringify({ ...cache, eredmeny: { ...cache.eredmeny, elteresek: [null] } }), JSON.stringify({ ...cache, eredmeny: { ...cache.eredmeny, allapot: 'ismeretlen' } })]) {
     writeFileSync(cacheUt, tartalom);
@@ -266,7 +266,7 @@ test('hibás, jövőbeli és ismeretlen állapotú gyorsítótárat nem használ
 
 test('nem írható gyorsítótár mellett is használható az eredmény', async (t) => {
   const gyoker = projekt(t);
-  mkdirSync(join(gyoker, '.kutetika', 'frissites-cache.json'));
+  mkdirSync(join(gyoker, 'keab/.eszkoz', 'frissites-cache.json'));
   const r = await ellenoriz(gyoker, halozat());
   assert.equal(r.allapot, 'egyezik');
   assert.match(r.figyelmeztetesek[0], /gyorsítótárba/);
@@ -274,7 +274,7 @@ test('nem írható gyorsítótár mellett is használható az eredmény', async 
 
 test('hibás helyi jegyzék nem helyettesíthető észrevétlenül a program sajátjával', async (t) => {
   const gyoker = projekt(t);
-  writeFileSync(join(gyoker, '.kutetika', 'dokumentumok', 'jegyzek.json'), '{}');
+  writeFileSync(join(gyoker, 'keab/.eszkoz', 'dokumentumok', 'jegyzek.json'), '{}');
   const net = halozat();
   const r = await ellenoriz(gyoker, net);
   assert.equal(r.allapot, 'nem-ellenorizheto');
@@ -285,7 +285,7 @@ test('hibás helyi jegyzék nem helyettesíthető észrevétlenül a program saj
 test('hiányos és duplázott helyi jegyzék figyelmeztet', async (t) => {
   const gyoker = projekt(t);
   for (const dokumentumok of [jegyzek.dokumentumok.slice(1), [...jegyzek.dokumentumok, jegyzek.dokumentumok[0]]]) {
-    writeFileSync(join(gyoker, '.kutetika', 'dokumentumok', 'jegyzek.json'), JSON.stringify({ ...jegyzek, dokumentumok }));
+    writeFileSync(join(gyoker, 'keab/.eszkoz', 'dokumentumok', 'jegyzek.json'), JSON.stringify({ ...jegyzek, dokumentumok }));
     assert.equal((await ellenoriz(gyoker, halozat())).allapot, 'nem-ellenorizheto');
   }
 });

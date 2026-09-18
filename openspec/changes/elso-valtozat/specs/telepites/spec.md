@@ -42,4 +42,4 @@ Az inicializálás SHALL beírja a projekt `AGENTS.md`-jébe a kutatási adat v�
 
 #### Scenario: Újratelepítés
 - **WHEN** a kutató egy újabb kutetika-verzióval újra inicializál
-- **THEN** a kutetika-blokk és a csomag fájljai frissülnek, a blokk nem duplázódik, és a `keab/` mappa tartalma nem változik
+- **THEN** a kutetika-blokk és a csomag fájljai frissülnek, a blokk nem duplázódik, és a `keab/` mappában a kutató anyagai nem változnak (csak a program `keab/.eszkoz/` almappája cserélődik)

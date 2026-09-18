@@ -1,7 +1,7 @@
 import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-import { CSOMAG_GYOKER, csomagJson } from './csomag.js';
+import { CSOMAG_GYOKER, csomagJson, PROGRAM_MAPPA } from './csomag.js';
 import { KAR_OLDAL, KARI_DOKUMENTUMOK, linkekKeresese } from './kar.js';
 import { csomagUjjlenyomatok } from './jegyzek.js';
 import { sha256, ujjlenyomat } from './ujjlenyomat.js';
@@ -86,7 +86,7 @@ export async function frissitesEllenoriz(projectRoot, options = {}) {
   try {
     const most = new Date((options.now ?? Date.now)()).getTime();
     eredmeny.ellenorizve = new Date(most).toISOString();
-    const helyi = join(projectRoot, '.kutetika');
+    const helyi = join(projectRoot, PROGRAM_MAPPA);
     const gyoker = options.csomagGyoker ?? (existsSync(join(helyi, 'package.json'))
       || existsSync(join(helyi, 'dokumentumok')) ? helyi : CSOMAG_GYOKER);
     const pkg = gyoker === CSOMAG_GYOKER ? csomagJson() : JSON.parse(await readFile(join(gyoker, 'package.json'), 'utf8'));
@@ -163,7 +163,7 @@ export async function frissitesEllenoriz(projectRoot, options = {}) {
   eredmeny.figyelmeztetesek = uzenetek(eredmeny);
   if (cacheUt && kulcs && options.cache !== false) {
     try {
-      await mkdir(join(projectRoot, '.kutetika'), { recursive: true });
+      await mkdir(join(projectRoot, PROGRAM_MAPPA), { recursive: true });
       await writeFile(cacheUt, `${JSON.stringify({ schema: 1, kulcs, eredmeny }, null, 2)}\n`);
     } catch {
       eredmeny.figyelmeztetesek.push('Az ellenőrzés eredményét nem sikerült gyorsítótárba menteni. A munka folytatható.');

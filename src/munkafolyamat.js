@@ -1,7 +1,7 @@
 import { appendFileSync, existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, renameSync, unlinkSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { randomUUID, createHash } from 'node:crypto';
-import { CSOMAG_GYOKER } from './csomag.js';
+import { CSOMAG_GYOKER, PROGRAM_MAPPA } from './csomag.js';
 import { beolvas, vazKeszit } from './kerelem.js';
 import { mezoterkepBetolt } from './mezoterkep.js';
 
@@ -78,7 +78,7 @@ export function allapotIr(root, s) {
 }
 
 export function anyagBetolt(root) {
-  const gyoker = existsSync(join(root, '.kutetika', 'dokumentumok')) ? join(root, '.kutetika') : CSOMAG_GYOKER;
+  const gyoker = existsSync(join(root, PROGRAM_MAPPA, 'dokumentumok')) ? join(root, PROGRAM_MAPPA) : CSOMAG_GYOKER;
   const terkepBetolto = (u, n) => mezoterkepBetolt(u, n, gyoker);
   const bytes = olvas(root, 'keab/kerelem.md');
   const draft = beolvas(bytes.toString('utf8'), terkepBetolto);
@@ -157,7 +157,7 @@ export async function vazIr(root, { nyelv } = {}) {
       olvas(root, 'keab/kerelem.md');
       return { allapot: 'mar-letezik', fajl: 'keab/kerelem.md' };
     } catch (e) { if (e.code !== 'ENOENT') throw e; }
-    const gyoker = existsSync(join(root, '.kutetika', 'dokumentumok')) ? join(root, '.kutetika') : CSOMAG_GYOKER;
+    const gyoker = existsSync(join(root, PROGRAM_MAPPA, 'dokumentumok')) ? join(root, PROGRAM_MAPPA) : CSOMAG_GYOKER;
     ir(root, 'keab/kerelem.md', vazKeszit(nyelv, (u, n) => mezoterkepBetolt(u, n, gyoker)));
     return { allapot: 'letrehozva', fajl: 'keab/kerelem.md', nyelv };
   });
