@@ -13,7 +13,7 @@ const VART_SZAMOK = [
 
 const cimek = (nyelv) =>
   readFileSync(`dokumentumok/szabalyzat-${nyelv}.md`, 'utf8')
-    .split('\n')
+    .split(/\r?\n/)
     .filter((s) => /^#{2,6} \d/.test(s))
     .map((s) => s.replace(/^#+ /, ''));
 

@@ -44,8 +44,10 @@ test('PATH-felderítés nem indít programot; kizárólag engedélyezett parancs
   chmodSync(f, 0o700);
   assert.deepEqual(elerhetoAsszisztensek({ PATH: root }), ['codex']);
   assert.deepEqual(elerhetoAsszisztensek({ PATH: '' }), []);
-  writeFileSync(join(root, 'claude.cmd'), '@echo off');
-  assert.deepEqual(elerhetoAsszisztensek({ Path: root, PATHEXT: '.EXE;.CMD' }, 'win32'), ['claude']);
+  const win = join(root, 'win');
+  mkdirSync(win);
+  writeFileSync(join(win, 'claude.cmd'), '@echo off');
+  assert.deepEqual(elerhetoAsszisztensek({ Path: win, PATHEXT: '.EXE;.CMD' }, 'win32'), ['claude']);
   assert.ok(kulsoParancs('codex').argumentumok.includes('read-only'));
   assert.ok(kulsoParancs('claude').argumentumok.includes('--restricted'));
   assert.throws(() => kulsoParancs('copilot'));
