@@ -6,7 +6,7 @@
 
 A `kutetika` egy telepíthető eszköz. A kutató a saját AI-asszisztensével végigmegy vele az ELTE TáTK Kutatásintegritási, Etikai és Adatkezelési Bizottságához (KEAB) beadandó kutatásetikai engedélykérelmen. A részletek a [README.md](README.md)-ben vannak. Munka előtt olvasd el.
 
-A projekt még a kezdetén tart: a README a terv, az eszköz maga még nem készült el.
+Az eszköz első változata elkészült, de még nincs kiadva. A tervezés és a feladatlista az `openspec/changes/elso-valtozat/` mappában van.
 
 ## Kivel dolgozol
 
@@ -31,7 +31,7 @@ Ezek a README-ből következnek, és a fejlesztés során végig érvényesek:
   - Minden ilyen engedély bekerül a `keab/dontesek.md`-be.
   - Ha személyes adat kerülne az AI-szolgáltatóhoz, figyelmeztet: ez maga is adatkezelés, és az adatkezelési tervben szerepelnie kell.
   - Ezt a szabályt telepítéskor a kutató projektjének `AGENTS.md`-jébe is be kell írnia.
-- **A kar űrlapjait és szabályzatát nem tartalmazza,** hanem a kar oldaláról (https://tatk.elte.hu/bizottsagok/kutetika) tölti le, hogy mindig a hatályos változattal dolgozzon.
+- **A kar űrlapjai és szabályzata a csomagban vannak,** a kar oldaláról (https://tatk.elte.hu/bizottsagok/kutetika) letöltve. Használatkor az eszköz összeveti őket a kar oldalával, és szól, ha a kar módosított valamit; a kutetika verziója a kar dokumentumainak változását követi.
 - **Nem ad jogi tanácsot és nem dönt a kutató helyett.** Felsorolja a lehetőségeket, hivatkozik a szabályzatra, megmondja, kihez kell fordulni. Minden döntés bekerül a `keab/dontesek.md`-be: mit döntött a kutató, mit javasolt a gép.
 - **Nem küldi el a kérelmet** és nem garantálja az engedélyt: formát ellenőriz, nem etikát.
 - **A 7.5-ös vizsgálati eljárással nem foglalkozik.**
