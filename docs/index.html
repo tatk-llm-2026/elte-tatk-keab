@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>kutetika – KEAB-kérelem az AI-asszisztensével</title>
-<meta name="description" content="Telepíthető eszköz ELTE TáTK-s kutatóknak: a saját AI-asszisztensével beszélgetve készíti el a KEAB kutatásetikai engedélykérelmet a kar hivatalos űrlapjain.">
+<title>kutetika – AI támogatás a KEAB-kérelemhez</title>
+<meta name="description" content="Telepíthető eszköz ELTE TáTK-s kutatóknak: a saját AI-asszisztenseddel beszélgetve segít elkészíteni a KEAB kutatásetikai engedélykérelmet a kar hivatalos űrlapjain.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='13' fill='none' stroke='%235b3fa0' stroke-width='3'/><path d='M10 16.5l4 4 8-9' fill='none' stroke='%235b3fa0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -148,13 +148,13 @@
   <div class="nyito">
     <div class="keret">
       <div>
-        <h1><span class="egyben">A KEAB&#8209;kérelem,</span> <em>beszélgetve</em> kitöltve.</h1>
-        <p class="lead">ELTE TáTK-s kutatóknak. A saját AI-asszisztense (Claude Code, Codex vagy GitHub Copilot) eldönti Önnel, kell-e kutatásetikai engedély. Kikérdezi, ami a projekt leírásából nem derül ki, és kitölti a kar hivatalos Word-űrlapjait: 7.1, 7.2, 7.4.</p>
+        <h1><em>AI támogatás</em> a <span class="egyben">KEAB&#8209;kérelem</span> kitöltéséhez</h1>
+        <p class="lead">ELTE TáTK-s kutatóknak. A kutatásod leírásából, kódjaiból segít kitölteni a kutatásetikai engedélyt. Ellenőrzi is, hogy a bizottság ne dobja vissza formai vagy alapvető tartalmi problémák miatt.</p>
         <div class="parancs">
           <code id="parancs">npx @arpadtamasi/elte-tatk-keab@latest init</code>
           <button type="button" id="masol">Másolás</button>
         </div>
-        <p class="apro">A kutatás projektmappájában futtassa. Node.js 20 vagy újabb kell hozzá.</p>
+        <p class="apro">A kutatásod mappájában futtasd. Node.js 20 vagy újabb kell hozzá.</p>
       </div>
 
       <figure class="urlap" aria-label="Részlet a kitöltött 7.2 Kutatásintegritási űrlapból">
@@ -172,7 +172,7 @@
 
   <section class="resz" aria-labelledby="menet-cim">
     <div class="keret">
-      <h2 id="menet-cim">Három mondat, ebben a sorrendben</h2>
+      <h2 id="menet-cim">Három lépésben dolgozik</h2>
       <ol class="menet">
         <li>
           <p class="mondat">kell nekem etikai engedély?</p>
@@ -180,7 +180,7 @@
         </li>
         <li>
           <p class="mondat">csináljuk meg a kérelmet</p>
-          <p>Megkérdezi, magyarul vagy angolul készüljön a beadvány. Utána kikérdezi azt is, amire a kutatók többnyire nem gondolnak: a kiskorú résztvevőket, az intézményvezetői hozzájárulást és az interjúk AI-alapú leiratkészítését. A válaszok egy olvasható munkaanyagba kerülnek, ezt kézzel is javíthatja.</p>
+          <p>Megkérdezi, magyarul vagy angolul készüljön a beadvány. Utána kikérdezi azt is, amire a kutatók többnyire nem gondolnak: a kiskorú résztvevőket, az intézményvezetői hozzájárulást és az interjúk AI-alapú leiratkészítését. A válaszok egy olvasható munkaanyagba kerülnek, ezt kézzel is javíthatod.</p>
         </li>
         <li>
           <p class="mondat">nézd át, mielőtt elküldöm</p>
@@ -192,12 +192,12 @@
 
   <section class="resz" aria-labelledby="mappa-cim">
     <div class="keret">
-      <h2 id="mappa-cim">Mi kerül a projektbe</h2>
+      <h2 id="mappa-cim">A projektedben tárolva, verziózva</h2>
       <div>
-        <p>A projektben egyetlen új mappa jelenik meg, a <code class="be">keab/</code>. A Word-fájlok csak akkor készülnek el, amikor kéri, a munkaanyagból.</p>
+        <p>A projektben egyetlen új mappa jelenik meg, a <code class="be">keab/</code>. A Word-fájlok csak akkor készülnek el, amikor kéred, a munkaanyagból.</p>
 <pre class="fa"><b>keab/</b>
   kerelem.md                         <i>munkaanyag: minden válasz itt van</i>
-  dontesek.md                        <i>mit javasolt a gép, mit döntött Ön</i>
+  dontesek.md                        <i>mit javasolt a gép, mit döntöttél</i>
   7.2 Kutatásintegritási űrlap (VEZETEKNEV_DATUM).docx
   7.4 Adatkezelési terv (VEZETEKNEV_DATUM).docx
   7.1 Kutatásintegritási nyilatkozat (VEZETEKNEV_DATUM).docx
@@ -213,7 +213,7 @@
       <h2 id="adat-cim">A kutatási adatokhoz nem nyúl</h2>
       <div class="adat">
         <p>A projekt leírását és a kutatási eszközöket (kérdőív, interjúvázlat, tájékoztató) szabadon olvassa. A nyers adatot, vagyis a <code class="be">data/</code> mappát, a válaszokat, a felvételeket és a leiratokat, alapból nem.</p>
-        <p>Ha a kérelemhez mégis kell belőle valami, előbb megmondja, melyik fájlt nézné meg és miért, és hogy a tartalma az AI-szolgáltatóhoz kerül. Csak az Ön kifejezett engedélyével olvassa el, csak annyit, amennyi kell, és az engedély bekerül a <code class="be">dontesek.md</code>-be.</p>
+        <p>Ha a kérelemhez mégis kell belőle valami, előbb megmondja, melyik fájlt nézné meg és miért, és hogy a tartalma az AI-szolgáltatóhoz kerül. Csak a kifejezett engedélyeddel olvassa el, csak annyit, amennyi kell, és az engedély bekerül a <code class="be">dontesek.md</code>-be.</p>
       </div>
     </div>
   </section>
@@ -223,9 +223,9 @@
       <h2 id="nem-cim">Amit nem csinál</h2>
       <ul class="nem">
         <li><strong>Nem küldi el a kérelmet.</strong>A kutatásvezető küldi el, digitális aláírással, a saját címéről.</li>
-        <li><strong>Nem ad jogi tanácsot.</strong>Felsorolja a lehetőségeket, és megmondja, kihez forduljon.</li>
+        <li><strong>Nem ad jogi tanácsot.</strong>Felsorolja a lehetőségeket, és megmondja, kihez fordulj.</li>
         <li><strong>Nem garantálja az engedélyt.</strong>A formát ellenőrzi, az etikai döntés a bizottságé.</li>
-        <li><strong>Nem dönt Ön helyett.</strong>Minden döntés az Öné, és bekerül a döntésnaplóba.</li>
+        <li><strong>Nem dönt helyetted.</strong>Minden döntés a tiéd, és bekerül a döntésnaplóba.</li>
       </ul>
     </div>
   </section>
@@ -235,11 +235,11 @@
       <h2 id="telepit-cim">Telepítés</h2>
       <div>
         <ol class="telepit">
-          <li>Legyen a gépén <a href="https://nodejs.org/">Node.js</a> (20-as vagy újabb), és a három asszisztens közül legalább egy: Claude Code, Codex vagy GitHub Copilot.</li>
-          <li>A kutatás projektmappájában futtassa: <code class="be">npx @arpadtamasi/elte-tatk-keab@latest init</code></li>
-          <li>Nyissa meg a mappát az asszisztensében, és írja be: <em>kell nekem etikai engedély?</em></li>
+          <li>Legyen a gépeden <a href="https://nodejs.org/">Node.js</a> (20-as vagy újabb), és a három asszisztens közül legalább egy: Claude Code, Codex vagy GitHub Copilot.</li>
+          <li>A kutatásod mappájában futtasd: <code class="be">npx @arpadtamasi/elte-tatk-keab@latest init</code></li>
+          <li>Nyisd meg a mappát az asszisztensedben, és írd be: <em>kell nekem etikai engedély?</em></li>
         </ol>
-        <p class="apro">Előzetes változat (0.1). Hibát vagy javaslatot a <a href="https://github.com/tatk-llm-2026/elte-tatk-keab/issues">GitHubon</a> jelezhet.</p>
+        <p class="apro">Előzetes változat (0.1). Hibát vagy javaslatot a <a href="https://github.com/tatk-llm-2026/elte-tatk-keab/issues">GitHubon</a> jelezhetsz.</p>
       </div>
     </div>
   </section>
