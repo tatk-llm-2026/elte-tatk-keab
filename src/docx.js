@@ -28,46 +28,68 @@ export function test(dom) {
   return dom.getElementsByTagNameNS(W, 'body')[0];
 }
 
+// Kiemelés egy futáson (w:r): aláhúzás, félkövér vagy színes kiemelés, ha nincs kikapcsolva.
+const KIKAPCSOLT = ['0', 'false', 'none'];
+function formazas(r, nevek) {
+  const rPr = gyerekek(r, 'rPr')[0];
+  return !!rPr && nevek.some((nev) => gyerekek(rPr, nev).some((e) => !KIKAPCSOLT.includes(e.getAttributeNS(W, 'val'))));
+}
+
+// Van-e az elemben kiemelt, nem üres szöveg. Így jelölik a kutatók az IGEN/NEM választást:
+// az űrlap aláhúzást kér, de sokan félkövérrel jelölnek.
+export function kiemelt(elem) {
+  return [...elem.getElementsByTagNameNS(W, 'r')].some((r) => bekezdesSzoveg(r).trim() !== '' && formazas(r, ['u', 'b', 'highlight']));
+}
+
 // Egy bekezdés szövege (a w:t elemek összefűzve, a tabulátorok és sortörések megtartásával).
-export function bekezdesSzoveg(p) {
+// alahuzas: az aláhúzott szöveg „[aláhúzva: …]” jelet kap (a hivatkozások kivételével).
+export function bekezdesSzoveg(p, { alahuzas = false } = {}) {
   let szoveg = '';
-  const bejar = (n) => {
+  const bejar = (n, jelol) => {
     for (let c = n.firstChild; c; c = c.nextSibling) {
       if (c.nodeType !== 1) continue;
       if (c.namespaceURI === W) {
-        if (c.localName === 't') szoveg += c.textContent;
+        if (jelol && c.localName === 'r' && formazas(c, ['u']) && bekezdesSzoveg(c).trim()) szoveg += `[aláhúzva: ${bekezdesSzoveg(c)}]`;
+        else if (c.localName === 'hyperlink') bejar(c, false);
+        else if (c.localName === 't') szoveg += c.textContent;
         else if (c.localName === 'tab') szoveg += '\t';
         else if (c.localName === 'br' || c.localName === 'cr') szoveg += '\n';
         else if (c.localName === 'delText' || c.localName === 'instrText') continue;
-        else bejar(c);
+        else bejar(c, jelol);
       } else {
-        bejar(c);
+        bejar(c, jelol);
       }
     }
   };
-  bejar(p);
-  return szoveg;
+  bejar(p, alahuzas);
+  return szoveg.replace(/\]\[aláhúzva: /g, '');
 }
 
 export function cellaSzoveg(tc) {
   return gyerekek(tc, 'p').map(bekezdesSzoveg).join('\n');
 }
 
+const VALASZTASOK = new Set(['IGEN', 'NEM', 'YES', 'NO']);
+
 // A dokumentum törzsének szerkezetes szövege: bekezdések és táblázatok sorrendben.
 // Táblázatnál sor- és cellahatárt is jelöl, így a szerkezet változása is látszik.
-export function szerkezetesSzoveg(dom) {
+// jeloles (csak a bíráló szöveges másolatához, az ujjlenyomathoz nem): a kiemelt IGEN/NEM
+// cella „[kijelölve]” jelet kap, az aláhúzott szöveg „[aláhúzva: …]” jelet.
+export function szerkezetesSzoveg(dom, { jeloles = false } = {}) {
   const sorok = [];
   const blokk = (elem) => {
     for (let n = elem.firstChild; n; n = n.nextSibling) {
       if (n.nodeType !== 1 || n.namespaceURI !== W) continue;
-      if (n.localName === 'p') sorok.push(bekezdesSzoveg(n));
+      if (n.localName === 'p') sorok.push(bekezdesSzoveg(n, { alahuzas: jeloles }));
       else if (n.localName === 'tbl') {
         sorok.push('[táblázat]');
         for (const tr of gyerekek(n, 'tr')) {
           sorok.push('[sor]');
           for (const tc of gyerekek(tr, 'tc')) {
             sorok.push('[cella]');
-            blokk(tc);
+            const valasztas = cellaSzoveg(tc).trim();
+            if (jeloles && VALASZTASOK.has(valasztas.toUpperCase()) && kiemelt(tc)) sorok.push(`[kijelölve] ${valasztas}`);
+            else blokk(tc);
           }
         }
         sorok.push('[táblázat vége]');

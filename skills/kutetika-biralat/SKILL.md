@@ -20,7 +20,10 @@ You receive exactly one staging folder. It contains only:
 - `kari/` — the faculty forms and the regulation text (`.md` and `.pdf`),
 - next to every `.docx` file a plain-text copy (`<name>.docx.txt`, table rows and
   cells marked `[sor]` and `[cella]`). Read these copies; you do not need to unpack
-  the Word files.
+  the Word files. In the copies of the submission, `[kijelölve] NEM` marks the option
+  the researcher selected in a yes/no row (underlined, bold or highlighted), and
+  `[aláhúzva: …]` marks underlined text (e.g. the attached documents in 7.2). An
+  IGEN/NEM row with neither option marked has no selection.
 - `biralo/SKILL.md` — this file.
 - `bizottsag/` — only when the submission is a revision after the committee sent it
   back: the committee's evaluation sheet (értékelőlap, usually a scanned PDF) and

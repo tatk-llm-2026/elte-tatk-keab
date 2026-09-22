@@ -31,6 +31,7 @@
 - [x] 5.1 A bírálati csomag `bizottsag/` mappája (az értékelőlap és a válaszlevél szöveges másolata), csak átdolgozáskor; `dontesek.md` és `atdolgozas.md` nélkül; ellenőrzés: teszt a csomag fájllistájára mindkét módban
 - [x] 5.2 A `kutetika-biralat` SKILL.md 7. kategóriája: bizottsági pontok lefedése, súlyos kifogás, ha a javítás csak a válaszlevélben van meg, és kötelező marad a teljes bírálat is
 - [x] 5.3 A második AI-szolgáltatóhoz küldés engedélykérő szövege kiegészül az értékelőlappal; ellenőrzés: teszt a szövegre
+- [x] 5.4 A bíráló szöveges másolatában a kijelölt IGEN/NEM „[kijelölve]”, az aláhúzás „[aláhúzva: …]” jelet kap (az ujjlenyomatot nem érinti); a 6.3 próbája mutatta meg, hogy enélkül a bíráló nem látja a választást; ellenőrzés: tesztek az eszközzel és kézzel kitöltött űrlapra, az üres kari űrlapokon nincs jel
 
 ## 6. Kipróbálás
 

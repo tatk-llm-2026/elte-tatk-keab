@@ -1,7 +1,7 @@
 // Korábban beadott, Wordben kitöltött kari űrlap beolvasása a munkaanyagba (átdolgozáshoz).
 // Az üres kari űrlappal összevetve olvas: a 7.2-ben a kérdés cellája, a 7.4-ben és a 7.1-ben
 // a kari szöveg (fejezetcímek, mondatok) alapján. Ami nem egyértelmű, azt megjelöli.
-import { bekezdesSzoveg, cellaSzoveg, docxMegnyit, gyerekek, W } from './docx.js';
+import { bekezdesSzoveg, cellaSzoveg, docxMegnyit, gyerekek, kiemelt } from './docx.js';
 import { bekezdesek, cella, tablazatok } from './mezoterkep.js';
 import { munkaanyagMezo } from './kerelem.js';
 import { normalizal } from './ujjlenyomat.js';
@@ -14,16 +14,7 @@ function cellaValasz(tc) {
   return gyerekek(tc, 'p').map((p) => bekezdesSzoveg(p).replace(/[ \t]+$/gm, '').trim()).filter(Boolean).join('\n\n');
 }
 
-// Kiemelt (aláhúzott, félkövér vagy színnel kiemelt) szöveg a cellában: így jelöli a kutató
-// az IGEN/NEM választ. Az űrlap aláhúzást kér, de sokan félkövérrel jelölnek.
-const KIKAPCSOLT = ['0', 'false', 'none'];
-function jelolt(tc) {
-  return [...tc.getElementsByTagNameNS(W, 'r')].some((r) => {
-    const rPr = gyerekek(r, 'rPr')[0];
-    if (!rPr || bekezdesSzoveg(r).trim() === '') return false;
-    return ['u', 'b', 'highlight'].some((nev) => gyerekek(rPr, nev).some((e) => !KIKAPCSOLT.includes(e.getAttributeNS(W, 'val'))));
-  });
-}
+const jelolt = kiemelt;
 
 // A 7.2 mezőinek helye: ha a kérdés a kari helyén van, ott; ha nem (régebbi vagy átszerkesztett
 // űrlap), a kérdés szövege alapján keresi, és a válasz a kérdéshez képest ugyanott van.

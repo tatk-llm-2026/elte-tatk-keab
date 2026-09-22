@@ -72,7 +72,8 @@ function csomagKeszit(root, f) {
     writeFileSync(join(mappa, nev), bytes, { flag: 'wx', mode: 0o400 });
     manifest[nev] = hash(bytes);
     // A Word-fájl tömörített, a korlátozott bíráló nem tudja kibontani: szöveges másolat mellé.
-    if (/\.docx$/i.test(nev)) masol(`${nev}.txt`, Buffer.from(szerkezetesSzoveg(docxMegnyit(bytes).dom)));
+    // A kijelölt IGEN/NEM és az aláhúzás a szövegből nem látszana: jelet kap.
+    if (/\.docx$/i.test(nev)) masol(`${nev}.txt`, Buffer.from(szerkezetesSzoveg(docxMegnyit(bytes).dom, { jeloles: true })));
   };
   const csatolt = f.tipus === 'vegleges' ? f.csatolando : ['keab/kerelem.md', ...(f.mellekletek ?? []).map((m) => m.fajl)];
   for (const fajl of csatolt) {

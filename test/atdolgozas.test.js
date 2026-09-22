@@ -9,7 +9,8 @@ import { allapot } from '../src/ellenorzes.js';
 import { beolvas, munkaanyagMezo } from '../src/kerelem.js';
 import { kitolt } from '../src/kitoltes.js';
 import { cella, mezoterkepBetolt, URLAPOK } from '../src/mezoterkep.js';
-import { docxMegnyit, docxMent, gyerekek, W } from '../src/docx.js';
+import { docxMegnyit, docxMent, gyerekek, szerkezetesSzoveg, W } from '../src/docx.js';
+import { ujjlenyomat } from '../src/ujjlenyomat.js';
 import { urlapBeolvas } from '../src/beolvasas.js';
 import { atdolgozasKezd, atdolgozasOlvas, valaszlevelSzoveg, wordBeolvas } from '../src/atdolgozas.js';
 import { allapotOlvas } from '../src/munkafolyamat.js';
@@ -376,4 +377,29 @@ test('a kitalált próbakérelem (cégplatform, gmailes cím) beolvasható, és 
   takarit(t, r);
   assert.deepEqual(r.kifogasok.map((k) => k.azonosito), ['formai:elte-email:7.2/5']);
   assert.match(readFileSync(new URL('./fixtures/atdolgozas-proba/ertekelolap.txt', import.meta.url), 'utf8'), /KITALÁLT/);
+});
+
+test('a bíráló szöveges másolatában látszik a kijelölt IGEN/NEM és az aláhúzás; az ujjlenyomat nem változik', () => {
+  const terkep = mezoterkepBetolt('7.2', 'hu');
+  const m = (azon) => terkep.mezok.find((x) => x.azonosito === azon);
+  const eszkozzel = kitolt(sablon('7.2', 'hu'), terkep, valaszok('hu'), { datum: new Date('2026-06-01') });
+  const jelolt = szerkezetesSzoveg(docxMegnyit(eszkozzel).dom, { jeloles: true });
+  assert.equal(jelolt.match(/\[kijelölve\] NEM/g).length, 7);
+  assert.equal(jelolt.match(/\[kijelölve\] IGEN/g).length, 1);
+  assert.doesNotMatch(szerkezetesSzoveg(docxMegnyit(eszkozzel).dom), /\[kijelölve\]|\[aláhúzva/);
+  for (const u of URLAPOK) assert.doesNotMatch(szerkezetesSzoveg(docxMegnyit(sablon(u, 'hu')).dom, { jeloles: true }), /\[kijelölve\]|\[aláhúzva/, u);
+  const kezi = keziKitoltes(sablon('7.2', 'hu'), ({ kiemel }) => { kiemel(m('27').nemHely, 'b'); kiemel(m('14').kerdesHely, 'u'); });
+  const kezzel = szerkezetesSzoveg(docxMegnyit(kezi).dom, { jeloles: true });
+  assert.equal(kezzel.match(/\[kijelölve\]/g).length, 1);
+  assert.match(kezzel, /\[aláhúzva: A beleegyezés/);
+  assert.equal(ujjlenyomat(sablon('7.2', 'hu'), 'docx'), terkep.ujjlenyomat);
+});
+
+test('a bírálati csomag szöveges másolata a kijelölést is mutatja', async (t) => {
+  const root = projekt(t);
+  writeFileSync(join(root, 'keab/kerelem.md'), teljesMunkaanyag());
+  const r = await eloallit(root, options);
+  takarit(t, r);
+  const nev = Object.keys(r.keres.fajlok).find((f) => f.startsWith('beadvany/7.2') && f.endsWith('.docx.txt'));
+  assert.match(readFileSync(join(r.keres.mappa, nev), 'utf8'), /\[kijelölve\] IGEN/);
 });
