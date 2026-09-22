@@ -27,8 +27,13 @@ export function olvas(root, fajl) {
   return readFileSync(ut);
 }
 
-export function ir(root, fajl, tartalom) {
+export const ELOZMENY = 'keab/elozmeny/';
+
+// Az előző beadás (keab/elozmeny/) csak az átdolgozás megkezdésekor írható, felülírni ott sem lehet.
+export function ir(root, fajl, tartalom, { elozmeny = false } = {}) {
+  if (fajl.startsWith(ELOZMENY) && !elozmeny) throw new Error('Az előző beadás (keab/elozmeny/) nem módosítható.');
   const ut = helyiUt(root, fajl);
+  if (elozmeny && existsSync(ut)) throw new Error(`Az előzmény már létezik, nem írom felül: ${fajl}`);
   mkdirSync(dirname(ut), { recursive: true });
   const atmeneti = `${ut}.${randomUUID()}.tmp`;
   writeFileSync(atmeneti, tartalom, { flag: 'wx', mode: 0o600 });
@@ -66,7 +71,8 @@ export function allapotOlvas(root) {
     const s = JSON.parse(olvas(root, 'keab/.ellenorzes.json'));
     if (s.sema !== 1 || !objektum(s.engedelyek) || !objektum(s.generalt) || Object.values(s.generalt).some((v) => !kivonat(v))
       || Object.entries(s.engedelyek).some(([k, v]) => !['claude', 'codex'].includes(k) || typeof v !== 'boolean')
-      || (s.futas != null && !futasErvenyes(s.futas))) throw new Error('Sérült állapot.');
+      || (s.futas != null && !futasErvenyes(s.futas))
+      || (s.atdolgozas != null && !atdolgozasErvenyes(s.atdolgozas))) throw new Error('Sérült állapot.');
     return s;
   } catch (e) {
     return { sema: 1, engedelyek: {}, generalt: {}, serult: e.code !== 'ENOENT', futas: null };
@@ -94,6 +100,8 @@ export function wordLista(root) {
     for (const e of readdirSync(join(ut, rel), { withFileTypes: true })) {
       // Rejtett fájlok és a Word ideiglenes „~$” fájljai (amíg egy dokumentum nyitva van).
       if (e.name.startsWith('.') || e.name.startsWith('~$')) continue;
+      // Az előző beadás Word-fájljai nem részei az új beadványnak.
+      if (!rel && e.name === 'elozmeny' && e.isDirectory()) continue;
       const fajl = rel ? `${rel}/${e.name}` : e.name;
       if (e.isDirectory()) bejar(fajl);
       else if (/\.docx$/i.test(e.name)) lista.push(`keab/${fajl}`);
@@ -131,7 +139,9 @@ function futasErvenyes(f) {
     && kivonat(f.token) && ['generalt', 'csatolando', 'fajlok', 'wordok'].every((p) => utak(f[p]))
     && f.generalt.every((p) => f.csatolando.includes(p) && f.fajlok.includes(p))
     && f.csatolando.every((p) => f.fajlok.includes(p)) && f.wordok.every((p) => f.fajlok.includes(p))
-    && (f.tipus !== 'vegleges' || f.generalt.length === 4)
+    && (f.tipus !== 'vegleges' || f.generalt.length === (f.atdolgozas ? 5 : 4))
+    && (f.atdolgozas == null || (objektum(f.atdolgozas) && typeof f.atdolgozas.azonosito === 'string'
+      && (f.atdolgozas.ertekelolap === null || (szoveg(f.atdolgozas.ertekelolap) && f.atdolgozas.ertekelolap.startsWith(ELOZMENY) && kivonat(f.atdolgozas.ertekelolapUjjlenyomat)))))
     && Array.isArray(f.dokumentumok) && f.dokumentumok.every((d) => objektum(d) && szoveg(d.azonosito) && szoveg(d.ujjlenyomat))
     && objektum(f.biralat) && typeof f.biralat.allapot === 'string'
     && (f.biralat.allapot !== 'kesz' || (szoveg(f.biralat.keres) && kivonat(f.biralat.token)
@@ -142,6 +152,11 @@ function futasErvenyes(f) {
     && Array.isArray(f.felulbiralasok) && f.felulbiralasok.every((v) => objektum(v) && szoveg(v.azonosito) && szoveg(v.indok) && kivonat(v.token))
     && objektum(f.frissites) && typeof f.frissites.allapot === 'string'
     && Array.isArray(f.frissites.figyelmeztetesek) && f.frissites.figyelmeztetesek.every((v) => typeof v === 'string');
+}
+
+function atdolgozasErvenyes(a) {
+  return objektum(a) && szoveg(a.mappa) && a.mappa.startsWith(ELOZMENY) && szoveg(a.ertekelolap) && a.ertekelolap.startsWith(`${a.mappa}/`)
+    && objektum(a.ujjlenyomatok) && Object.entries(a.ujjlenyomatok).every(([p, v]) => p.startsWith(`${a.mappa}/`) && kivonat(v)) && kivonat(a.ujjlenyomatok[a.ertekelolap]);
 }
 
 export function kifogasErvenyes(k) {

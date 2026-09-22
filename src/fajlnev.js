@@ -6,12 +6,14 @@ const CIMEK = {
     '7.2': '7.2 Kutatásintegritási űrlap',
     '7.4': '7.4 Adatkezelési terv',
     tajekoztato: 'Tájékoztató és hozzájáruló nyilatkozat',
+    valaszlevel: 'Válaszlevél a Bizottság értékelésére',
   },
   en: {
     '7.1': '7.1 Statement of research integrity',
     '7.2': '7.2 Research integrity application form',
     '7.4': '7.4 Plan for data processing',
     tajekoztato: 'Statement of information and consent',
+    valaszlevel: 'Response to the Committee evaluation',
   },
 };
 

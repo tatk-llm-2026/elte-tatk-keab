@@ -143,3 +143,38 @@ test('üres tartalom: a kari sablon helykitöltői maradnak, a Wordök érvénye
   assert.match(readFileSync(join(root, 'keab/bead.md'), 'utf8'), /Üres kötelező érték/);
   assert.equal(r.mehet, false);
 });
+
+for (const [cim, jo] of [['kutato@gmail.com', false], ['kutato@tatk.elte.hu', true], ['kutato@elte.hu', true], ['KUTATO@TATK.ELTE.HU', true], ['  kutato@elte.hu  ', true],
+  ['kutato@notelte.hu', false], ['kutato@elte.hu.example.com', false], ['kutato@elte.hu kutato@gmail.com', false], ['Kutató Kata', false]]) test(`ELTE-s e-mail cím: ${cim.trim()}`, (t) => {
+  const root = projekt(t);
+  for (const nyelv of ['hu', 'en']) {
+    const draft = beolvas(vazKeszit(nyelv));
+    draft.valaszok['7.2']['5'] = cim;
+    const k = formaiEllenorzes(root, { draft, terkepBetolto: mezoterkepBetolt, mellekletek: [] }).find((v) => v.azonosito === 'formai:elte-email:7.2/5');
+    assert.equal(!k, jo, nyelv);
+    if (k) {
+      assert.equal(k.sulyossag, 'javitando');
+      assert.equal(k.szabalyzat, null);
+      assert.equal(k.hely, 'kerelem.md 7.2/[5]');
+    }
+  }
+});
+
+test('üres e-mail mezőre csak az üres mező kifogás jön, az ELTE-s nem', (t) => {
+  const root = projekt(t);
+  const lista = formaiEllenorzes(root, { draft: beolvas(vazKeszit('hu')), terkepBetolto: mezoterkepBetolt, mellekletek: [] });
+  assert.ok(lista.some((k) => k.azonosito === 'formai:ures:7.2/5'));
+  assert.ok(!lista.some((k) => k.azonosito.startsWith('formai:elte-email')));
+});
+
+test('a „kutetika: ellenőrizendő” jelölés nem válasz, de formai kifogás, amíg a kutató ki nem törli', (t) => {
+  const root = projekt(t);
+  const md = vazKeszit('hu').replace('## [6] A kutatás címe:\n', '## [6] A kutatás címe:\n<!-- kutetika: ellenőrizendő: a cella üres volt. -->\nKitalált cím\n');
+  const draft = beolvas(md);
+  assert.equal(draft.valaszok['7.2']['6'], 'Kitalált cím');
+  assert.equal(draft.ellenorizendo['7.2']['6'], 'a cella üres volt.');
+  const k = formaiEllenorzes(root, { draft, terkepBetolto: mezoterkepBetolt, mellekletek: [] }).find((v) => v.azonosito === 'formai:ellenorizendo:7.2/6');
+  assert.ok(k?.problema.includes('a cella üres volt.'));
+  const javitott = beolvas(md.replace(/<!-- kutetika: ellenőrizendő:[^>]*-->\n/, ''));
+  assert.ok(!formaiEllenorzes(root, { draft: javitott, terkepBetolto: mezoterkepBetolt, mellekletek: [] }).some((v) => v.azonosito.startsWith('formai:ellenorizendo')));
+});

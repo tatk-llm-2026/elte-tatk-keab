@@ -7,10 +7,12 @@ import { docxMent, W } from './docx.js';
 import { frissitesEllenoriz } from './frissites.js';
 import { beadIr, formaiEllenorzes, mellekletekEllenoriz } from './ellenorzes.js';
 import { biralatIndit, biraloValaszt } from './biralat.js';
+import { ATDOLGOZAS, VALASZLEVEL, atdolgozasBetolt, atdolgozasFormai, valaszlevelSzoveg } from './atdolgozas.js';
 import { allapotIr, allapotOlvas, anyagBetolt, hash, ir, olvas, pillanatkep, wordLista, zarol } from './munkafolyamat.js';
 
-function tajekoztatoWord(szoveg) {
-  if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/u.test(szoveg)) throw new Error('A tájékoztató XML-ben nem megengedett vezérlőkaraktert tartalmaz.');
+// Egyszerű, formázatlan Word-dokumentum (tájékoztató, válaszlevél) soronként egy bekezdéssel.
+function szovegWord(szoveg) {
+  if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/u.test(szoveg)) throw new Error('A szöveg XML-ben nem megengedett vezérlőkaraktert tartalmaz.');
   const dom = new DOMImplementation().createDocument(W, 'w:document', null);
   const body = dom.createElementNS(W, 'w:body');
   dom.documentElement.appendChild(body);
@@ -37,18 +39,32 @@ async function frissit(root, options) {
   }
 }
 
-function futasKeszit(root, anyag, frissites, { tipus, generalt, mellekletek }) {
+// Átdolgozáskor a válaszlevél szövege a pontokból, és a bírálathoz szükséges adatok.
+function atdolgozasElokeszit(root, s, nyelv) {
+  const atd = atdolgozasBetolt(root);
+  if (!atd) return null;
+  const szoveg = valaszlevelSzoveg(atd, nyelv);
+  ir(root, VALASZLEVEL, szoveg);
+  const a = s.atdolgozas;
+  const formai = atdolgozasFormai(atd);
+  if (!a) formai.push({ azonosito: 'formai:atdolgozas:nincs-megkezdve', hely: ATDOLGOZAS, sulyossag: 'javitando', szabalyzat: null,
+    problema: 'Az átdolgozás nincs megkezdve: az előző beadás és az értékelőlap nincs elmentve (atdolgozas-kezd parancs).' });
+  return { szoveg, formai, adat: { azonosito: atd.fejlec.azonosito ?? '', visszakuldes: atd.fejlec.visszakuldes ?? '',
+    ertekelolap: a?.ertekelolap ?? null, ertekelolapUjjlenyomat: a ? a.ujjlenyomatok[a.ertekelolap] : null } };
+}
+
+function futasKeszit(root, anyag, frissites, { tipus, generalt, mellekletek, atd = null }) {
   const wordok = wordLista(root);
   const csatolando = [...generalt, ...(mellekletek ?? []).map((m) => m.fajl)];
-  const fajlok = [...new Set([...csatolando, ...wordok])].sort();
+  const fajlok = [...new Set([...csatolando, ...wordok, ...(atd ? [ATDOLGOZAS, VALASZLEVEL] : [])])].sort();
   const snapshot = pillanatkep(root, fajlok);
   if (snapshot['keab/kerelem.md'] !== hash(anyag.bytes)) throw new Error('A munkaanyag a feldolgozás közben megváltozott; új előállítás szükséges.');
   const { draft, terkepBetolto, jegyzek } = anyag;
   const dokumentumok = jegyzek.dokumentumok.filter((d) => d.nyelv === draft.nyelv);
-  const formai = formaiEllenorzes(root, { draft, terkepBetolto, frissites, mellekletek, generalt, wordok });
+  const formai = [...formaiEllenorzes(root, { draft, terkepBetolto, frissites, mellekletek, generalt, wordok }), ...(atd?.formai ?? [])];
   return { tipus, idopont: new Date().toISOString(), nyelv: draft.nyelv, verzio: jegyzek.kutetikaVerzio, dokumentumok,
     generalt, csatolando, mellekletek, wordok, fajlok, pillanatkep: snapshot, token: hash(JSON.stringify(snapshot)),
-    formai, frissites, felulbiralasok: [], biralat: { allapot: 'biralatra-var' } };
+    formai, frissites, felulbiralasok: [], biralat: { allapot: 'biralatra-var' }, atdolgozas: atd?.adat ?? null };
 }
 
 export async function eloallit(root, options = {}) {
@@ -62,7 +78,8 @@ export async function eloallit(root, options = {}) {
     const datum = options.datum === undefined ? new Date() : new Date(options.datum);
     if (!Number.isFinite(datum.getTime())) throw new Error('Érvénytelen előállítási dátum.');
     const { draft, gyoker, terkepBetolto } = anyag;
-    const nevek = Object.fromEntries([...URLAPOK, 'tajekoztato'].map((u) => [u, `keab/${fajlnev(u, draft.nyelv, draft.valaszok['7.2']?.['1'], datum)}`]));
+    const atd = atdolgozasElokeszit(root, s, draft.nyelv);
+    const nevek = Object.fromEntries([...URLAPOK, 'tajekoztato', ...(atd ? ['valaszlevel'] : [])].map((u) => [u, `keab/${fajlnev(u, draft.nyelv, draft.valaszok['7.2']?.['1'], datum)}`]));
     const generalt = Object.values(nevek);
     if ((mellekletek ?? []).some((m) => generalt.includes(m.fajl))) throw new Error('A melléklet neve ütközik egy előállítandó Word-fájllal.');
     const modositott = [];
@@ -78,7 +95,8 @@ export async function eloallit(root, options = {}) {
       figyelmeztetesek: [...frissites.figyelmeztetesek, 'A kézzel módosított vagy ismeretlen eredetű Word-fájlok felülíródnak. Előbb vidd át a javítást a kerelem.md-be, vagy a kutató kifejezett jóváhagyásával add meg a felulirasMegerosites tokent.'],
     };
     const kimenetek = URLAPOK.map((u) => [nevek[u], kitolt(olvas(gyoker, `dokumentumok/${u}-${draft.nyelv}.docx`), terkepBetolto(u, draft.nyelv), draft.valaszok, { datum })]);
-    kimenetek.push([nevek.tajekoztato, tajekoztatoWord(draft.tajekoztato)]);
+    kimenetek.push([nevek.tajekoztato, szovegWord(draft.tajekoztato)]);
+    if (atd) kimenetek.push([nevek.valaszlevel, szovegWord(atd.szoveg)]);
     s.futas = null;
     s.serult = false;
     allapotIr(root, s);
@@ -91,7 +109,7 @@ export async function eloallit(root, options = {}) {
     }
     if (!s.engedelyek) s.engedelyek = {};
     irDontesek(root);
-    s.futas = futasKeszit(root, anyag, frissites, { tipus: 'vegleges', generalt, mellekletek });
+    s.futas = futasKeszit(root, anyag, frissites, { tipus: 'vegleges', generalt, mellekletek, atd });
     allapotIr(root, s);
     beadIr(root, s);
     const eredmeny = await biralatIndit(root, s, options);
@@ -115,7 +133,8 @@ export async function munkaanyagBiralat(root, options = {}) {
     const anyag = anyagBetolt(root);
     const s = allapotOlvas(root);
     s.serult = false;
-    s.futas = futasKeszit(root, anyag, frissites, { tipus: 'munkaanyag', generalt: [], mellekletek: options.mellekletek });
+    const atd = atdolgozasElokeszit(root, s, anyag.draft.nyelv);
+    s.futas = futasKeszit(root, anyag, frissites, { tipus: 'munkaanyag', generalt: [], mellekletek: options.mellekletek, atd });
     allapotIr(root, s);
     ir(root, 'keab/bead.md', '# Ellenőrzés\n\nMunkaanyag-bírálat folyamatban; ez nem ad mehet állapotot. Új előállítás szükséges.\n');
     return biralatIndit(root, s, options);

@@ -56,7 +56,9 @@ function utmutato(mezo, sz) {
   return reszek.length ? `<!-- ${reszek.join(' ')} -->\n` : '';
 }
 
-export function vazKeszit(nyelv, terkepBetolto = mezoterkepBetolt) {
+// tartalom (nem kötelező): Wordből beolvasott válaszok és a bizonytalan mezők jelölése,
+// { valaszok: { '7.2': { '1': '…' } }, ellenorizendo: { '7.2': { '1': 'ok' } } }.
+export function vazKeszit(nyelv, terkepBetolto = mezoterkepBetolt, tartalom = null) {
   const sz = SZOVEGEK[nyelv];
   if (!sz) throw new Error(`Ismeretlen beadványnyelv: ${nyelv}`);
   const reszek = [`<!-- kutetika-kerelem nyelv=${nyelv} -->\n# ${sz.cim}\n\n<!--\n${sz.bevezeto}\n-->\n`];
@@ -64,7 +66,10 @@ export function vazKeszit(nyelv, terkepBetolto = mezoterkepBetolt) {
     const terkep = terkepBetolto(urlap, nyelv);
     reszek.push(`# ${urlap} ${terkep.cim}\n`);
     for (const mezo of terkep.mezok.filter(munkaanyagMezo)) {
-      reszek.push(`## [${mezo.azonosito}] ${mezo.kerdes}\n${utmutato(mezo, sz)}\n`);
+      const ok = tartalom?.ellenorizendo?.[urlap]?.[mezo.azonosito];
+      // A válasz egy sora sem kezdődhet „#”-sel, mert az új fejezetnek számítana.
+      const valasz = (tartalom?.valaszok?.[urlap]?.[mezo.azonosito] ?? '').replace(/^(#+ )/gm, '\\$1');
+      reszek.push(`## [${mezo.azonosito}] ${mezo.kerdes}\n${utmutato(mezo, sz)}${ok ? `${ellenorizendoJel(ok)}\n` : ''}${valasz ? `${valasz}\n` : ''}\n`);
     }
   }
   reszek.push(`# ${sz.tajekoztato}\n<!-- ${sz.tajekoztatoUtmutato} -->\n\n`);
@@ -76,26 +81,32 @@ const MEGJEGYZES = /<!--[\s\S]*?-->/g;
 // ezekkel a Word-fájl nem nyílna meg.
 const TILTOTT_KARAKTER = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\uFFFE\uFFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g;
 const TAJEKOZTATO_CIMEK = Object.values(SZOVEGEK).map((sz) => sz.tajekoztato);
+// A Wordből beolvasott, bizonytalan mezők jelölése; a kutató törli, ha ellenőrizte.
+export const ELLENORIZENDO = /<!--\s*kutetika:\s*ellen[őo]rizend[őo]:?\s*([\s\S]*?)-->/;
+export const ellenorizendoJel = (ok) => `<!-- kutetika: ellenőrizendő: ${ok.replace(/--/g, '–')} -->`;
 
-// Beolvasás: { nyelv, valaszok: { '7.2': { '1': '...' } }, tajekoztato, hibak: [...] }
+// Beolvasás: { nyelv, valaszok: { '7.2': { '1': '...' } }, ellenorizendo: { '7.2': { '1': 'ok' } }, tajekoztato, hibak: [...] }
 export function beolvas(szoveg, terkepBetolto = mezoterkepBetolt) {
   // Windows-sorvégek, BOM, macOS-en bontott ékezetek (NFD), tiltott vezérlőkarakterek.
   szoveg = szoveg.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').normalize('NFC').replace(TILTOTT_KARAKTER, '');
   const nyelvJel = /<!--\s*kutetika-kerelem\s+nyelv=(hu|en)\s*-->/.exec(szoveg);
   const hibak = [];
   if (!nyelvJel) {
-    return { nyelv: null, valaszok: {}, tajekoztato: '', hibak: ['Hiányzik a munkaanyag első sora (kutetika-kerelem nyelv=…).'] };
+    return { nyelv: null, valaszok: {}, ellenorizendo: {}, tajekoztato: '', hibak: ['Hiányzik a munkaanyag első sora (kutetika-kerelem nyelv=…).'] };
   }
   const nyelv = nyelvJel[1];
   const terkepek = Object.fromEntries(URLAPOK.map((u) => [u, terkepBetolto(u, nyelv)]));
   const valaszok = Object.fromEntries(URLAPOK.map((u) => [u, {}]));
+  const ellenorizendo = Object.fromEntries(URLAPOK.map((u) => [u, {}]));
   let tajekoztato = '';
 
   let urlap = null; // aktuális űrlap, vagy TAJEKOZTATO
   let mezo = null;
   let puffer = [];
   const lezar = () => {
-    const tartalom = puffer.join('\n').replace(MEGJEGYZES, '').trim();
+    const jel = ELLENORIZENDO.exec(puffer.join('\n'));
+    if (jel && urlap && urlap !== TAJEKOZTATO && mezo) ellenorizendo[urlap][mezo] = jel[1].trim() || 'a beolvasás bizonytalan.';
+    const tartalom = puffer.join('\n').replace(MEGJEGYZES, '').replace(/^\\(#+ )/gm, '$1').trim();
     if (urlap === TAJEKOZTATO) tajekoztato = tartalom;
     else if (urlap && mezo) {
       if (mezo in valaszok[urlap]) hibak.push(`A ${urlap} űrlap [${mezo}] mezője kétszer szerepel; mindkét válasz megmaradt, egybefűzve.`);
@@ -140,7 +151,7 @@ export function beolvas(szoveg, terkepBetolto = mezoterkepBetolt) {
       if (!(m.azonosito in valaszok[u])) hibak.push(`Hiányzik a ${u} űrlap [${m.azonosito}] mezőjének címsora.`);
     }
   }
-  return { nyelv, valaszok, tajekoztato, hibak };
+  return { nyelv, valaszok, ellenorizendo, tajekoztato, hibak };
 }
 
 export function szoszam(szoveg) {

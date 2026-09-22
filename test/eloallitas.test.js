@@ -23,6 +23,7 @@ function teljesMunkaanyag() {
       if (m.valasztas) valasz = m.valasztas[0];
       if (m.tipus === 'sorok') valasz = 'Minta Anna | ABC123 | kutatásvezető';
       if (u === '7.2' && m.azonosito === '1') valasz = 'Dr. Minta Anna';
+      if (m.ellenorzes === 'elte-email') valasz = 'minta.anna@tatk.elte.hu';
       reszek.push(`## [${m.azonosito}] ${m.kerdes}\n${valasz}\n`);
     }
   }

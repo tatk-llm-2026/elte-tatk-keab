@@ -18,6 +18,14 @@ export function mellekletekEllenoriz(lista) {
   return lista;
 }
 
+// ELTE-s cím: a @ utáni tartomány pontosan elte.hu, vagy .elte.hu-ra végződik.
+export function elteEmail(ertek) {
+  const t = /^[^\s@<>]+@([a-z0-9.-]+)$/i.exec(ertek.trim());
+  if (!t) return false;
+  const tartomany = t[1].toLowerCase();
+  return tartomany === 'elte.hu' || tartomany.endsWith('.elte.hu');
+}
+
 export function formaiEllenorzes(root, { draft, terkepBetolto, frissites, mellekletek, generalt = [], wordok = [] }) {
   const lista = [];
   const hozzaad = (azonosito, hely, problema, sulyossag = 'javitando', szabalyzat = null) => lista.push({ azonosito: `formai:${azonosito}`, hely, problema, sulyossag, szabalyzat });
@@ -38,6 +46,9 @@ export function formaiEllenorzes(root, { draft, terkepBetolto, frissites, mellek
       }
       if (v && m.tipus === 'megerosites' && igenNemBontas(v).dontes !== 'igen') hozzaad(`megerosites:${id}`, hely, 'A felülvizsgálat nincs megerősítve; az emlékeztető a Wordben maradt.');
       if (v && m.valasztas && !m.valasztas.includes(v)) hozzaad(`valasztas:${id}`, hely, `Ismeretlen választás; lehetőségek: ${m.valasztas.join(', ')}.`);
+      // A bizottság gyakorlata (nem a szabályzat szövege): a kutatásvezető ELTE-s címet adjon meg.
+      if (v && m.ellenorzes === 'elte-email' && !elteEmail(v)) hozzaad(`elte-email:${id}`, hely, 'A bizottság ELTE-s e-mail címet kér (…@elte.hu vagy kari cím, pl. …@tatk.elte.hu).');
+      if (draft.ellenorizendo?.[u]?.[m.azonosito]) hozzaad(`ellenorizendo:${id}`, hely, `Beolvasáskor bizonytalan maradt, ellenőrizd a Word-fájllal: ${draft.ellenorizendo[u][m.azonosito]} Ha rendben van, töröld a „kutetika: ellenőrizendő” megjegyzést.`);
     }
   }
   if (!draft.tajekoztato.trim()) hozzaad('tajekoztato', 'kerelem.md tájékoztató', 'Üres tájékoztató és hozzájáruló nyilatkozat.');
@@ -72,7 +83,7 @@ export function allapotSzamit(root, s = allapotOlvas(root)) {
   const kifogasok = kifogasokRendez([...f.formai, ...(kesz ? b.kifogasok : [])]);
   const felulbiralasok = Array.isArray(f.felulbiralasok) ? f.felulbiralasok.filter((v) => v.token === f.token && szoveg(v.indok) && kifogasok.some((k) => k.azonosito === v.azonosito)) : [];
   const maradt = kifogasok.filter((k) => !felulbiralasok.some((v) => v.azonosito === k.azonosito));
-  const teljes = f.tipus === 'vegleges' && Array.isArray(f.generalt) && f.generalt.length === 4
+  const teljes = f.tipus === 'vegleges' && Array.isArray(f.generalt) && f.generalt.length === (f.atdolgozas ? 5 : 4)
     && f.generalt.every((p) => typeof f.pillanatkep[p] === 'string');
   const mehet = teljes && kesz && !maradt.length;
   return { mehet, allapot: mehet ? 'mehet' : !kesz ? (b?.allapot ?? 'biralatra-var') : f.tipus === 'munkaanyag' ? 'munkaanyag-biralva' : 'kifogasok',
@@ -80,11 +91,18 @@ export function allapotSzamit(root, s = allapotOlvas(root)) {
     figyelmeztetesek: [...(f.frissites?.figyelmeztetesek ?? []), ...(f.figyelmeztetesek ?? []), ...(felulbiralasok.length ? ['Felülbírált kifogások maradtak; ez nem garantál etikai engedélyt.'] : [])] };
 }
 
+function atdolgozasBead(f) {
+  const a = f.atdolgozas;
+  if (!a) return '';
+  return `## Átdolgozás\nEz ${a.azonosito ? `a(z) ${a.azonosito} azonosítójú eljárás` : 'egy korábbi eljárás'} átdolgozott beadványa. A válaszlevelet is csatolni kell (a csatolandók között van).\n`
+    + `Visszaküldés: ${a.visszakuldes || 'az értékelőlap nem mondja meg, kinek és hogyan kell visszaküldeni. Kérdezd meg a KEAB titkárságát (keab@tatk.elte.hu), például hogy ugyanabban a levélláncban válaszolj-e.'}\n\n`;
+}
+
 export function beadIr(root, s) {
   const f = s.futas;
   if (!f || f.tipus !== 'vegleges') return;
   const a = allapotSzamit(root, s);
-  ir(root, 'keab/bead.md', `# Beadási tudnivalók\n\nCímzett: ELTE TáTK KEAB elnöke, keab@tatk.elte.hu.\nA beküldés a kutatásvezető feladata, elektronikusan, Word formátumban, digitális aláírással.\nHatáridő: a következő bizottsági ülés előtt legalább 10 munkanappal (szabályzat 5.1.2.). Konkrét ülésnapot a Bizottságtól kell megkérdezni.\nForrás: https://tatk.elte.hu/bizottsagok/kutetika\n\nkutetika verzió: ${f.verzio}\n\n## Csatolandók\n${f.csatolando.map((p) => `- ${p}`).join('\n')}\n\n## Felhasznált kari dokumentumok\n${f.dokumentumok.map((d) => `- ${d.azonosito}: ${d.ujjlenyomat}; ${d.forras}`).join('\n')}\n\n## Ellenőrzés\nÁllapot: ${a.allapot}.\nPillanatkép: ${f.token}\nBíráló: ${f.biralat?.asszisztens ?? f.keres?.asszisztens ?? 'nincs'}; mód: ${f.biralat?.mod ?? f.keres?.mod ?? 'nincs'}.\nEz az állapot csak a rögzített fájlbájtokra érvényes; beadás előtt futtasd le újra az állapotellenőrzést (allapot parancs). A fájlok változása érvényteleníti. Nem garantál etikai engedélyt.\n\n${a.figyelmeztetesek.join('\n')}\n\n${a.kifogasok.map((k) => `- ${k.azonosito} (${k.sulyossag}): ${k.hely}: ${k.problema}${k.szabalyzat ? `; ${k.szabalyzat}` : ''}`).join('\n')}\n\n## Kutatói felülbírálások\n${a.felulbiralasok.map((v) => `- ${v.azonosito}: ${v.indok}`).join('\n') || 'Nincs.'}\n`);
+  ir(root, 'keab/bead.md', `# Beadási tudnivalók\n\nCímzett: ELTE TáTK KEAB elnöke, keab@tatk.elte.hu.\nA beküldés a kutatásvezető feladata, elektronikusan, Word formátumban, digitális aláírással.\nHatáridő: a következő bizottsági ülés előtt legalább 10 munkanappal (szabályzat 5.1.2.). Konkrét ülésnapot a Bizottságtól kell megkérdezni.\nForrás: https://tatk.elte.hu/bizottsagok/kutetika\n\nkutetika verzió: ${f.verzio}\n\n${atdolgozasBead(f)}## Csatolandók\n${f.csatolando.map((p) => `- ${p}`).join('\n')}\n\n## Felhasznált kari dokumentumok\n${f.dokumentumok.map((d) => `- ${d.azonosito}: ${d.ujjlenyomat}; ${d.forras}`).join('\n')}\n\n## Ellenőrzés\nÁllapot: ${a.allapot}.\nPillanatkép: ${f.token}\nBíráló: ${f.biralat?.asszisztens ?? f.keres?.asszisztens ?? 'nincs'}; mód: ${f.biralat?.mod ?? f.keres?.mod ?? 'nincs'}.\nEz az állapot csak a rögzített fájlbájtokra érvényes; beadás előtt futtasd le újra az állapotellenőrzést (allapot parancs). A fájlok változása érvényteleníti. Nem garantál etikai engedélyt.\n\n${a.figyelmeztetesek.join('\n')}\n\n${a.kifogasok.map((k) => `- ${k.azonosito} (${k.sulyossag}): ${k.hely}: ${k.problema}${k.szabalyzat ? `; ${k.szabalyzat}` : ''}`).join('\n')}\n\n## Kutatói felülbírálások\n${a.felulbiralasok.map((v) => `- ${v.azonosito}: ${v.indok}`).join('\n') || 'Nincs.'}\n`);
 }
 
 export async function allapot(root) {

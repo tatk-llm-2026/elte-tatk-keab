@@ -1,6 +1,6 @@
 ---
 name: kutetika-kerelem
-description: Prepare the ELTE TáTK KEAB ethics application by interviewing the researcher and continuously maintaining the keab/kerelem.md working draft in the submission language (hu/en), without creating Word files. Use when the researcher wants to "csináljuk meg a kérelmet", "prepare the application", fill the 7.1/7.2/7.4 forms, or produce the submission. Not for deciding whether approval is needed (use kutetika-engedely) and not for the adversarial review (kutetika-biralat).
+description: Prepare the ELTE TáTK KEAB ethics application by interviewing the researcher and continuously maintaining the keab/kerelem.md working draft in the submission language (hu/en), without creating Word files. Use when the researcher wants to "csináljuk meg a kérelmet", "prepare the application", fill the 7.1/7.2/7.4 forms, or produce the submission; also when the committee sent the application back and it must be revised ("visszaküldték", "megjött a bírálat", "átdolgozásra javasolt", "értékelőlap", "hiánypótlás"). Not for deciding whether approval is needed (use kutetika-engedely) and not for the adversarial review (kutetika-biralat).
 ---
 
 # kutetika-kerelem — Prepare the KEAB application
@@ -52,6 +52,13 @@ In Hungarian, address the researcher informally (tegezés), as the tool itself d
    explicitly ask about the points researchers typically forget:
    - who is the kutatásvezető (must have a PhD; doktorandusz cannot, except with a
      PhD szupervizor assigned by the department head),
+   - the kutatásvezető's ELTE e-mail address (…@elte.hu or a faculty address such as
+     …@tatk.elte.hu) for the 7.2 e-mail field. The committee asks for an ELTE address
+     (this is its practice, not the text of the regulation). If the description or the
+     answer gives a private address (e.g. gmail), say so and ask for the ELTE one. If
+     the kutatásvezető has none (e.g. an external supervisor), write the existing
+     address, record this in `keab/dontesek.md`, and suggest asking the KEAB
+     titkárság,
    - institutional director's permission when the research happens in an institution
      (school, kindergarten, hospital) — also add it to the attachment list,
    - minor participants (parental consent forms),
@@ -73,6 +80,8 @@ write the options to `keab/.beallitas.json` and pass `@keab/.beallitas.json` ins
 |---|---|---|
 | `frissites` | start of session | `{}` or `{"force":true}` |
 | `vaz` | create the empty draft | `{"nyelv":"hu"\|"en"}` |
+| `atdolgozas-kezd` | start a revision: save the previous submission and the evaluation sheet | `{"ertekelolap":…,"datum":"ÉÉÉÉ-HH-NN","beadott":[…],"azonosito":…,"dontes":…,"visszakuldes":…}` |
+| `beolvas` | revision of an application not made with this tool: fill the draft from the submitted Word forms | `{"nyelv":"hu"\|"en","fajlok":{"7.2":…,"7.4":…,"7.1":…}}` |
 | `munkaanyag-biralat` | "nézd át" before any Word file exists; never gives "mehet" | `{"asszisztens":…,"subagent":…,"mellekletek":[…]}` |
 | `eloallit` | produce the submission | `{"asszisztens":…,"subagent":…,"mellekletek":[…]}` (+ `felulirasMegerosites`) |
 | `biralat-rogzit` | record the reviewer's JSON result | the reviewer's JSON as is |
@@ -133,6 +142,68 @@ node keab/.eszkoz/bin/kutetika.js eloallit . '{"asszisztens":"claude","subagent"
   delete files in `keab/`.
 - Before submitting, run `node keab/.eszkoz/bin/kutetika.js allapot .` and only report
   "mehet" when the tool itself reports `mehet: true`.
+
+## Revision after the committee's evaluation (átdolgozás)
+
+Use this when the researcher says the committee sent the application back
+("visszaküldték", "megjött a bírálat", "átdolgozásra javasolt", "hiánypótlás",
+"értékelőlap"). Never search or read the researcher's mailbox: ask for the evaluation
+sheet (értékelőlap) as a file in the project folder, or as pasted text.
+
+1. **Read the evaluation sheet** and tell the researcher its decision in plain words.
+   If it is a rejection (elutasítás), not a request for revision, say so, cite the
+   regulation, and point to the KEAB titkárság (keab@tatk.elte.hu); start a revision
+   only if the researcher wants to submit a new application.
+2. **Save the previous submission** with `atdolgozas-kezd`:
+   - `ertekelolap`: the sheet's path inside the project (ask the researcher to copy it
+     into `keab/` if it is elsewhere, e.g. in Letöltések);
+   - `datum`: the date the previous version was submitted (ÉÉÉÉ-HH-NN);
+   - `beadott`: the submitted files, if the researcher has them in the project; leave
+     it out if the last production of this tool was what they submitted (then say so);
+   - `azonosito` (e.g. `2026_007_01`), `dontes` (the committee's decision, verbatim) and
+     `visszakuldes` (only if the sheet says whom and how to send the revision to).
+   The files go to `keab/elozmeny/<date>/` and are never changed afterwards.
+3. **No `keab/kerelem.md` yet** (the application was not made with this tool): ask for
+   the submitted language and run `beolvas` with the submitted 7.2, 7.4 and 7.1 Word
+   files (use the copies in `keab/elozmeny/…`). It fills the draft from the forms and
+   returns the fields it could not read reliably (`ellenorizendo`). Name those fields
+   to the researcher in plain words; they are marked in the draft with
+   `<!-- kutetika: ellenőrizendő: … -->`. After the researcher checks a field, delete
+   its marker. Add the other submitted documents (consent form, questionnaire) to the
+   attachment list of the next production.
+4. **Split the sheet into points** in `keab/atdolgozas.md` (the helper created the
+   skeleton). One point per request; a bulleted list in one paragraph is several
+   points. For each point: `## [n] short title`, `Állapot: nyitott`, `Érintett:` the
+   draft fields (like `7.2/[5]`) and attachments, and under `### A bizottság szövege`
+   the committee's words verbatim. Then ask the researcher to compare the list with the
+   sheet before you continue. If a request can be read in several ways (e.g. „ELTE-s cím
+   megadása szükséges”: e-mail or postal address), list the readings, ask, and if the
+   researcher is unsure, suggest asking the titkárság; record the decision in
+   `keab/dontesek.md`.
+5. **Go through the points one by one**, the weightiest first (kutatásvezető, consent,
+   data protection, conflict of interest, then missing attachments and formalities).
+   For each: propose a fix, and after the researcher decides, make it in
+   `keab/kerelem.md` or as a new attachment. Then set the point's state:
+   - `Állapot: javítva` and under `### Mi változott` what changed and where (form and
+     question);
+   - `Állapot: nem teljesíthető` and under `### Indoklás` the researcher's reason, after
+     you have told them the likely consequence. Also record it in `keab/dontesek.md`.
+   Write `Mi változott`, `Indoklás` and the optional `# Kísérőszöveg` (a short opening
+   for the letter) in the submission language: the response letter is built from them.
+   Do not argue with the committee on the researcher's behalf, and never say that
+   fixing the points guarantees approval.
+   - If the kutatásvezető must change (no PhD), cite the regulation's definition, list
+     the options (e.g. the témavezető as kutatásvezető), update every affected field in
+     all three forms, and tell the researcher that the new kutatásvezető sends the
+     application.
+6. **Produce** with `eloallit` as usual. The tool builds the response letter
+   (`keab/valaszlevel.md` and a Word file) from `keab/atdolgozas.md`, adds it to the
+   attachments, flags open points and missing explanations as formal objections, and
+   gives the reviewer the evaluation sheet and the letter so that it can check every
+   point. `keab/bead.md` names the previous procedure and how to send the revision.
+   If the file names changed (e.g. a new kutatásvezető), the old Word files stay in
+   `keab/` and are flagged as earlier outputs. Their copy is safe in
+   `keab/elozmeny/…`; tell the researcher, and delete them only after they agree.
 
 ## bead.md and sending
 

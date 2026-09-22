@@ -22,6 +22,9 @@ You receive exactly one staging folder. It contains only:
   cells marked `[sor]` and `[cella]`). Read these copies; you do not need to unpack
   the Word files.
 - `biralo/SKILL.md` — this file.
+- `bizottsag/` — only when the submission is a revision after the committee sent it
+  back: the committee's evaluation sheet (értékelőlap, usually a scanned PDF) and
+  `valaszlevel.md`, the response letter that goes to the committee with the revision.
 
 You MUST NOT read, request or use anything else: no project files, no `AGENTS.md`, no
 `dontesek.md`, no chat history, no raw research data, no network. Everything you need
@@ -51,6 +54,15 @@ Find problems in these categories, and only these:
    the contact person. Flag any missing element.
 6. **Older faculty documents** — if the submission indicates it was produced with
    documents the faculty has since changed, flag it.
+7. **Committee points (revision only, when `bizottsag/` exists)** — go through every
+   request on the evaluation sheet and check in the forms and attachments in
+   `beadvany/` that it is really handled. A point the letter calls fixed but the
+   submission does not show fixed is `sulyos`: name the committee point, the letter's
+   claim and the place in the submission. A point the letter marks as not addressed
+   needs a reason in the letter; flag it (`figyelmeztetes`) so the researcher sees the
+   risk. A revision still gets a full review: check the whole submission in categories
+   1–6 as well, including problems the committee did not mention and new ones
+   introduced by the fixes.
 
 ## Severity and output
 

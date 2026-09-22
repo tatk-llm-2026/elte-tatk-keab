@@ -103,7 +103,8 @@
         "cella": 2
       },
       "kotelezo": true,
-      "szoszam": null
+      "szoszam": null,
+      "ellenorzes": "elte-email"
     },
     {
       "azonosito": "6",

@@ -7,6 +7,7 @@ import { eloallit, munkaanyagBiralat } from './eloallitas.js';
 import { allapot, felulbiral } from './ellenorzes.js';
 import { biralatFolytat, biralatRogzit, engedelyRogzit } from './biralat.js';
 import { frissitesEllenoriz } from './frissites.js';
+import { atdolgozasKezd, wordBeolvas } from './atdolgozas.js';
 import { objektum, vazIr } from './munkafolyamat.js';
 
 export function initCel(args, { otthon = homedir() } = {}) {
@@ -29,6 +30,8 @@ regisztral('init', async (args) => {
 const KOZOS = ['asszisztens', 'subagent', 'mellekletek'];
 const MUVELETEK = {
   vaz: { fut: vazIr, kulcsok: ['nyelv'] },
+  beolvas: { fut: wordBeolvas, kulcsok: ['nyelv', 'fajlok'] },
+  'atdolgozas-kezd': { fut: atdolgozasKezd, kulcsok: ['ertekelolap', 'datum', 'beadott', 'azonosito', 'dontes', 'visszakuldes'] },
   'nyers-adat': { fut: nyersAdatRogzit, kulcsok: ['helyek'] },
   eloallit: { fut: eloallit, kulcsok: [...KOZOS, 'datum', 'felulirasMegerosites'] },
   'munkaanyag-biralat': { fut: munkaanyagBiralat, kulcsok: KOZOS },

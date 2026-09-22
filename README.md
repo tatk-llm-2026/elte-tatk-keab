@@ -42,6 +42,7 @@ majd az AI-asszisztensben
 > kell nekem etikai engedély?  
 > csináljuk meg a kérelmet     
 > nézd át, mielőtt elküldöm    
+> visszaküldték, itt az értékelőlap
 ```
 
 A telepítéshez Node.js kell a gépen.
@@ -61,12 +62,22 @@ keab/
   bead.md                                       ← kinek, mit, mikor
 ```
 
+Átdolgozáskor ezek is:
+
+```text
+keab/
+  atdolgozas.md                                 ← a bizottság pontjai, mindegyiknél: nyitott, javítva vagy nem teljesíthető
+  Válaszlevél a Bizottság értékelésére (VEZETEKNEV_DATUM).docx
+  elozmeny/<dátum>/                             ← az előző beadás és az értékelőlap, érintetlenül
+```
+
 **Hogyan készül:**
 
 - **A beadvány nyelve** magyar vagy angol. Az elején rákérdez, és ez független attól, milyen nyelven beszélget a kutató.
 - **A munkaanyag:** beszélgetés közben minden a `kerelem.md`-be kerül. A kutató és az eszköz is ezt javítja, a Word-fájlokat nem.
 - **Előállítás:** a Word-fájlok csak akkor készülnek el, amikor a kutató kéri („állítsd elő a beadványt”). Egy lépésben fut le a kari dokumentumok ellenőrzése, a Word-fájlok kitöltése, a formai ellenőrzés és a független bírálat.
 - **Független bírálat:** a bíráló nem látta a beszélgetést, csak a beadványt, az űrlapokat és a szabályzatot. Azt keresi, miből lehetne hiánypótlás. Lehet a gépen lévő másik asszisztens (pl. Codexben dolgozva a Claude), ha a kutató ehhez engedélyt ad, vagy a saját asszisztens tiszta lappal.
+- **Átdolgozás:** ha a bizottság visszaküldi a kérelmet, a kutató odaadja az értékelőlapot. Az eszköz pontokra bontja, és pontonként végigmegy rajta a kutatóval. A javításokat a munkaanyagban végzi, a bizottságnak pontonkénti válaszlevelet ír. Ha a kérelem nem ezzel az eszközzel készült, a beadott Word-űrlapokból tölti fel a munkaanyagot, és megjelöli, amit nem tudott biztosan kiolvasni. A bíráló ilyenkor az értékelőlapot is megkapja, és ellenőrzi, hogy minden kért javítás tényleg benne van-e a beadványban, ne csak a levélben.
 - **„Mehet”:** csak akkor jár, ha a bírálat lefutott, és pontosan arra a változatra szól, amelyet a bíráló látott. Ha utána bármi módosul, újra elő kell állítani. A kutató felülbírálhatja a kifogásokat; ez indoklással bekerül a `dontesek.md`-be és a `bead.md`-be.
 
 **Egy konkrét példa:**
@@ -86,6 +97,8 @@ keab/
 ## 6. Honnan tudod, hogy jó?
 
 **Mihez hasonlítom:** a bizottság döntéséhez
+
+**Az első összevetés (2026 szeptembere):** egy valódi, átdolgozásra visszaküldött kérelmen a bíráló az értékelőlap ismerete nélkül a bizottság hat kifogásából ötöt megtalált. A hatodikat (ELTE-s cím) azóta a gépi ellenőrzés is nézi.
 
 **Addig is:** kitalált mintaprojekteken próbáljuk ki a jellemző esetekre (iskolai kutatás kiskorúakkal, interjúk AI-leiratkészítéssel, anonimizált adatok másodelemzése, doktorandusz mint kutatásvezető, angol beadvány). A program gépi részei automatikus teszteket kapnak.
 
