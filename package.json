@@ -1,6 +1,6 @@
 {
   "name": "@arpadtamasi/elte-tatk-keab",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "ELTE TáTK kutatásetikai engedélykérelem (KEAB) a kutató saját AI-asszisztensével",
   "type": "module",
   "bin": {
